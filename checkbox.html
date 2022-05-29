@@ -3,7 +3,11 @@
   <input type="submit" id="submit">
 </form>
 
-
+<form method="post" action="">
+<input type="hidden" name="hoge" value="嫌い">
+<label><input type="checkbox" name="hoge" value="好き" <?php if($_POST['hoge'] == "好き"){echo 'checked="checked"';}?>">好きならチェック！</label>
+<input type="submit" name="" value="確認する">
+</form>
 
 
 
