@@ -1,0 +1,12 @@
+<form action="./checkbox2.html">
+  <label><input type="checkbox" id="checkbox" name="checkbox" value="こんにちは" />チェックボックスをクリックしてください。</label>
+  <input type="submit" id="submit">
+</form>
+<script type="text/javascript">
+$(function(){
+  $("#checkbox").on("click", function(){
+    var v = $(this).val();
+    sessionStorage.setItem('key', v);
+  });
+})
+</script>
