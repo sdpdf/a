@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>名札作成ツール</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+  :root {
+    --bg: #f4f4f0;
+    --surface: #ffffff;
+    --border: #e0ddd8;
+    --accent: #2c5f8a;
+    --accent-light: #e8f0f8;
+    --text: #1a1a1a;
+    --text-muted: #777;
+    --danger: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  header h1 { font-size: 1.2rem; font-weight: 500; letter-spacing: .05em; }
+  header span { font-size: .85rem; opacity: .75; margin-left: auto; }
+
+  /* ── レイアウト ── */
+  .app { display: grid; grid-template-columns: 400px 1fr; min-height: calc(100vh - 58px); }
+
+  /* ── 左パネル ── */
+  .panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .panel-title {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* 人物カード */
+  .person-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #fafaf8;
+    position: relative;
+    transition: box-shadow .2s;
+  }
+  .person-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .card-num {
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .btn-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color .15s, background .15s;
+  }
+  .btn-remove:hover { color: var(--danger); background: #fdecea; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .form-row.full { grid-template-columns: 1fr; }
+
+  label {
+    display: block;
+    font-size: .68rem;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    font-weight: 500;
+  }
+  input, select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: .88rem;
+    font-family: inherit;
+    background: #fff;
+    color: var(--text);
+    transition: border-color .15s, box-shadow .15s;
+    outline: none;
+  }
+  input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(44,95,138,.12);
+  }
+
+  /* ボタン群 */
+  .btn-add {
+    width: 100%;
+    padding: 11px;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    background: none;
+    color: var(--text-muted);
+    font-size: .88rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color .2s, color .2s, background .2s;
+    margin-bottom: 20px;
+  }
+  .btn-add:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .btn-print {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: .95rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: .05em;
+    transition: background .15s, transform .1s;
+  }
+  .btn-print:hover { background: #1e4870; }
+  .btn-print:active { transform: scale(.98); }
+
+  /* ── 右プレビュー ── */
+  .preview {
+    padding: 32px;
+    overflow-y: auto;
+  }
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .preview-title {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .badge-note {
+    font-size: .72rem;
+    color: var(--text-muted);
+  }
+
+  .badges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  /* ── 名札本体 ── */
+  /*
+    実寸 56×89mm
+    画面表示は2倍スケール: 212px × 337px（96dpi基準）
+    56mm = 212.6px, 89mm = 337.0px at 96dpi
+  */
+  .badge {
+    width: 212px;
+    height: 337px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.04);
+    position: relative;
+    font-family: 'Noto Sans JP', sans-serif;
+    flex-shrink: 0;
+  }
+
+  /* アクセントバー（上） */
+  .badge-top-bar {
+    height: 8px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* 学年・学科エリア */
+  .badge-meta {
+    padding: 12px 16px 8px;
+    flex-shrink: 0;
+  }
+  .badge-grade {
+    font-size: 9px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: .08em;
+    margin-bottom: 3px;
+  }
+  .badge-dept {
+    font-size: 10.5px;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.35;
+    word-break: break-all;
+  }
+
+  /* 区切り線 */
+  .badge-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 16px;
+    flex-shrink: 0;
+  }
+
+  /* 名前エリア */
+  .badge-name-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 14px;
+  }
+  .badge-furigana {
+    font-size: 9.5px;
+    color: var(--text-muted);
+    letter-spacing: .15em;
+    margin-bottom: 6px;
+    font-weight: 300;
+  }
+  .badge-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: .06em;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-all;
+  }
+
+  /* 下部バー */
+  .badge-bottom-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent) 0%, #5b9bd5 100%);
+    flex-shrink: 0;
+  }
+
+  .badge-empty {
+    color: var(--text-muted);
+    font-size: .8rem;
+    align-self: center;
+  }
+
+  /* ── 印刷スタイル ── */
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    body { background: #fff; }
+    header, .panel, .preview-header, .badge-note { display: none !important; }
+
+    .app { display: block; }
+    .preview { padding: 0; }
+
+    .badges-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5mm;
+      justify-content: flex-start;
+    }
+
+    /* 印刷時は実寸 56×89mm */
+    .badge {
+      width: 56mm;
+      height: 89mm;
+      border-radius: 3mm;
+      box-shadow: none;
+      border: 0.3mm solid #bbb;
+      page-break-inside: avoid;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .badge-top-bar { height: 3mm; }
+    .badge-bottom-bar { height: 2mm; }
+
+    .badge-grade { font-size: 6pt; }
+    .badge-dept { font-size: 7.5pt; }
+    .badge-furigana { font-size: 6.5pt; margin-bottom: 2mm; }
+    .badge-name { font-size: 20pt; }
+    .badge-meta { padding: 4mm 5mm 2mm; }
+    .badge-divider { margin: 0 5mm; }
+    .badge-name-area { padding: 4mm; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+  </svg>
+  <h1>名札作成ツール</h1>
+  <span>56 × 89 mm</span>
+</header>
+
+<div class="app">
+  <!-- 左：入力パネル -->
+  <div class="panel">
+    <div class="panel-title">参加者情報の入力</div>
+    <div id="cards"></div>
+    <button class="btn-add" onclick="addPerson()">＋ 人を追加</button>
+    <button class="btn-print" onclick="window.print()">🖨　印刷する</button>
+  </div>
+
+  <!-- 右：プレビュー -->
+  <div class="preview">
+    <div class="preview-header">
+      <div class="preview-title">プレビュー</div>
+      <div class="badge-note">表示は拡大プレビューです（実寸 56×89mm）</div>
+    </div>
+    <div class="badges-grid" id="badges"></div>
+  </div>
+</div>
+
+<script>
+  // デフォルトデータ
+  let people = [
+    { grade: '1年生', dept: '医学科', name: '山田 太郎', furigana: 'やまだ たろう' },
+    { grade: '2年生', dept: '看護学科', name: '鈴木 花子', furigana: 'すずき はなこ' },
+  ];
+
+  const gradeOptions = ['1年生','2年生','3年生','4年生','5年生','6年生','M1','M2','D1','D2','D3','その他'];
+
+  function addPerson() {
+    people.push({ grade: '1年生', dept: '', name: '', furigana: '' });
+    render();
+  }
+
+  function removePerson(i) {
+    if (people.length === 1) return;
+    people.splice(i, 1);
+    render();
+  }
+
+  function update(i, field, val) {
+    people[i][field] = val;
+    renderBadges();
+  }
+
+  function render() {
+    renderCards();
+    renderBadges();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('cards');
+    container.innerHTML = people.map((p, i) => `
+      <div class="person-card">
+        <div class="card-header">
+          <span class="card-num">No.${i + 1}</span>
+          <button class="btn-remove" onclick="removePerson(${i})" title="削除">×</button>
+        </div>
+        <div class="form-row">
+          <div>
+            <label>学年</label>
+            <select onchange="update(${i},'grade',this.value)">
+              ${gradeOptions.map(g => `<option${p.grade===g?' selected':''}>${g}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label>学科・専攻</label>
+            <input type="text" value="${esc(p.dept)}" placeholder="例：医学科" oninput="update(${i},'dept',this.value)">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div>
+            <label>ふりがな</label>
+            <input type="text" value="${esc(p.furigana)}" placeholder="やまだ たろう" oninput="update(${i},'furigana',this.value)">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div>
+            <label>名前（漢字）</label>
+            <input type="text" value="${esc(p.name)}" placeholder="山田 太郎" oninput="update(${i},'name',this.value)">
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderBadges() {
+    const container = document.getElementById('badges');
+    container.innerHTML = people.map(p => `
+      <div class="badge">
+        <div class="badge-top-bar"></div>
+        <div class="badge-meta">
+          <div class="badge-grade">${esc(p.grade)}</div>
+          <div class="badge-dept">${esc(p.dept) || '<span style="color:#ccc">学科未入力</span>'}</div>
+        </div>
+        <div class="badge-divider"></div>
+        <div class="badge-name-area">
+          <div class="badge-furigana">${esc(p.furigana) || '&nbsp;'}</div>
+          <div class="badge-name">${esc(p.name) || '<span style="color:#ddd;font-size:16px">名前未入力</span>'}</div>
+        </div>
+        <div class="badge-bottom-bar"></div>
+      </div>
+    `).join('');
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  render();
+</script>
+</body>
+</html>
