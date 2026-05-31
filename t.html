@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投票締め切りカウントダウン</title>
+<style>
+  :root{
+    --ink:#ffffff;
+    --sub:#b5b5b5;
+    --line:#3a3a3a;
+    --accent:#ffffff;
+    --warn:#ff5b50;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,"Segoe UI",sans-serif;
+    background:#0f0f10;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%;
+    max-width:520px;
+    text-align:center;
+  }
+
+  /* 上段：東京○R を青いバー（横幅100%）で大きく表示 */
+  .header{
+    display:flex;
+    width:100%;
+    align-items:center;
+    margin-bottom:8px;
+    transition:opacity .4s ease;
+  }
+  .venue-badge{
+    flex:1 1 100%;
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    gap:18px;
+    background:#1463d6;
+    color:#ffffff;
+    font-weight:800;
+    letter-spacing:.02em;
+    line-height:1.2;
+    padding:14px 16px;
+    white-space:nowrap;
+  }
+  .venue-badge .race-id{
+    font-size:clamp(44px,12vw,72px);
+  }
+  .post-time{
+    font-size:clamp(22px,6vw,34px);
+    font-weight:600;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:.02em;
+    opacity:.92;
+  }
+
+  .divider{
+    width:48px;
+    height:1px;
+    background:var(--line);
+    margin:22px auto 28px;
+  }
+
+  .deadline-label{
+    font-size:13px;
+    color:var(--sub);
+    letter-spacing:.18em;
+    margin-bottom:14px;
+  }
+
+  /* 中段：カウントダウン（最大） */
+  .countdown{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:6px;
+    font-variant-numeric:tabular-nums;
+    line-height:1;
+    transition:opacity .3s ease;
+  }
+  .num{
+    font-size:clamp(72px,22vw,150px);
+    font-weight:700;
+    letter-spacing:-.02em;
+  }
+  .unit{
+    font-size:clamp(20px,5vw,30px);
+    font-weight:500;
+    color:var(--sub);
+    margin:0 14px 12px 2px;
+  }
+  .countdown.closing .num{color:var(--warn);}
+
+  .closed-msg{
+    font-size:clamp(34px,9vw,52px);
+    font-weight:700;
+    color:var(--sub);
+    line-height:1.2;
+  }
+  .closed-sub{
+    margin-top:14px;
+    font-size:14px;
+    color:var(--sub);
+    letter-spacing:.06em;
+  }
+
+  .footer{
+    margin-top:34px;
+    font-size:12px;
+    color:#bdbdbd;
+    letter-spacing:.06em;
+  }
+
+  @media (max-width:420px){
+    .venue-badge{gap:12px;padding:12px;}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header" id="header"></div>
+    <div class="divider"></div>
+    <div class="deadline-label" id="deadlineLabel">投票締め切りまで</div>
+    <div id="main"></div>
+    <div class="footer"></div>
+  </div>
+
+<script>
+  // ---- レースデータ（HH:MM は出走時刻） ----
+  const RACES = [
+    {venue:"東京", no:1,  name:"サラ系3歳未勝利",       time:"09:40"},
+    {venue:"東京", no:2,  name:"サラ系3歳未勝利",       time:"10:10"},
+    {venue:"東京", no:3,  name:"サラ系3歳未勝利",       time:"10:40"},
+    {venue:"東京", no:4,  name:"サラ系3歳未勝利",       time:"11:10"},
+    {venue:"東京", no:5,  name:"サラ系3歳1勝クラス",     time:"12:10"},
+    {venue:"東京", no:6,  name:"サラ系4歳上1勝クラス",   time:"12:40"},
+    {venue:"東京", no:7,  name:"サラ系4歳上1勝クラス",   time:"13:10"},
+    {venue:"東京", no:8,  name:"青嵐賞",               time:"13:45"},
+    {venue:"東京", no:9,  name:"ARF杯薫風S",           time:"14:20"},
+    {venue:"東京", no:10, name:"IFHA杯むらさき賞",      time:"14:55"},
+    {venue:"東京", no:11, name:"東京優駿",             time:"15:40"},
+    {venue:"東京", no:12, name:"目黒記念",             time:"17:00"},
+
+    {venue:"京都", no:1,  name:"サラ系3歳未勝利",       time:"09:55"},
+    {venue:"京都", no:2,  name:"サラ系3歳未勝利",       time:"10:25"},
+    {venue:"京都", no:3,  name:"サラ系3歳未勝利",       time:"10:55"},
+    {venue:"京都", no:4,  name:"障害4歳上オープン",     time:"11:25"},
+    {venue:"京都", no:5,  name:"サラ系3歳未勝利",       time:"12:25"},
+    {venue:"京都", no:6,  name:"サラ系3歳1勝クラス",     time:"12:55"},
+    {venue:"京都", no:7,  name:"サラ系4歳上1勝クラス",   time:"13:25"},
+    {venue:"京都", no:8,  name:"サラ系4歳上2勝クラス",   time:"14:00"},
+    {venue:"京都", no:9,  name:"與杼特別",             time:"14:35"},
+    {venue:"京都", no:10, name:"安土城ステークス",      time:"15:15"},
+    {venue:"京都", no:11, name:"白百合ステークス",      time:"16:05"},
+    {venue:"京都", no:12, name:"渡月橋ステークス",      time:"16:40"},
+  ];
+
+  const DEADLINE_OFFSET_MS = 1 * 60 * 1000; // 出走1分前
+
+  // 当日の Date を生成
+  function raceDeadline(r){
+    const [h,m] = r.time.split(":").map(Number);
+    const d = new Date();
+    d.setHours(h, m, 0, 0);
+    return new Date(d.getTime() - DEADLINE_OFFSET_MS);
+  }
+
+  // 締め切りが最も近い（まだ過ぎていない）レースを選ぶ
+  function pickRace(now){
+    const upcoming = RACES
+      .map(r => ({...r, deadline: raceDeadline(r)}))
+      .filter(r => r.deadline.getTime() > now)
+      .sort((a,b) => a.deadline - b.deadline);
+    return upcoming[0] || null;
+  }
+
+  const headerEl = document.getElementById("header");
+  const mainEl = document.getElementById("main");
+  const labelEl = document.getElementById("deadlineLabel");
+
+  function render(){
+    const now = Date.now();
+    const r = pickRace(now);
+
+    if(!r){
+      headerEl.style.opacity = "0";
+      labelEl.style.display = "none";
+      mainEl.innerHTML =
+        '<div class="closed-msg">本日の投票は<br>すべて終了しました</div>' +
+        '<div class="closed-sub">お疲れさまでした</div>';
+      return;
+    }
+
+    headerEl.style.opacity = "1";
+    labelEl.style.display = "block";
+
+    // 上段
+    headerEl.innerHTML =
+      '<span class="venue-badge">' +
+        '<span class="race-id">'+r.venue+' '+r.no+'R</span>' +
+        '<span class="post-time">'+r.time+'</span>' +
+      '</span>';
+
+    // 残り時間
+    let remain = Math.max(0, r.deadline.getTime() - now);
+    const totalSec = Math.floor(remain / 1000);
+    const mm = Math.floor(totalSec / 60);
+    const ss = totalSec % 60;
+    const closing = totalSec < 60; // 残り1分未満で強調
+
+    mainEl.innerHTML =
+      '<div class="countdown'+(closing?' closing':'')+'">' +
+        '<span class="num">'+mm+'</span><span class="unit">分</span>' +
+        '<span class="num">'+String(ss).padStart(2,"0")+'</span><span class="unit">秒</span>' +
+      '</div>';
+  }
+
+  render();
+  setInterval(render, 250);
+</script>
+</body>
+</html>
