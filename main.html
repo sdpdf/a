@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>高知大学医学部競馬部｜複勝転がし</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --surface:#ffffff; --surface-2:#f6f6f7; --surface-3:#fbfbfc;
+  --line:#ececef; --line-2:#dddde1;
+  --ink:#18181b; --ink-2:#3f3f46; --ink-soft:#71717a; --ink-faint:#a1a1aa;
+  --on:#18181b; --on-ink:#ffffff;
+  --pos:#15803d; --neg:#dc2626;
+  --r:12px; --maxw:1280px;
+  --sans:"Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Helvetica Neue",sans-serif;
+  --sh:0 1px 2px rgba(24,24,27,.04), 0 1px 3px rgba(24,24,27,.05);
+}
+[data-theme="dark"]{
+  --bg:#0d0d0f; --surface:#161618; --surface-2:#1d1d20; --surface-3:#19191c;
+  --line:#2a2a2e; --line-2:#37373c;
+  --ink:#f4f4f5; --ink-2:#d4d4d8; --ink-soft:#a1a1aa; --ink-faint:#71717a;
+  --on:#f4f4f5; --on-ink:#0d0d0f;
+  --pos:#4ade80; --neg:#f87171;
+  --sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--bg);
+  -webkit-text-size-adjust:100%; line-height:1.5; overflow-x:hidden;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 18px 28px; min-height:100%}
+
+/* Header */
+header.top{display:flex; align-items:center; gap:14px; padding:16px 4px 12px; flex-wrap:wrap}
+.brand{flex:1; min-width:200px}
+.brand h1{font-size:clamp(17px,2.2vw,21px); font-weight:900; margin:0; letter-spacing:.02em}
+.brand .sub{font-size:11.5px; color:var(--ink-soft); margin-top:2px; letter-spacing:.14em; font-weight:500}
+.tools{display:flex; gap:6px; align-items:center}
+.tools button{
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2);
+  border-radius:9px; padding:8px 12px; font-family:var(--sans); font-weight:700; font-size:12.5px;
+  cursor:pointer; transition:.12s; white-space:nowrap;
+}
+.tools button:hover{background:var(--surface-2); border-color:var(--ink-faint)}
+.tools button:active{transform:scale(.97)}
+.tools .ghost{border-color:transparent; color:var(--ink-soft)}
+
+/* Tabs */
+nav.tabs{
+  position:sticky; top:0; z-index:30; display:flex; gap:4px; padding:6px;
+  background:var(--bg); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--sh); overflow-x:auto; scrollbar-width:none; margin-bottom:16px;
+}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{
+  flex:1 0 auto; border:none; background:transparent; color:var(--ink-soft);
+  font-family:var(--sans); font-weight:700; font-size:14px; padding:11px 18px; border-radius:9px;
+  cursor:pointer; transition:.12s; white-space:nowrap; display:flex; align-items:center; gap:7px; justify-content:center;
+}
+nav.tabs button .ic{font-size:17px}
+nav.tabs button.active{background:var(--on); color:var(--on-ink)}
+nav.tabs button:not(.active):hover{background:var(--surface-2); color:var(--ink)}
+
+.view{display:none}
+.view.active{display:block}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--sh); padding:18px 18px 20px; margin-bottom:16px}
+.card h2{font-size:15px; font-weight:900; margin:0 0 3px; letter-spacing:.02em}
+.hint{font-size:12.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.6}
+
+/* ===== Chart (iPad-first, fills screen) ===== */
+#view-chart.active > .card{display:flex; flex-direction:column; height:calc(100dvh - 168px); min-height:400px; padding:14px 14px 12px; margin-bottom:0}
+.chart-toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:10px}
+.fbar{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.chip{
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink-soft);
+  font-family:var(--sans); font-weight:700; font-size:13px; padding:7px 14px; border-radius:99px;
+  cursor:pointer; transition:.12s; min-height:34px;
+}
+.chip.active{background:var(--on); color:var(--on-ink); border-color:var(--on)}
+.chip:not(.active):hover{border-color:var(--ink-faint); color:var(--ink)}
+.seg{display:inline-flex; border:1px solid var(--line-2); border-radius:99px; overflow:hidden; background:var(--surface)}
+.seg button{border:none; background:transparent; color:var(--ink-soft); font-family:var(--sans); font-weight:700; font-size:13px; padding:7px 14px; cursor:pointer; min-height:34px}
+.seg button.active{background:var(--on); color:var(--on-ink)}
+.tspacer{margin-left:auto; display:flex; gap:6px}
+.iconbtn{border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); border-radius:9px; padding:7px 12px; font-family:var(--sans); font-weight:700; font-size:13px; cursor:pointer; min-height:34px}
+.iconbtn:hover{background:var(--surface-2)}
+
+#chartWrap{flex:1; min-height:0; position:relative}
+#chart{display:block; width:100%; height:100%}
+.chart-line{fill:none; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round}
+.grid-line{stroke:var(--line); stroke-width:1}
+.zero-line{stroke:var(--ink-faint); stroke-width:1; stroke-dasharray:2 3}
+.axis-txt{fill:var(--ink-soft); font-family:var(--sans); font-size:10.5px}
+.cross{stroke:var(--ink-faint); stroke-width:1; stroke-dasharray:3 3; opacity:.7}
+
+.legend{display:flex; flex-wrap:nowrap; gap:7px; margin-top:10px; overflow-x:auto; padding-bottom:4px; scrollbar-width:thin}
+.lg{display:flex; align-items:center; gap:7px; padding:5px 11px 5px 8px; border-radius:99px; border:1px solid var(--line); background:var(--surface); cursor:pointer; transition:.12s; font-size:12.5px; white-space:nowrap; flex:none}
+.lg .sw{width:11px; height:11px; border-radius:3px; flex:none}
+.lg .nm{font-weight:700}
+.lg .vl{font-variant-numeric:tabular-nums; font-weight:700; color:var(--ink-soft)}
+.lg.off{opacity:.32}
+.lg.off .vl{text-decoration:line-through}
+.lg:hover{border-color:var(--line-2)}
+
+#tooltip{position:fixed; z-index:80; pointer-events:none; background:var(--surface); color:var(--ink); border:1px solid var(--line-2); border-radius:11px; padding:10px 12px; font-size:12.5px; box-shadow:0 8px 28px rgba(24,24,27,.14); min-width:160px; max-width:240px; opacity:0; transition:opacity .08s}
+#tooltip .tt-h{font-weight:900; font-size:12.5px; margin-bottom:7px; padding-bottom:6px; border-bottom:1px solid var(--line)}
+#tooltip .tt-r{display:flex; align-items:center; gap:7px; margin:3px 0}
+#tooltip .tt-r .sw{width:9px;height:9px;border-radius:2px;flex:none}
+#tooltip .tt-r .nm{flex:1}
+#tooltip .tt-r .vl{font-variant-numeric:tabular-nums; font-weight:700}
+
+/* Fullscreen (maximize) */
+body.maxed header.top, body.maxed nav.tabs, body.maxed footer{display:none}
+body.maxed .wrap{padding:0; max-width:none}
+body.maxed .view:not(#view-chart){display:none}
+body.maxed #view-chart.active > .card{position:fixed; inset:0; height:100dvh; border:none; border-radius:0; margin:0; z-index:60; padding:14px 16px}
+#chartClose{display:none; position:fixed; top:12px; right:14px; z-index:70; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); border-radius:99px; padding:9px 16px; font-family:var(--sans); font-weight:800; font-size:13px; cursor:pointer; box-shadow:var(--sh)}
+body.maxed #chartClose{display:block}
+
+/* ===== Entry ===== */
+.race-nav{display:flex; align-items:center; gap:10px; margin-bottom:16px}
+.race-nav select{flex:1; min-width:0; padding:12px 12px; border-radius:10px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font-family:var(--sans); font-weight:700; font-size:14px}
+.navbtn{width:46px; height:46px; flex:none; border-radius:10px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font-size:22px; cursor:pointer; font-weight:700}
+.navbtn:hover{background:var(--surface-2)}
+.race-head{display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:12px; margin-bottom:16px; background:var(--surface-2); border:1px solid var(--line)}
+.race-head .rno{font-weight:900; font-size:24px; line-height:1; min-width:52px; color:var(--ink)}
+.race-head .rname{font-weight:900; font-size:16px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.race-head .rinfo{font-size:12px; color:var(--ink-soft); margin-top:3px}
+.badge{font-size:10px; font-weight:900; padding:2px 6px; border-radius:4px; letter-spacing:.04em; color:#fff}
+.badge.gi{background:#1f6fd6}.badge.gii{background:#c0392b}.badge.giii{background:#2e9e5b}.badge.l{background:#475569}.badge.op{background:#92722f}
+
+.entry-grade{margin-bottom:16px}
+.entry-grade .gh{font-size:13px; font-weight:900; color:var(--ink-soft); margin:0 0 8px; letter-spacing:.08em; display:flex; align-items:center; gap:10px}
+.entry-grade .gh::after{content:""; flex:1; height:1px; background:var(--line)}
+.erow{display:flex; align-items:center; gap:12px; padding:11px 13px; border:1px solid var(--line); border-radius:12px; margin-bottom:8px; background:var(--surface); transition:.12s; flex-wrap:wrap}
+.erow.betting{border-color:var(--line-2); background:var(--surface-3)}
+.erow .dot{width:14px;height:14px;border-radius:4px;flex:none}
+.erow .who{font-weight:800; min-width:60px; flex:none; font-size:15px}
+.toggle{position:relative; width:108px; height:38px; flex:none; border-radius:99px; border:1px solid var(--line-2); background:var(--surface-2); cursor:pointer; font-size:12.5px; font-weight:800; overflow:hidden; transition:.15s}
+.toggle .knob{position:absolute; top:3px; left:3px; width:50px; height:30px; border-radius:99px; background:var(--ink-faint); transition:.18s}
+.toggle .lab{position:absolute; top:0; bottom:0; display:flex; align-items:center; justify-content:center; width:54px; transition:.15s; z-index:1}
+.toggle .l-skip{left:0; color:var(--ink-soft)}
+.toggle .l-bet{right:0; color:var(--ink-faint)}
+.toggle.on{background:var(--surface-2); border-color:var(--on)}
+.toggle.on .knob{left:55px; background:var(--on)}
+.toggle.on .l-bet{color:var(--on-ink)}
+.toggle.on .l-skip{color:var(--ink-faint)}
+.col{flex:1; min-width:170px; display:flex; flex-direction:column; gap:7px}
+.amt-wrap{display:flex; align-items:center; gap:9px}
+.amt-wrap .yen{color:var(--ink-soft); font-weight:800}
+.amt-wrap input.amt{flex:1; min-width:90px; padding:10px 12px; border-radius:9px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font-family:var(--sans); font-weight:800; font-size:17px; text-align:right; font-variant-numeric:tabular-nums}
+.amt-wrap input.amt:focus{outline:none; border-color:var(--ink)}
+.amt-wrap .carry{flex:1; text-align:right; color:var(--ink-faint); font-weight:700; font-variant-numeric:tabular-nums; font-size:14px}
+.amt-wrap .delta{font-size:13px; font-weight:800; font-variant-numeric:tabular-nums; min-width:64px; text-align:right}
+.delta.up{color:var(--pos)} .delta.dn{color:var(--neg)} .delta.zero{color:var(--ink-faint)}
+.memo{padding:8px 11px; border-radius:8px; border:1px dashed var(--line-2); background:transparent; color:var(--ink); font-family:var(--sans); font-size:12.5px}
+.memo:focus{outline:none;border-color:var(--ink-faint)}
+.race-summary{display:flex; gap:18px; flex-wrap:wrap; padding:13px 15px; background:var(--surface-2); border-radius:11px; margin-top:8px; font-size:13px; color:var(--ink-soft)}
+.race-summary b{font-size:16px; color:var(--ink); font-weight:900}
+
+/* ===== Rank ===== */
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:8px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px}
+.stat .k{font-size:11.5px; color:var(--ink-soft); font-weight:700}
+.stat .v{font-weight:900; font-size:21px; margin-top:5px; font-variant-numeric:tabular-nums; line-height:1.15}
+.stat .v small{font-size:13px}
+.stat .who{font-size:12px; color:var(--ink-soft); margin-top:3px; font-weight:700}
+table.rank{width:100%; border-collapse:collapse; font-size:14px}
+table.rank th{font-weight:700; font-size:11.5px; color:var(--ink-soft); text-align:right; padding:9px 8px; border-bottom:1px solid var(--line-2)}
+table.rank th.l,table.rank td.l{text-align:left}
+table.rank td{padding:12px 8px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; text-align:right}
+table.rank tr:last-child td{border-bottom:none}
+.rk{font-weight:900; font-size:16px; width:30px; text-align:center!important; color:var(--ink-soft)}
+.rk.m1,.rk.m2,.rk.m3{color:var(--ink)}
+.nmcell{display:flex; align-items:center; gap:9px}
+.nmcell .dot{width:12px;height:12px;border-radius:3px;flex:none}
+.nmcell .g{font-size:10.5px; color:var(--ink-soft); font-weight:700}
+.money{font-weight:800}
+.pm{font-weight:800}
+.mini-bar{height:5px; border-radius:3px; background:var(--surface-2); overflow:hidden; min-width:50px; margin-top:4px}
+.mini-bar i{display:block; height:100%; border-radius:3px}
+
+/* ===== Admin ===== */
+.adm-row{display:flex; align-items:center; gap:10px; padding:11px 12px; border:1px solid var(--line); border-radius:12px; margin-bottom:8px; background:var(--surface); flex-wrap:wrap}
+.adm-row input[type=color]{width:40px; height:40px; border:1px solid var(--line-2); background:none; border-radius:9px; cursor:pointer; padding:2px; flex:none}
+.adm-row input.txt{flex:1; min-width:80px; padding:10px 12px; border-radius:9px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font-family:var(--sans); font-weight:700; font-size:14px}
+.adm-row .ifield{display:flex; align-items:center; gap:5px; border:1px solid var(--line-2); border-radius:9px; padding:0 10px; background:var(--surface)}
+.adm-row .ifield .yen{color:var(--ink-soft); font-weight:800; font-size:13px}
+.adm-row .ifield input{width:96px; border:none; background:transparent; padding:10px 0; font-family:var(--sans); font-weight:800; font-size:15px; text-align:right; color:var(--ink); font-variant-numeric:tabular-nums}
+.adm-row .ifield input:focus{outline:none}
+.adm-row select{padding:10px; border-radius:9px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font-weight:700; font-family:var(--sans)}
+.adm-row .del{width:38px;height:38px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--neg);font-size:17px;cursor:pointer;flex:none;font-weight:700}
+.adm-row .del:hover{background:var(--surface-2)}
+.adm-row .move{width:34px;height:38px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink-soft);cursor:pointer;flex:none;font-weight:700}
+.lab-sm{font-size:11px; color:var(--ink-soft); font-weight:700; align-self:center}
+.btn-add{width:100%; padding:13px; border:1.5px dashed var(--line-2); border-radius:12px; background:transparent; color:var(--ink-soft); font-family:var(--sans); font-weight:800; font-size:14px; cursor:pointer; margin-top:4px}
+.btn-add:hover{background:var(--surface-2); color:var(--ink)}
+.row-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap}
+.danger{color:var(--neg)!important}
+
+footer{text-align:center; font-size:11px; color:var(--ink-faint); margin-top:22px; letter-spacing:.08em; font-weight:500}
+
+/* iPad portrait / phone */
+@media (max-width:768px){
+  #view-chart.active > .card{height:calc(100dvh - 156px)}
+}
+@media (max-width:560px){
+  nav.tabs button{padding:10px 12px}
+  nav.tabs button .lab{display:none}
+  nav.tabs button .ic{font-size:20px}
+  .erow .col{min-width:100%; order:5}
+  .stat .v{font-size:18px}
+}
+</style>
+</head>
+<body>
+<button id="chartClose">✕ 全画面を終了</button>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      
+<img src="https://b8ihua.com/a/無題1715_20260531092152.png" width="80%">
+      <div class="sub"></div>
+    </div>
+    <div class="tools">
+      <button id="btnTheme" class="ghost">🌙</button>
+      <button id="btnExport">保存</button>
+      <button id="btnImport">読込</button>
+      <button id="btnReset" class="ghost danger">初期化</button>
+      <input type="file" id="fileInput" accept="application/json" hidden>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-v="chart" class="active"><span class="ic">📈</span><span class="lab">推移グラフ</span></button>
+    <button data-v="entry"><span class="ic">✍️</span><span class="lab">記録入力</span></button>
+    <button data-v="rank"><span class="ic">🏆</span><span class="lab">順位・成績</span></button>
+    <button data-v="members"><span class="ic">👥</span><span class="lab">メンバー</span></button>
+    <button data-v="races"><span class="ic">🏇</span><span class="lab">レース</span></button>
+  </nav>
+
+  <!-- CHART -->
+  <section class="view active" id="view-chart">
+    <div class="card">
+      <div class="chart-toolbar">
+        <div class="fbar" id="gradeFilter"></div>
+        <div class="tspacer">
+          <div class="seg"><button id="mAbs" class="active">金額</button><button id="mPct">増減率</button></div>
+          <button class="iconbtn" id="btnMax">⤢ 全画面</button>
+          <button class="iconbtn" id="btnSvg">画像</button>
+        </div>
+      </div>
+      <div id="chartWrap"><svg id="chart" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <!-- ENTRY -->
+  <section class="view" id="view-entry">
+    <div class="card">
+      <h2>記録入力</h2>
+      <p class="hint">レースを選び、各人の「賭けた／見」を切替えます。賭けた人はそのレース後の持ち金を入力。見送りは前レースから自動で引き継ぎます。レースは時間順に並んでいます。</p>
+      <div class="race-nav">
+        <button class="navbtn" id="rPrev">‹</button>
+        <select id="raceSelect"></select>
+        <button class="navbtn" id="rNext">›</button>
+      </div>
+      <div class="race-head" id="raceHead"></div>
+      <div id="entryBody"></div>
+      <div class="race-summary" id="raceSummary"></div>
+    </div>
+  </section>
+
+  <!-- RANK -->
+  <section class="view" id="view-rank">
+    <div class="card">
+      <h2>部全体サマリー</h2>
+      <div class="stat-grid" id="statGrid" style="margin-top:14px"></div>
+    </div>
+    <div class="card">
+      <h2>現在の順位</h2>
+      <p class="hint">最新の記録時点での持ち金ランキング。損益・回収率・的中率（増えたレース÷賭けたレース）も表示します。</p>
+      <div style="overflow-x:auto"><table class="rank" id="rankTable"></table></div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section class="view" id="view-members">
+    <div class="card">
+      <h2>メンバーと初期投資</h2>
+      <p class="hint">名前・学年・固有カラー・<b>初期投資額（各人で異なる）</b>を編集できます。初期投資はグラフの開始地点になります。</p>
+      <div id="memberList"></div>
+      <button class="btn-add" id="addMember">＋ メンバーを追加</button>
+    </div>
+  </section>
+
+  <!-- RACES -->
+  <section class="view" id="view-races">
+    <div class="card">
+      <div class="row-head">
+        <h2>対象レース</h2>
+        <button class="iconbtn" id="sortTime">🕐 時間順に並べ替え</button>
+      </div>
+      <p class="hint">「2回東京12日目」「3回京都12日目」全24レースを発走時刻順で登録済み。会場・時刻・距離・グレードは編集でき、追加・削除・並べ替えも可能です。</p>
+      <div id="raceList"></div>
+      <button class="btn-add" id="addRace">＋ レースを追加</button>
+    </div>
+  </section>
+
+  <footer></footer>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+"use strict";
+
+/* ============ Defaults ============ */
+const GRADES = ["6年","5年","4年","3年","2年"];
+const DEFAULT_MEMBERS = [
+  {name:"所",   grade:"6年", color:"#e63946", start:1000},
+  {name:"宇賀", grade:"5年", color:"#1e6fd9", start:1000},
+  {name:"田口", grade:"5年", color:"#2ba84a", start:1000},
+  {name:"木村", grade:"4年", color:"#f2820d", start:1000},
+  {name:"高場", grade:"4年", color:"#8e3fc0", start:1000},
+  {name:"小山", grade:"3年", color:"#e84393", start:1000},
+  {name:"佐藤", grade:"3年", color:"#0fb5c9", start:1000},
+  {name:"宮川", grade:"3年", color:"#b8860b", start:1000},
+  {name:"大西", grade:"2年", color:"#6d4c41", start:1000},
+  {name:"紀本", grade:"2年", color:"#2a9d8f", start:1000},
+  {name:"西川", grade:"2年", color:"#1a2a6c", start:1000},
+];
+
+function Rc(v,no,time,name,course,badge){return {venue:v,no,time,name,course,badge:badge||""};}
+const RAW_RACES = [
+  // 東京（2回東京12日目）
+  Rc("東京","1R","09:40","サラ系3歳未勝利","ダ1600m"),
+  Rc("東京","2R","10:10","サラ系3歳未勝利","ダ1400m"),
+  Rc("東京","3R","10:40","サラ系3歳未勝利","ダ1600m"),
+  Rc("東京","4R","11:10","サラ系3歳未勝利","芝1600m"),
+  Rc("東京","5R","12:10","サラ系3歳1勝クラス","ダ1400m"),
+  Rc("東京","6R","12:40","サラ系4歳上1勝クラス","芝1800m"),
+  Rc("東京","7R","13:10","サラ系4歳上1勝クラス","ダ1400m"),
+  Rc("東京","8R","13:45","青嵐賞","芝2400m"),
+  Rc("東京","9R","14:20","ARF杯薫風S","ダ1600m"),
+  Rc("東京","10R","14:55","IFHA杯むらさき賞","芝1800m"),
+  Rc("東京","11R","15:40","東京優駿","芝2400m","gi"),
+  Rc("東京","12R","17:00","目黒記念","芝2500m","gii"),
+  // 京都（3回京都12日目）
+  Rc("京都","1R","09:55","サラ系3歳未勝利","ダ1800m"),
+  Rc("京都","2R","10:25","サラ系3歳未勝利","ダ1200m"),
+  Rc("京都","3R","10:55","サラ系3歳未勝利","ダ1900m"),
+  Rc("京都","4R","11:25","障害4歳上オープン","障3170m"),
+  Rc("京都","5R","12:25","サラ系3歳未勝利","芝1600m"),
+  Rc("京都","6R","12:55","サラ系3歳1勝クラス","ダ1400m"),
+  Rc("京都","7R","13:25","サラ系4歳上1勝クラス","芝2400m"),
+  Rc("京都","8R","14:00","サラ系4歳上2勝クラス","芝2000m"),
+  Rc("京都","9R","14:35","與杼特別","ダ1800m"),
+  Rc("京都","10R","15:15","安土城ステークス","芝1400m","l"),
+  Rc("京都","11R","16:05","白百合ステークス","芝1800m","l"),
+  Rc("京都","12R","16:40","渡月橋ステークス","芝1400m"),
+];
+let uidc = 0;
+const uid = (p)=> p+(Date.now().toString(36))+(uidc++).toString(36);
+function shortLabel(r){ return (r.venue?r.venue[0]:"")+String(r.no).replace(/[Rｒr]/g,""); }
+function buildDefaultRaces(){
+  return RAW_RACES.slice().sort((a,b)=> (a.time||"").localeCompare(b.time||""))
+    .map(r=> Object.assign({id:uid("r"), short:shortLabel(r)}, r));
+}
+
+/* ============ State ============ */
+const LS_KEY = "kochi_keiba_fukusho_v2";
+let state = null;
+function freshState(){
+  return { defaultStake:1000, members:DEFAULT_MEMBERS.map(m=>Object.assign({id:uid("m")},m)),
+    races:buildDefaultRaces(), data:{}, theme:"light", curRace:0, chartMode:"abs", gradeFilter:"全体", hidden:{} };
+}
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function load(){
+  try{ const raw=localStorage.getItem(LS_KEY); if(raw){ const s=JSON.parse(raw); if(s&&s.members&&s.races) return s; } }catch(e){}
+  return freshState();
+}
+
+/* ============ Helpers ============ */
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const yen=(n)=>"¥"+Math.round(n).toLocaleString("ja-JP");
+const yenShort=(n)=>{ const a=Math.abs(n); if(a>=10000) return "¥"+(n/10000).toFixed(a%10000===0?0:1)+"万"; return "¥"+Math.round(n).toLocaleString("ja-JP"); };
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function memberStart(m){ return (m.start!=null && m.start!=="") ? Number(m.start) : (Number(state.defaultStake)||1000); }
+function cell(raceId,mId){ if(!state.data[raceId]) state.data[raceId]={}; if(!state.data[raceId][mId]) state.data[raceId][mId]={bet:false,amount:null,memo:""}; return state.data[raceId][mId]; }
+function seriesFor(m){ const out=[memberStart(m)]; let prev=out[0]; state.races.forEach(rc=>{ const c=(state.data[rc.id]||{})[m.id]; let v=prev; if(c&&c.bet&&c.amount!=null&&c.amount!=="") v=Number(c.amount); out.push(v); prev=v; }); return out; }
+function lastDataIndex(){ let idx=-1; state.races.forEach((rc,i)=>{ const d=state.data[rc.id]; if(d&&Object.values(d).some(c=>c.bet&&c.amount!=null&&c.amount!=="")) idx=i; }); return idx; }
+function metrics(m){
+  const s=seriesFor(m); const start=s[0], last=s[s.length-1];
+  let bet=0,hit=0,prev=s[0],ddPeak=s[0],maxDD=0;
+  state.races.forEach((rc,i)=>{ const c=(state.data[rc.id]||{})[m.id]; const cur=s[i+1];
+    if(c&&c.bet&&c.amount!=null&&c.amount!==""){ bet++; if(cur>prev) hit++; } prev=cur;
+    if(cur>ddPeak) ddPeak=cur; const dd=ddPeak-cur; if(dd>maxDD) maxDD=dd; });
+  return {series:s,start,current:last,profit:last-start,roi:start?((last-start)/start*100):0,peak:Math.max(...s),trough:Math.min(...s),bet,hit,hitRate:bet?hit/bet*100:0,maxDD};
+}
+function visibleMembers(){ return state.members.filter(m=> state.gradeFilter==="全体"||m.grade===state.gradeFilter); }
+function gradesInUse(){ return GRADES.filter(g=> state.members.some(m=>m.grade===g)); }
+
+/* ============ Chart ============ */
+function renderGradeFilter(){
+  const box=$("#gradeFilter"); box.innerHTML="";
+  ["全体",...gradesInUse()].forEach(g=>{
+    const b=document.createElement("button"); b.className="chip"+(state.gradeFilter===g?" active":""); b.textContent=g;
+    b.onclick=()=>{ state.gradeFilter=g; save(); renderGradeFilter(); renderLegend(); renderChart(); };
+    box.appendChild(b);
+  });
+}
+function renderLegend(){
+  const box=$("#legend"); box.innerHTML="";
+  visibleMembers().forEach(m=>{
+    const mt=metrics(m); const off=state.hidden[m.id];
+    const el=document.createElement("div"); el.className="lg"+(off?" off":"");
+    el.innerHTML=`<span class="sw" style="background:${m.color}"></span><span class="nm">${esc(m.name)}</span><span class="vl">${yen(mt.current)}</span>`;
+    el.onclick=()=>{ state.hidden[m.id]=!off; save(); renderLegend(); renderChart(); };
+    box.appendChild(el);
+  });
+}
+let chartPts=null;
+function renderChart(){
+  const svg=$("#chart"), wrap=$("#chartWrap");
+  const W=Math.max(280, wrap.clientWidth||700);
+  const H=Math.max(240, wrap.clientHeight||360);
+  const mems=visibleMembers().filter(m=>!state.hidden[m.id]);
+  const cut=lastDataIndex();          // 結果が入っている最後のレース index（-1=未記録）
+  const nDraw=cut+1;                  // 描画するレース数（S を除く）
+  const drawLen=nDraw+1;              // 点の数（S を含む）
+  const n=nDraw;
+  const labels=["S",...state.races.slice(0,nDraw).map(r=>r.short)];
+  const padL=58,padR=16,padT=14,padB=26;
+  const pct=state.chartMode==="pct";
+  const series=mems.map(m=>({m,s:seriesFor(m).slice(0,drawLen)}));
+  let vals=[];
+  series.forEach(o=>{ o.disp=o.s.map(v=> pct ? (o.s[0]?(v-o.s[0])/o.s[0]*100:0):v); o.disp.forEach(v=>vals.push(v)); });
+  if(!vals.length) vals=[0, pct?10:(Number(state.defaultStake)||1000)];
+  let mn=Math.min(...vals), mx=Math.max(...vals);
+  if(pct){ const pad=Math.max(5,(mx-mn)*0.12); mn-=pad; mx+=pad; if(mn>0)mn=Math.min(mn,-2); if(mx<0)mx=Math.max(mx,2); }
+  else { mn=Math.min(mn,0); const pad=(mx-mn)*0.1||100; mx+=pad; mn=Math.max(0,mn-pad*0.25); }
+  if(mn===mx) mx=mn+1;
+  const stepX=(W-padL-padR)/Math.max(1,n);
+  const x=i=> padL+stepX*i;
+  const y=v=> padT+(H-padT-padB)*(1-(v-mn)/(mx-mn));
+
+  let g="";
+  const ticks=5;
+  for(let t=0;t<=ticks;t++){ const v=mn+(mx-mn)*t/ticks, yy=y(v);
+    g+=`<line class="grid-line" x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}"/>`;
+    g+=`<text class="axis-txt" x="${padL-8}" y="${(yy+3.5).toFixed(1)}" text-anchor="end">${pct?((v>0?"+":"")+v.toFixed(0)+"%"):yenShort(v)}</text>`;
+  }
+  // x labels (thin out if crowded)
+  const every = stepX<30 ? 2 : 1;
+  labels.forEach((lb,i)=>{ if(i%every!==0 && i!==labels.length-1) return; g+=`<text class="axis-txt" x="${x(i).toFixed(1)}" y="${H-padB+15}" text-anchor="middle">${lb}</text>`; });
+  if(pct){ const yy=y(0); g+=`<line class="zero-line" x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}"/>`; }
+
+  chartPts=[];
+  series.forEach((o,si)=>{ let d=""; const dots=[];
+    o.disp.forEach((v,i)=>{ const xx=x(i),yy=y(v); d+=(i?"L":"M")+xx.toFixed(1)+" "+yy.toFixed(1)+" "; dots.push({xx,yy}); });
+    g+=`<path class="chart-line" d="${d}" stroke="${o.m.color}" style="stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw .85s ${si*0.04}s ease forwards"/>`;
+    dots.forEach(p=>{ g+=`<circle cx="${p.xx.toFixed(1)}" cy="${p.yy.toFixed(1)}" r="2.8" fill="${o.m.color}" stroke="var(--surface)" stroke-width="1.3"/>`; });
+  });
+  for(let i=0;i<=n;i++) chartPts.push({i,x:x(i),rows:series.map(o=>({name:o.m.name,color:o.m.color,v:o.s[i],disp:o.disp[i]}))});
+
+  const empty = nDraw===0 ? `<text class="axis-txt" x="${(W/2).toFixed(1)}" y="${((H-padB+padT)/2).toFixed(1)}" text-anchor="middle" style="font-size:13px">まだ結果が入力されたレースがありません（初期投資のみ表示）</text>` : "";
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  svg.innerHTML=`<style>@keyframes draw{to{stroke-dashoffset:0}}</style>`+g+empty+
+    `<line id="hoverLine" class="cross" x1="0" y1="${padT}" x2="0" y2="${H-padB}" style="display:none"/>`;
+  attachTooltip(svg,pct);
+}
+function attachTooltip(svg,pct){
+  const tip=$("#tooltip"), hl=()=>$("#hoverLine");
+  function nearest(cx){ const r=svg.getBoundingClientRect(); const sx=svg.viewBox.baseVal.width/r.width; const vx=(cx-r.left)*sx; let best=null,bd=1e9; chartPts.forEach(p=>{const d=Math.abs(p.x-vx); if(d<bd){bd=d;best=p;}}); return best; }
+  function show(cx,cy){ if(!chartPts||!chartPts.length){tip.style.opacity=0;return;} const p=nearest(cx); if(!p)return; const h=hl(); if(h){h.style.display="block"; h.setAttribute("x1",p.x); h.setAttribute("x2",p.x);} 
+    const lab=p.i===0?"スタート（初期投資）":(state.races[p.i-1].venue+state.races[p.i-1].no+" "+state.races[p.i-1].name);
+    const rows=[...p.rows].sort((a,b)=>(b.v||0)-(a.v||0));
+    let html=`<div class="tt-h">${esc(lab)}</div>`;
+    rows.forEach(rw=>{ html+=`<div class="tt-r"><span class="sw" style="background:${rw.color}"></span><span class="nm">${esc(rw.name)}</span><span class="vl">${pct?((rw.disp>0?"+":"")+rw.disp.toFixed(1)+"%"):yen(rw.v)}</span></div>`; });
+    tip.innerHTML=html; tip.style.opacity=1;
+    let tx=cx+14,ty=cy-10; const tw=tip.offsetWidth,th=tip.offsetHeight;
+    if(tx+tw>window.innerWidth-8) tx=cx-tw-14; if(ty+th>window.innerHeight-8) ty=window.innerHeight-th-8; if(ty<8)ty=8;
+    tip.style.left=tx+"px"; tip.style.top=ty+"px";
+  }
+  function hide(){ tip.style.opacity=0; const h=hl(); if(h)h.style.display="none"; }
+  svg.onmousemove=e=>show(e.clientX,e.clientY); svg.onmouseleave=hide;
+  svg.ontouchstart=svg.ontouchmove=e=>{ const t=e.touches[0]; if(t){e.preventDefault();show(t.clientX,t.clientY);} };
+  svg.ontouchend=hide;
+}
+
+/* ============ Entry ============ */
+function renderRaceSelect(){ const sel=$("#raceSelect"); sel.innerHTML=""; state.races.forEach((r,i)=>{ const o=document.createElement("option"); o.value=i; o.textContent=`${r.time||""}　${r.venue} ${r.no}　${r.name}`; sel.appendChild(o); }); sel.value=state.curRace; }
+function renderRaceHead(){ const r=state.races[state.curRace], h=$("#raceHead"); if(!r){h.innerHTML="";return;}
+  const bmap={gi:"GⅠ",gii:"GⅡ",giii:"GⅢ",l:"L",op:"OP"};
+  const badge=r.badge?`<span class="badge ${r.badge}">${bmap[r.badge]||r.badge}</span>`:"";
+  h.innerHTML=`<div class="rno">${r.no}</div><div style="flex:1;min-width:0"><div class="rname">${esc(r.name)} ${badge}</div><div class="rinfo">${r.time||""}　${r.venue}　${esc(r.course||"")}</div></div>`;
+}
+function renderEntry(){
+  renderRaceSelect(); renderRaceHead();
+  const r=state.races[state.curRace], body=$("#entryBody"); body.innerHTML="";
+  if(!r){ body.innerHTML='<p class="hint">レースがありません。「レース」タブで追加してください。</p>'; $("#raceSummary").innerHTML=""; return; }
+  gradesInUse().forEach(g=>{
+    const mems=state.members.filter(m=>m.grade===g); if(!mems.length) return;
+    const wrap=document.createElement("div"); wrap.className="entry-grade"; wrap.innerHTML=`<div class="gh">${g}</div>`;
+    mems.forEach(m=>{
+      const c=cell(r.id,m.id), s=seriesFor(m), prev=s[state.curRace];
+      const has=c.amount!=null&&c.amount!=="";
+      const eff=(c.bet&&has)?Number(c.amount):prev, delta=eff-prev;
+      const dcls=delta>0?"up":delta<0?"dn":"zero", dtxt=(delta>0?"+":"")+yen(delta);
+      const row=document.createElement("div"); row.className="erow"+(c.bet?" betting":"");
+      row.innerHTML=`<span class="dot" style="background:${m.color}"></span><span class="who">${esc(m.name)}</span>
+        <button class="toggle ${c.bet?"on":""}" data-m="${m.id}"><span class="knob"></span><span class="lab l-skip">見</span><span class="lab l-bet">賭けた</span></button>
+        <div class="col">
+          <div class="amt-wrap">${ c.bet
+            ? `<span class="yen">¥</span><input class="amt" type="number" inputmode="numeric" data-m="${m.id}" value="${has?c.amount:""}" placeholder="${prev}"><span class="delta ${dcls}">${has?dtxt:""}</span>`
+            : `<span class="carry">引継 ${yen(prev)}</span>` }
+          </div>
+          ${ c.bet?`<input class="memo" data-m="${m.id}" placeholder="メモ（馬名・複勝オッズなど）" value="${esc(c.memo||"")}">`:"" }
+        </div>`;
+      wrap.appendChild(row);
+    });
+    body.appendChild(wrap);
+  });
+  $$(".toggle",body).forEach(b=> b.onclick=()=>{ const c=cell(r.id,b.dataset.m); c.bet=!c.bet; save(); renderEntry(); });
+  $$("input.amt",body).forEach(inp=>{ inp.oninput=()=>{ const c=cell(r.id,inp.dataset.m); c.amount=inp.value===""?null:Number(inp.value); save(); updateDelta(inp); refreshSummary(); };
+    inp.onchange=()=>renderEntry(); });
+  $$("input.memo",body).forEach(inp=> inp.oninput=()=>{ cell(r.id,inp.dataset.m).memo=inp.value; save(); });
+  refreshSummary();
+}
+function updateDelta(inp){ const m=state.members.find(x=>x.id===inp.dataset.m); if(!m)return; const prev=seriesFor(m)[state.curRace]; const dEl=inp.parentElement.querySelector(".delta"); if(!dEl)return; if(inp.value===""){dEl.textContent="";return;} const delta=Number(inp.value)-prev; dEl.className="delta "+(delta>0?"up":delta<0?"dn":"zero"); dEl.textContent=(delta>0?"+":"")+yen(delta); }
+function refreshSummary(){ const r=state.races[state.curRace], sum=$("#raceSummary"); let cnt=0,total=0,wins=0;
+  state.members.forEach(m=>{ const c=(state.data[r.id]||{})[m.id]; if(c&&c.bet&&c.amount!=null&&c.amount!==""){ cnt++; total+=Number(c.amount); const s=seriesFor(m); if(s[state.curRace+1]>s[state.curRace]) wins++; } });
+  sum.innerHTML=cnt?`<div>参加 <b>${cnt}</b> 人</div><div>うちプラス <b>${wins}</b> 人</div><div>参加者の持ち金合計 <b>${yen(total)}</b></div>`:`<div style="margin:0">まだ誰も「賭けた」になっていません。</div>`;
+}
+
+/* ============ Rank ============ */
+function renderRank(){
+  const all=state.members.map(m=>({m,x:metrics(m)}));
+  const ranked=[...all].sort((a,b)=>b.x.current-a.x.current);
+  const totNow=all.reduce((s,o)=>s+o.x.current,0), totStart=all.reduce((s,o)=>s+o.x.start,0), totProfit=totNow-totStart;
+  const top=ranked[0]||{m:{name:"—",color:"#999"},x:{current:0}};
+  const bestProfit=[...all].sort((a,b)=>b.x.profit-a.x.profit)[0]||top;
+  const worst=[...all].sort((a,b)=>a.x.profit-b.x.profit)[0]||top;
+  const bestPeak=[...all].sort((a,b)=>b.x.peak-a.x.peak)[0]||top;
+  const li=lastDataIndex(); const prog=li<0?"未記録":(state.races[li].venue+state.races[li].no+"まで");
+  const avgRoi=all.length?all.reduce((s,o)=>s+o.x.roi,0)/all.length:0;
+  $("#statGrid").innerHTML=`
+    <div class="stat"><div class="k">部の総資産</div><div class="v">${yen(totNow)}</div><div class="who">初期合計 ${yen(totStart)}</div></div>
+    <div class="stat"><div class="k">部全体の損益</div><div class="v" style="color:${totProfit>=0?'var(--pos)':'var(--neg)'}">${totProfit>=0?"+":""}${yen(totProfit)}</div><div class="who">回収率 ${totStart?(totNow/totStart*100).toFixed(1):0}%</div></div>
+    <div class="stat"><div class="k">首位</div><div class="v" style="color:${top.m.color}">${esc(top.m.name)}</div><div class="who">${yen(top.x.current)}</div></div>
+    <div class="stat"><div class="k">最高益</div><div class="v" style="color:var(--pos)">+${yen(Math.max(0,bestProfit.x.profit))}</div><div class="who">${esc(bestProfit.m.name)}</div></div>
+    <div class="stat"><div class="k">最大損失</div><div class="v" style="color:var(--neg)">${worst.x.profit<0?"":"+"}${yen(worst.x.profit)}</div><div class="who">${esc(worst.m.name)}</div></div>
+    <div class="stat"><div class="k">最高到達額</div><div class="v" style="color:${bestPeak.m.color}">${yen(bestPeak.x.peak)}</div><div class="who">${esc(bestPeak.m.name)}</div></div>
+    <div class="stat"><div class="k">平均回収率</div><div class="v">${(100+avgRoi).toFixed(1)}<small>%</small></div><div class="who">記録：${prog}</div></div>`;
+  const maxAbs=Math.max(1,...all.map(o=>Math.abs(o.x.profit)));
+  const tb=$("#rankTable");
+  tb.innerHTML=`<thead><tr><th class="l">順</th><th class="l">メンバー</th><th>持ち金</th><th>損益</th><th>回収率</th><th>的中率</th><th>高/安</th></tr></thead><tbody></tbody>`;
+  const tbody=$("tbody",tb);
+  ranked.forEach((o,i)=>{ const x=o.x, mcls=i<3?"m"+(i+1):"", w=(Math.abs(x.profit)/maxAbs*100).toFixed(0), pc=x.profit>=0?"var(--pos)":"var(--neg)";
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td class="rk ${mcls} l">${i+1}</td>
+      <td class="l"><div class="nmcell"><span class="dot" style="background:${o.m.color}"></span><span><b>${esc(o.m.name)}</b> <span class="g">${o.m.grade}</span></span></div></td>
+      <td class="money">${yen(x.current)}</td>
+      <td class="pm" style="color:${pc}">${x.profit>=0?"+":""}${yen(x.profit)}<div class="mini-bar"><i style="width:${w}%;background:${pc}"></i></div></td>
+      <td style="color:${pc}">${(100+x.roi).toFixed(0)}%</td>
+      <td>${x.bet?x.hitRate.toFixed(0)+"%":"—"}<div class="g">${x.bet?x.hit+"/"+x.bet:"未"}</div></td>
+      <td><span class="g">${yenShort(x.peak)}</span><br><span class="g">${yenShort(x.trough)}</span></td>`;
+    tbody.appendChild(tr); });
+}
+
+/* ============ Members ============ */
+function renderMembers(){
+  const box=$("#memberList"); box.innerHTML="";
+  state.members.forEach((m,i)=>{
+    const row=document.createElement("div"); row.className="adm-row";
+    const gopts=GRADES.map(g=>`<option ${g===m.grade?"selected":""}>${g}</option>`).join("");
+    row.innerHTML=`<input type="color" value="${m.color}" data-i="${i}" class="col">
+      <input class="txt" value="${esc(m.name)}" data-i="${i}" data-f="name" placeholder="名前" style="max-width:130px">
+      <select data-i="${i}" data-f="grade">${gopts}</select>
+      <span class="lab-sm">初期投資</span>
+      <span class="ifield"><span class="yen">¥</span><input type="number" inputmode="numeric" data-i="${i}" data-f="start" value="${memberStart(m)}"></span>
+      <button class="del" data-i="${i}" title="削除">✕</button>`;
+    box.appendChild(row);
+  });
+  $$('input.col',box).forEach(inp=>inp.oninput=()=>{ state.members[+inp.dataset.i].color=inp.value; save(); renderLegend(); });
+  $$('input[data-f="name"]',box).forEach(inp=>inp.oninput=()=>{ state.members[+inp.dataset.i].name=inp.value; save(); });
+  $$('select[data-f="grade"]',box).forEach(s=>s.onchange=()=>{ state.members[+s.dataset.i].grade=s.value; save(); renderGradeFilter(); });
+  $$('input[data-f="start"]',box).forEach(inp=>inp.oninput=()=>{ state.members[+inp.dataset.i].start=inp.value===""?null:Number(inp.value); save(); });
+  $$('.del',box).forEach(b=>b.onclick=()=>{ if(confirm(state.members[+b.dataset.i].name+" を削除しますか？")){ state.members.splice(+b.dataset.i,1); save(); renderAll(); } });
+}
+
+/* ============ Races ============ */
+function renderRaces(){
+  const box=$("#raceList"); box.innerHTML="";
+  state.races.forEach((r,i)=>{
+    const row=document.createElement("div"); row.className="adm-row";
+    const bopts=["","gi","gii","giii","l","op"].map(v=>`<option value="${v}" ${v===r.badge?"selected":""}>${v?({gi:"GⅠ",gii:"GⅡ",giii:"GⅢ",l:"L",op:"OP"})[v]:"—"}</option>`).join("");
+    row.innerHTML=`<button class="move" data-i="${i}" data-d="-1">▲</button><button class="move" data-i="${i}" data-d="1">▼</button>
+      <input class="txt" value="${esc(r.time||"")}" data-i="${i}" data-f="time" placeholder="時刻" style="max-width:74px">
+      <input class="txt" value="${esc(r.venue)}" data-i="${i}" data-f="venue" placeholder="会場" style="max-width:74px">
+      <input class="txt" value="${esc(r.no)}" data-i="${i}" data-f="no" placeholder="R" style="max-width:58px">
+      <input class="txt" value="${esc(r.name)}" data-i="${i}" data-f="name" placeholder="レース名">
+      <input class="txt" value="${esc(r.course||"")}" data-i="${i}" data-f="course" placeholder="芝1600m" style="max-width:104px">
+      <select data-i="${i}" data-f="badge" style="max-width:74px">${bopts}</select>
+      <button class="del" data-i="${i}">✕</button>`;
+    box.appendChild(row);
+  });
+  $$('input[data-f]',box).forEach(inp=>inp.oninput=()=>{ const r=state.races[+inp.dataset.i]; r[inp.dataset.f]=inp.value; r.short=shortLabel(r); save(); });
+  $$('select[data-f="badge"]',box).forEach(s=>s.onchange=()=>{ state.races[+s.dataset.i].badge=s.value; save(); });
+  $$('.move',box).forEach(b=>b.onclick=()=>{ const i=+b.dataset.i,d=+b.dataset.d,j=i+d; if(j<0||j>=state.races.length)return; const t=state.races[i]; state.races[i]=state.races[j]; state.races[j]=t; save(); renderRaces(); });
+  $$('.del',box).forEach(b=>b.onclick=()=>{ const r=state.races[+b.dataset.i]; if(confirm(`${r.venue}${r.no} ${r.name} を削除しますか？`)){ delete state.data[r.id]; state.races.splice(+b.dataset.i,1); if(state.curRace>=state.races.length)state.curRace=Math.max(0,state.races.length-1); save(); renderAll(); } });
+}
+
+/* ============ Tabs / theme / fullscreen ============ */
+function renderAll(){ renderGradeFilter(); renderLegend(); renderChart(); renderEntry(); renderRank(); renderMembers(); renderRaces(); }
+function showView(v){
+  $$("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===v));
+  $$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-"+v));
+  if(v==="chart"){ renderGradeFilter(); renderLegend(); requestAnimationFrame(renderChart); }
+  if(v==="rank") renderRank(); if(v==="entry") renderEntry(); if(v==="members") renderMembers(); if(v==="races") renderRaces();
+}
+function applyTheme(){ document.documentElement.setAttribute("data-theme",state.theme); $("#btnTheme").textContent=state.theme==="dark"?"☀️":"🌙"; }
+
+function doExport(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="kochi_keiba_"+new Date().toISOString().slice(0,10)+".json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function doImport(file){ const fr=new FileReader(); fr.onload=()=>{ try{ const s=JSON.parse(fr.result); if(s&&s.members&&s.races){ state=s; if(!state.hidden)state.hidden={}; if(state.curRace>=state.races.length)state.curRace=0; save(); applyTheme(); renderAll(); showView("chart"); alert("読み込みました。"); } else alert("形式が正しくありません。"); }catch(e){ alert("読み込みに失敗しました。"); } }; fr.readAsText(file); }
+function doSvgExport(){ const css=getComputedStyle(document.documentElement); const svg=$("#chart").cloneNode(true); svg.querySelectorAll("text").forEach(t=>t.setAttribute("fill",css.getPropertyValue("--ink-soft"))); svg.querySelectorAll(".grid-line").forEach(l=>l.setAttribute("stroke",css.getPropertyValue("--line"))); const vb=$("#chart").getAttribute("viewBox"); const wrap=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${vb.split(" ")[2]}" height="${vb.split(" ")[3]}"><rect width="100%" height="100%" fill="${css.getPropertyValue("--surface")}"/>${svg.innerHTML}</svg>`; const blob=new Blob([wrap],{type:"image/svg+xml"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="keiba_chart.svg"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+
+/* ============ Init ============ */
+function init(){
+  state=load(); if(!state.hidden)state.hidden={}; if(state.curRace==null)state.curRace=0; if(state.defaultStake==null)state.defaultStake=1000;
+  applyTheme(); renderAll(); showView("chart");
+  $$("#tabs button").forEach(b=>b.onclick=()=>showView(b.dataset.v));
+  $("#btnTheme").onclick=()=>{ state.theme=state.theme==="dark"?"light":"dark"; save(); applyTheme(); renderChart(); };
+  $("#mAbs").onclick=()=>{ state.chartMode="abs"; $("#mAbs").classList.add("active"); $("#mPct").classList.remove("active"); save(); renderChart(); };
+  $("#mPct").onclick=()=>{ state.chartMode="pct"; $("#mPct").classList.add("active"); $("#mAbs").classList.remove("active"); save(); renderChart(); };
+  if(state.chartMode==="pct"){ $("#mPct").classList.add("active"); $("#mAbs").classList.remove("active"); }
+  $("#btnSvg").onclick=doSvgExport;
+  $("#btnMax").onclick=()=>{ document.body.classList.add("maxed"); requestAnimationFrame(()=>requestAnimationFrame(renderChart)); };
+  $("#chartClose").onclick=()=>{ document.body.classList.remove("maxed"); requestAnimationFrame(()=>requestAnimationFrame(renderChart)); };
+  $("#rPrev").onclick=()=>{ if(state.curRace>0){state.curRace--; save(); renderEntry();} };
+  $("#rNext").onclick=()=>{ if(state.curRace<state.races.length-1){state.curRace++; save(); renderEntry();} };
+  $("#raceSelect").onchange=e=>{ state.curRace=+e.target.value; save(); renderEntry(); };
+  $("#addMember").onclick=()=>{ const pal=["#e63946","#1e6fd9","#2ba84a","#f2820d","#8e3fc0","#e84393","#0fb5c9","#b8860b","#6d4c41","#2a9d8f","#1a2a6c","#c0392b"]; state.members.push({id:uid("m"),name:"新規",grade:"2年",color:pal[state.members.length%pal.length],start:1000}); save(); renderMembers(); renderGradeFilter(); };
+  $("#addRace").onclick=()=>{ const r={id:uid("r"),venue:"その他",no:(state.races.length+1)+"R",time:"",name:"新規レース",course:"",badge:""}; r.short=shortLabel(r); state.races.push(r); save(); renderRaces(); };
+  $("#sortTime").onclick=()=>{ state.races.sort((a,b)=>(a.time||"").localeCompare(b.time||"")); state.curRace=0; save(); renderRaces(); };
+  $("#btnExport").onclick=doExport; $("#btnImport").onclick=()=>$("#fileInput").click();
+  $("#fileInput").onchange=e=>{ if(e.target.files[0]) doImport(e.target.files[0]); e.target.value=""; };
+  $("#btnReset").onclick=()=>{ if(confirm("全データを初期状態に戻します。よろしいですか？（保存でバックアップ推奨）")){ state=freshState(); save(); applyTheme(); renderAll(); showView("chart"); } };
+  let rt; window.addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if($("#view-chart").classList.contains("active")) renderChart(); },120); });
+}
+init();
+</script>
+</body>
+</html>
