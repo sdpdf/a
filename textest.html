@@ -3,175 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>病理問題集 解答・解説集 ― 創傷治癒／物質代謝障害</title>
+<title>病理問題集 解答・解説集</title>
 <style>
   :root{
-    --paper:#F4F6F5;
-    --paper-2:#FBFCFB;
-    --ink:#1B2A2C;
-    --ink-soft:#41525350;
-    --muted:#5C6B6B;
-    --teal:#0E5E5A;
-    --teal-soft:#E7F0EE;
-    --teal-line:#CBDAD6;
-    --red:#BB413A;          /* 赤ペン */
-    --red-soft:#F6E7E5;
-    --rule:#D9E0DD;
+    --paper:#F4F6F5; --paper-2:#FBFCFB; --ink:#1B2A2C; --muted:#5C6B6B;
+    --teal:#0E5E5A; --teal-soft:#E7F0EE; --teal-line:#CBDAD6;
+    --red:#BB413A; --red-soft:#F6E7E5; --rule:#D9E0DD;
     --shadow:0 1px 2px rgba(27,42,44,.05),0 8px 28px rgba(27,42,44,.06);
   }
   *{box-sizing:border-box;}
-  html{ -webkit-text-size-adjust:100%; }
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body{ margin:0; background:var(--paper); color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic",Meiryo,system-ui,sans-serif;
-    line-height:1.92;
-    font-size:16px;
-    letter-spacing:.01em;
-    text-rendering:optimizeLegibility;
-    -webkit-font-smoothing:antialiased;
-  }
+    line-height:1.92; font-size:16px; letter-spacing:.01em;
+    text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; }
   .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif; }
-
   .wrap{ max-width:760px; margin:0 auto; padding:0 20px 96px; }
 
-  /* ---- ヘッダー ---- */
-  header.cover{
-    padding:56px 0 30px;
-    border-bottom:2px solid var(--ink);
-    margin-bottom:8px;
-  }
-  .eyebrow{
-    font-size:12.5px; letter-spacing:.34em; color:var(--teal);
-    font-weight:700; margin:0 0 18px;
-  }
-  header.cover h1{
-    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
-    font-weight:600; font-size:30px; line-height:1.5; margin:0 0 14px;
-    letter-spacing:.02em;
-  }
+  header.cover{ padding:56px 0 30px; border-bottom:2px solid var(--ink); margin-bottom:8px; }
+  .eyebrow{ font-size:12.5px; letter-spacing:.34em; color:var(--teal); font-weight:700; margin:0 0 18px; }
+  header.cover h1{ font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+    font-weight:600; font-size:30px; line-height:1.5; margin:0 0 14px; letter-spacing:.02em; }
   header.cover h1 .sub{ display:block; font-size:17px; color:var(--muted); margin-top:8px; letter-spacing:.06em;}
   .cover-meta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:22px; }
-  .chip{
-    font-size:12px; color:var(--muted); border:1px solid var(--rule);
-    background:var(--paper-2); border-radius:999px; padding:4px 12px; letter-spacing:.04em;
-  }
+  .chip{ font-size:12px; color:var(--muted); border:1px solid var(--rule); background:var(--paper-2);
+    border-radius:999px; padding:4px 12px; letter-spacing:.04em; }
   .chip strong{ color:var(--teal); font-weight:700; }
 
-  /* ---- 凡例 ---- */
-  .legend{
-    margin:26px 0 40px; padding:16px 18px; background:var(--paper-2);
-    border:1px solid var(--rule); border-radius:14px; font-size:13.5px; color:var(--muted);
-  }
-  .legend b{ color:var(--ink); }
-  .legend .k-q{ color:var(--red); font-weight:700; }
-  .legend .k-a{ color:var(--teal); font-weight:700; }
+  .legend{ margin:26px 0 14px; padding:16px 18px; background:var(--paper-2); border:1px solid var(--rule);
+    border-radius:14px; font-size:13.5px; color:var(--muted); }
+  .legend b{ color:var(--ink); } .legend .k-q{ color:var(--red); font-weight:700; } .legend .k-a{ color:var(--teal); font-weight:700; }
 
-  /* ---- 各問 ---- */
+  /* 目次 */
+  .toc{ margin:14px 0 8px; padding:20px 22px; background:var(--paper-2); border:1px solid var(--rule); border-radius:14px; }
+  .toc h2{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:13px; letter-spacing:.24em; color:var(--teal); margin:0 0 14px; font-weight:700; }
+  .toc ol{ margin:0; padding:0; list-style:none; counter-reset:ch; }
+  .toc li{ counter-increment:ch; margin:0; }
+  .toc a{ display:flex; align-items:baseline; gap:12px; padding:9px 6px; color:var(--ink);
+    text-decoration:none; border-top:1px solid var(--rule); }
+  .toc li:first-child a{ border-top:none; }
+  .toc a:hover{ color:var(--teal); }
+  .toc a .cn{ flex:none; width:26px; height:26px; border-radius:7px; background:var(--teal); color:#fff;
+    font-size:12px; font-weight:700; display:grid; place-items:center; }
+  .toc a .ct{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:16px; }
+  .toc a .cc{ margin-left:auto; flex:none; font-size:12px; color:var(--muted); }
+
+  /* 章見出し */
+  .chapter{ margin:64px 0 6px; padding-top:20px; border-top:3px solid var(--ink); scroll-margin-top:14px; }
+  .chapter .ch-no{ font-size:12px; letter-spacing:.28em; color:var(--red); font-weight:700; }
+  .chapter h2{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; font-weight:600;
+    font-size:24px; margin:6px 0 0; letter-spacing:.03em; }
+  .chapter:first-of-type{ margin-top:40px; }
+
   .q{ margin:0 0 14px; padding:34px 0 8px; border-top:1px solid var(--rule); }
-  .q:first-of-type{ border-top:none; }
-  .q-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:18px; }
-  .q-no{
-    flex:none;
-    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
-    font-size:13px; font-weight:700; letter-spacing:.12em; color:#fff;
-    background:var(--red); border-radius:7px; padding:6px 11px 5px; line-height:1;
-    box-shadow:0 1px 0 rgba(0,0,0,.08);
-  }
-  .q-years{
-    flex:none; font-size:11.5px; color:var(--red); border:1px solid #E2BCB8;
-    background:var(--red-soft); border-radius:6px; padding:3px 9px; letter-spacing:.05em;
-    align-self:center;
-  }
+  .q-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:18px; flex-wrap:wrap; }
+  .q-no{ flex:none; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:13px; font-weight:700;
+    letter-spacing:.12em; color:#fff; background:var(--red); border-radius:7px; padding:6px 11px 5px; line-height:1; box-shadow:0 1px 0 rgba(0,0,0,.08); }
+  .q-years{ flex:none; font-size:11.5px; color:var(--red); border:1px solid #E2BCB8; background:var(--red-soft);
+    border-radius:6px; padding:3px 9px; letter-spacing:.05em; align-self:center; }
   .q-years::before{ content:"出題  "; color:#C98C87; }
+  .q-new{ flex:none; font-size:11.5px; color:var(--teal); border:1px solid var(--teal-line); background:var(--teal-soft);
+    border-radius:6px; padding:3px 9px; letter-spacing:.08em; align-self:center; }
 
-  .stem{
-    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
-    font-size:18px; line-height:1.85; margin:0; letter-spacing:.015em;
-  }
+  .stem{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; font-size:18px; line-height:1.85; margin:0; letter-spacing:.015em; }
+  .scenario{ margin:10px 0 0; padding:13px 16px; background:#fff; border:1px dashed var(--teal-line); border-radius:10px;
+    font-size:15px; line-height:1.8; color:#2a3a3b; }
   ol.items{ margin:14px 0 0; padding:0; list-style:none; }
-  ol.items li{
-    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
-    font-size:17px; padding:3px 0 3px 4px; color:#2a3a3b;
-  }
+  ol.items li{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:17px; padding:3px 0 3px 4px; color:#2a3a3b; }
   ol.items li .maru{ color:var(--teal); font-weight:600; margin-right:.45em; }
 
-  /* ---- 解答 ---- */
   .answer{ margin:22px 0 0; }
-  .tag{
-    display:inline-block; font-size:12px; font-weight:700; letter-spacing:.18em;
-    padding:3px 12px; border-radius:6px 6px 0 0; line-height:1.4;
-  }
+  .tag{ display:inline-block; font-size:12px; font-weight:700; letter-spacing:.18em; padding:3px 12px; border-radius:6px 6px 0 0; line-height:1.4; }
   .tag.a{ color:#fff; background:var(--teal); }
-  .answer .body{
-    border:1px solid var(--teal-line); border-top:3px solid var(--teal);
-    border-radius:0 12px 12px 12px; background:var(--paper-2);
-    padding:18px 20px; box-shadow:var(--shadow);
-  }
+  .answer .body{ border:1px solid var(--teal-line); border-top:3px solid var(--teal); border-radius:0 12px 12px 12px;
+    background:var(--paper-2); padding:18px 20px; box-shadow:var(--shadow); }
 
-  .pair{ margin:4px 0 16px; }
-  .pair:last-child{ margin-bottom:2px; }
+  .pair{ margin:4px 0 16px; } .pair:last-child{ margin-bottom:2px; }
   .term{ font-weight:700; color:var(--ink); }
   .en{ color:var(--teal); font-weight:600; font-size:.9em; letter-spacing:.02em; }
   .pair .def{ margin-top:2px; }
-  .vs{
-    display:inline-block; font-size:11px; color:var(--red); font-weight:700;
-    border:1px solid #E2BCB8; border-radius:5px; padding:1px 7px; margin:0 2px;
-    vertical-align:.08em; letter-spacing:.06em;
-  }
-
-  ul.clean{ margin:6px 0 0; padding-left:1.15em; }
-  ul.clean li{ margin:3px 0; }
-  ul.clean li::marker{ color:var(--teal); }
+  .vs{ display:inline-block; font-size:11px; color:var(--red); font-weight:700; border:1px solid #E2BCB8;
+    border-radius:5px; padding:1px 7px; margin:0 2px; vertical-align:.08em; letter-spacing:.06em; }
+  ul.clean{ margin:6px 0 0; padding-left:1.15em; } ul.clean li{ margin:3px 0; } ul.clean li::marker{ color:var(--teal); }
   .key{ font-weight:700; border-bottom:2px solid #E7C7C3; padding-bottom:.5px; }
   .lbl{ font-weight:700; color:var(--teal); }
+  .qsub{ font-weight:700; color:var(--red); margin-right:.3em; }
 
   table.t{ width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:14.5px; }
   table.t th,table.t td{ border:1px solid var(--rule); padding:8px 10px; text-align:left; vertical-align:top; }
   table.t th{ background:var(--teal-soft); color:var(--ink); font-weight:700; width:34%; }
   table.t caption{ text-align:left; font-size:13px; color:var(--muted); margin-bottom:6px; }
 
-  /* ---- 解説 ---- */
-  .note{ margin:16px 0 4px; padding:16px 18px 14px;
-    background:var(--teal-soft); border-left:4px solid var(--teal); border-radius:0 10px 10px 0; }
+  .note{ margin:16px 0 4px; padding:16px 18px 14px; background:var(--teal-soft); border-left:4px solid var(--teal); border-radius:0 10px 10px 0; }
   .note .nt{ font-size:11.5px; font-weight:700; letter-spacing:.2em; color:var(--teal); margin:0 0 8px; }
-  .note p{ margin:0 0 9px; font-size:14.5px; }
-  .note p:last-child{ margin-bottom:0; }
-
-  /* 添削（赤ペン） */
-  .redpen{ margin:14px 0 2px; padding:14px 16px; background:var(--red-soft);
-    border-left:4px solid var(--red); border-radius:0 10px 10px 0; }
+  .note p{ margin:0 0 9px; font-size:14.5px; } .note p:last-child{ margin-bottom:0; }
+  .redpen{ margin:14px 0 2px; padding:14px 16px; background:var(--red-soft); border-left:4px solid var(--red); border-radius:0 10px 10px 0; }
   .redpen .nt{ font-size:11.5px; font-weight:700; letter-spacing:.2em; color:var(--red); margin:0 0 7px; }
-  .redpen p{ margin:0 0 7px; font-size:14px; }
-  .redpen p:last-child{ margin-bottom:0; }
+  .redpen p{ margin:0 0 7px; font-size:14px; } .redpen p:last-child{ margin-bottom:0; }
   .strike{ text-decoration:line-through; text-decoration-color:var(--red); color:var(--muted); }
   .fix{ color:var(--red); font-weight:700; }
 
-  .group-label{
-    margin:48px 0 4px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-size:15px; letter-spacing:.18em; color:var(--teal); font-weight:700;
-    display:flex; align-items:center; gap:12px;
-  }
-  .group-label::after{ content:""; flex:1; height:1px; background:var(--teal-line); }
+  .backtop{ display:block; text-align:right; margin:10px 0 0; font-size:12px; color:var(--muted); text-decoration:none; }
+  .backtop:hover{ color:var(--teal); }
 
-  footer{ margin-top:60px; padding-top:22px; border-top:1px solid var(--rule);
-    font-size:12.5px; color:var(--muted); line-height:1.8; }
+  footer{ margin-top:60px; padding-top:22px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--muted); line-height:1.8; }
 
   @media (max-width:520px){
-    body{ font-size:15.5px; }
-    .wrap{ padding:0 16px 72px; }
-    header.cover h1{ font-size:25px; }
-    .stem{ font-size:16.5px; }
-    ol.items li{ font-size:15.5px; }
-    .q-head{ flex-wrap:wrap; gap:9px; }
-    table.t th{ width:38%; }
+    body{ font-size:15.5px; } .wrap{ padding:0 16px 72px; }
+    header.cover h1{ font-size:25px; } .chapter h2{ font-size:20px; }
+    .stem{ font-size:16.5px; } ol.items li{ font-size:15.5px; }
+    table.t th{ width:40%; }
   }
   @media print{
-    body{ background:#fff; font-size:11.5pt; }
-    .legend{ display:none; }
-    .answer .body,.note,.redpen{ box-shadow:none; }
-    .q{ break-inside:avoid; }
+    body{ background:#fff; font-size:11.5pt; } .legend,.toc,.backtop{ display:none; }
+    .answer .body,.note,.redpen{ box-shadow:none; } .q,.chapter{ break-inside:avoid; }
     .wrap{ padding:0; max-width:none; }
   }
 </style>
@@ -179,300 +124,914 @@
 <body>
 <div class="wrap">
 
-  <header class="cover">
+  <header class="cover" id="top">
     <p class="eyebrow">病理学 ｜ 過去問 解答・解説集</p>
-    <h1 class="mincho">創傷治癒／物質代謝障害
-      <span class="sub">細胞・組織傷害と適応 ― 全6問</span>
+    <h1 class="mincho">病理 問題集 解答・解説集
+      <span class="sub">全7章・全45問 ― 総論まとめ</span>
     </h1>
     <div class="cover-meta">
-      <span class="chip"><strong>収録</strong>　問1–問6</span>
-      <span class="chip"><strong>出題年</strong>　2017–2022</span>
-      <span class="chip"><strong>範囲</strong>　壊死／変性／萎縮／化生／代謝</span>
+      <span class="chip"><strong>章</strong>　創傷治癒／炎症／免疫／循環／複合／感染症／腫瘍</span>
+      <span class="chip"><strong>出題年</strong>　2016–2023</span>
     </div>
   </header>
 
   <div class="legend">
-    <b>読み方</b>：各問は <span class="k-q">問題</span>（教科書の出題文）→ <span class="k-a">解答</span>（要点を整理したモデル解答）→ <b>解説</b>（背景・鑑別・臨床的意味）の順。赤い枠は元の手書き解答に対する <b style="color:var(--red)">添削</b> です。
+    <b>読み方</b>：各問は <span class="k-q">問題</span> → <span class="k-a">解答</span>（モデル解答）→ <b>解説</b>（背景・鑑別・臨床的意味）の順。赤い枠は元の手書き解答への <b style="color:var(--red)">添削</b>。<span class="q-new" style="display:inline-block;vertical-align:middle;">新出</span> は過去問表記のない新作問題です。
   </div>
 
-  <!-- ============== 問1 ============== -->
+  <nav class="toc">
+    <h2>目 次</h2>
+    <ol>
+      <li><a href="#ch1"><span class="cn">1</span><span class="ct">創傷治癒／物質代謝障害</span><span class="cc">問1–6</span></a></li>
+      <li><a href="#ch2"><span class="cn">2</span><span class="ct">炎症（免疫・炎症）</span><span class="cc">問1–5</span></a></li>
+      <li><a href="#ch3"><span class="cn">3</span><span class="ct">免疫異常（免疫・炎症）</span><span class="cc">問1–2</span></a></li>
+      <li><a href="#ch4"><span class="cn">4</span><span class="ct">循環障害</span><span class="cc">問1–8</span></a></li>
+      <li><a href="#ch5"><span class="cn">5</span><span class="ct">複合問題</span><span class="cc">問1</span></a></li>
+      <li><a href="#ch6"><span class="cn">6</span><span class="ct">感染症</span><span class="cc">問1–11</span></a></li>
+      <li><a href="#ch7"><span class="cn">7</span><span class="ct">腫瘍総論</span><span class="cc">問1–12</span></a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 第1章 ================= -->
+  <div class="chapter" id="ch1"><div class="ch-no">CHAPTER 1</div><h2 class="mincho">創傷治癒／物質代謝障害</h2></div>
+
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 1</span>
-      <span class="q-years">2019・2022</span>
-    </div>
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2019・2022</span></div>
     <p class="stem mincho">以下の用語に関して、両者の違いが明確になるように説明せよ。</p>
     <ol class="items">
-      <li><span class="maru">①</span>壊死とアポトーシス</li>
-      <li><span class="maru">②</span>肉芽組織と肉芽腫</li>
-      <li><span class="maru">③</span>肥大と過形成</li>
-      <li><span class="maru">④</span>過形成と腫瘍</li>
+      <li><span class="maru">①</span>壊死とアポトーシス</li><li><span class="maru">②</span>肉芽組織と肉芽腫</li>
+      <li><span class="maru">③</span>肥大と過形成</li><li><span class="maru">④</span>過形成と腫瘍</li>
     </ol>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <div><span class="en">①</span> <span class="term">壊死（ネクローシス, necrosis）</span> <span class="vs">vs</span> <span class="term">アポトーシス（apoptosis）</span></div>
-          <table class="t">
-            <tr><th></th><th>壊死</th></tr>
-            <tr><th>性質</th><td>外部からの強い傷害により<span class="key">受動的</span>に起こる細胞死</td></tr>
-            <tr><th>機序</th><td>ATP枯渇 → 細胞膨化 → 細胞膜破綻 → 内容物が漏出</td></tr>
-            <tr><th>範囲・炎症</th><td>多くの細胞が<span class="key">集団</span>で死に、内容物漏出により周囲に<span class="key">炎症を伴う</span></td></tr>
-          </table>
-          <table class="t" style="margin-top:10px;">
-            <tr><th></th><th>アポトーシス</th></tr>
-            <tr><th>性質</th><td>遺伝子に制御された<span class="key">能動的・プログラムされた死</span>（“細胞の自殺”）</td></tr>
-            <tr><th>機序</th><td>ATPを<span class="key">消費</span>し、細胞は縮小、核クロマチンが凝集・断片化 → アポトーシス小体に分裂</td></tr>
-            <tr><th>範囲・炎症</th><td><span class="key">個々の細胞単位</span>で起こり、マクロファージに貪食され<span class="key">炎症を起こさない</span></td></tr>
-          </table>
-        </div>
-
-        <div class="pair">
-          <div><span class="en">②</span> <span class="term">肉芽組織</span> <span class="en">granulation tissue</span> <span class="vs">vs</span> <span class="term">肉芽腫</span> <span class="en">granuloma</span></div>
-          <div class="def"><span class="lbl">肉芽組織</span>：創傷治癒・組織修復の過程で<span class="key">一時的に</span>作られる幼若な新生組織。毛細血管新生・線維芽細胞増生・炎症細胞浸潤からなり、やがて膠原線維に置き換わって瘢痕となる（＝修復のための組織）。</div>
-          <div class="def" style="margin-top:6px;"><span class="lbl">肉芽腫</span>：慢性炎症（特にⅣ型遅延型過敏反応や難分解性の持続刺激）で生じる、<span class="key">類上皮細胞</span>と<span class="key">多核巨細胞</span>の限局性集簇からなる結節性病巣。結核・サルコイドーシス・異物反応など（＝特殊な慢性炎症の形態）。</div>
-          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 名称は似るが概念は別物。<b>肉芽組織＝修復組織</b>、<b>肉芽腫＝慢性炎症病巣</b>。</div>
-        </div>
-
-        <div class="pair">
-          <div><span class="en">③</span> <span class="term">肥大</span> <span class="en">hypertrophy</span> <span class="vs">vs</span> <span class="term">過形成</span> <span class="en">hyperplasia</span></div>
-          <div class="def"><span class="lbl">肥大</span>：個々の<span class="key">細胞の容積（サイズ）が増大</span>することによる臓器の容積増加。細胞数は変わらない。例：運動による骨格筋、高血圧による心肥大。</div>
-          <div class="def" style="margin-top:6px;"><span class="lbl">過形成</span>：<span class="key">細胞の数が増加</span>することによる臓器の容積増加。例：前立腺肥大症（実体は過形成）、バセドウ病の甲状腺、ホルモン刺激による子宮内膜。</div>
-          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 区別の軸は <b>細胞の大きさ↑（肥大）か、数↑（過形成）か</b>。両者とも刺激に応じた可逆的変化。</div>
-        </div>
-
-        <div class="pair">
-          <div><span class="en">④</span> <span class="term">過形成</span> <span class="vs">vs</span> <span class="term">腫瘍（新生物, neoplasm）</span></div>
-          <div class="def"><span class="lbl">過形成</span>：刺激に<span class="key">依存した</span>、制御された・<span class="key">可逆的</span>な細胞数増加。刺激が除かれれば元に戻る。多クローン性。</div>
-          <div class="def" style="margin-top:6px;"><span class="lbl">腫瘍</span>：細胞が<span class="key">自律的・不可逆的</span>に、無目的かつ過剰に増殖する。原因刺激から独立し、刺激を除いても増殖が続く。<span class="key">単クローン性</span>。</div>
-          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 腫瘍の本質は <b>自律性・不可逆性・単クローン性</b>。過形成は“反応”、腫瘍は“自走”。</div>
-        </div>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">
+        <div><span class="en">①</span> <span class="term">壊死（necrosis）</span> <span class="vs">vs</span> <span class="term">アポトーシス（apoptosis）</span></div>
+        <table class="t"><tr><th></th><th>壊死</th></tr>
+          <tr><th>性質</th><td>外部からの強い傷害による<span class="key">受動的</span>な細胞死</td></tr>
+          <tr><th>機序</th><td>ATP枯渇 → 細胞膨化 → 細胞膜破綻 → 内容物が漏出</td></tr>
+          <tr><th>範囲・炎症</th><td>多くの細胞が<span class="key">集団</span>で死に、漏出物により周囲に<span class="key">炎症を伴う</span></td></tr></table>
+        <table class="t" style="margin-top:10px;"><tr><th></th><th>アポトーシス</th></tr>
+          <tr><th>性質</th><td>遺伝子に制御された<span class="key">能動的・プログラムされた死</span>（“細胞の自殺”）</td></tr>
+          <tr><th>機序</th><td>ATPを<span class="key">消費</span>し、細胞は縮小、核クロマチン凝集・断片化 → アポトーシス小体</td></tr>
+          <tr><th>範囲・炎症</th><td><span class="key">個々の細胞単位</span>で起こり、貪食され<span class="key">炎症を起こさない</span></td></tr></table>
       </div>
+      <div class="pair">
+        <div><span class="en">②</span> <span class="term">肉芽組織</span> <span class="en">granulation tissue</span> <span class="vs">vs</span> <span class="term">肉芽腫</span> <span class="en">granuloma</span></div>
+        <div class="def"><span class="lbl">肉芽組織</span>：創傷治癒・修復の過程で<span class="key">一時的に</span>作られる幼若な新生組織。毛細血管新生・線維芽細胞増生・炎症細胞浸潤からなり、やがて瘢痕になる（修復組織）。</div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">肉芽腫</span>：慢性炎症（特にⅣ型遅延型過敏や難分解性刺激）で生じる、<span class="key">類上皮細胞</span>・<span class="key">多核巨細胞</span>の限局性集簇からなる結節性病巣。結核・サルコイドーシス・異物反応など（慢性炎症の形態）。</div>
+        <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 名称は似るが、<b>肉芽組織＝修復組織</b>、<b>肉芽腫＝慢性炎症病巣</b>で全く別概念。</div>
+      </div>
+      <div class="pair">
+        <div><span class="en">③</span> <span class="term">肥大</span> <span class="en">hypertrophy</span> <span class="vs">vs</span> <span class="term">過形成</span> <span class="en">hyperplasia</span></div>
+        <div class="def"><span class="lbl">肥大</span>：個々の<span class="key">細胞容積（サイズ）の増大</span>による臓器の容積増加。細胞数は不変。例：運動による骨格筋、高血圧による心肥大。</div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">過形成</span>：<span class="key">細胞数の増加</span>による臓器の容積増加。例：前立腺肥大症（実体は過形成）、バセドウ病の甲状腺、ホルモン刺激による子宮内膜。</div>
+        <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 区別の軸は <b>細胞の大きさ↑（肥大）か、数↑（過形成）か</b>。両者とも可逆的な適応。</div>
+      </div>
+      <div class="pair">
+        <div><span class="en">④</span> <span class="term">過形成</span> <span class="vs">vs</span> <span class="term">腫瘍（neoplasm）</span></div>
+        <div class="def"><span class="lbl">過形成</span>：刺激に<span class="key">依存した</span>・<span class="key">可逆的</span>な細胞数増加。刺激が除かれれば元に戻る。多クローン性。</div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">腫瘍</span>：細胞が<span class="key">自律的・不可逆的</span>に、無目的に過剰増殖。刺激から独立し、除いても増殖が続く。<span class="key">単クローン性</span>。</div>
+        <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 腫瘍の本質は <b>自律性・不可逆性・単クローン性</b>。過形成は“反応”、腫瘍は“自走”。</div>
+      </div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>4組とも「<b>受動 vs 能動</b>」「<b>反応性 vs 自律性</b>」の軸で対比すると整理しやすい。①は死の様式、③は適応の様式、④は増殖の制御の有無を問う。</p>
+      <p>①では、軽度ならアポトーシス・高度ならネクローシスへ傾く<b>連続性</b>と、アポトーシスがATPを要する積極的過程である点が頻出。③④では<b>「前立腺肥大症」が実は過形成</b>というひっかけ、心筋・神経が<b>肥大しかできない</b>点（→問3）を関連づけたい。</p>
     </div>
-
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>4組とも「<b>受動 vs 能動</b>」「<b>反応性 vs 自律性</b>」という軸で対比すると整理しやすい。①は<b>死の様式</b>、③は<b>適応の様式</b>、④は<b>増殖の制御の有無</b>を問うている。</p>
-      <p>①で押さえるべきは、両者がしばしば<b>連続的</b>であること。同じ傷害でも軽度ならアポトーシス、高度ならネクローシスに傾く。アポトーシスがATPを要する“積極的”な過程である点（ATP枯渇で起こる壊死との決定的な違い）は頻出。</p>
-      <p>③④は混同しやすいが、<b>「前立腺肥大症」は名前に反して過形成</b>、という臨床用語のズレが定番のひっかけ。心筋・神経細胞のような分裂能を持たない細胞（→問3）は<b>肥大しかできず過形成は起こらない</b>点も関連づけて覚えるとよい。</p>
-    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
-  <!-- ============== 問2 ============== -->
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 2</span>
-      <span class="q-years">2018</span>
-    </div>
+    <div class="q-head"><span class="q-no">問 2</span><span class="q-years">2018</span></div>
     <p class="stem mincho">細胞・組織の「変性」とはどのような状態か説明せよ。また変性の種類を少なくとも4つ挙げ、各々につき簡潔に説明し、例となる病態を示せ。</p>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <span class="lbl">変性（degeneration）とは</span>：物質代謝の障害により、正常では存在しない物質や過剰な物質が細胞内外に<span class="key">蓄積</span>し、形態的・機能的変化を生じた状態。多くは<span class="key">可逆的</span>で、まだ壊死には至っていない段階を指す。</div>
-
-        <table class="t">
-          <caption>主な変性（代表的な8種＋関連2種。設問は「4つ以上」なので太字の型を優先して書けば十分）</caption>
-          <tr><th>種類</th><th>内容と例</th></tr>
-          <tr><th>細胞腫脹・空胞変性<br><span class="en">cell swelling / vacuolar deg.</span></th>
-              <td>虚血・低酸素でミトコンドリア障害 → ATP低下 → Na排出障害で<b>水分が貯留</b>し細胞膨化・空胞形成。最も軽度・初期の可逆的変性。<br>例：虚血、急性尿細管障害の初期</td></tr>
-          <tr><th>硝子変性（硝子化）<br><span class="en">hyaline deg.</span></th>
-              <td>HE染色で<b>赤く均質無構造</b>に染まる硝子様物質（多種の蛋白の総称）が蓄積。<br>例：硝子細動脈硬化症、瘢痕・ケロイド</td></tr>
-          <tr><th>類線維素変性<br><span class="en">fibrinoid deg.</span></th>
-              <td>フィブリンを含む血漿成分が血管壁・膠原線維に沈着し、好酸性を呈す。<b>類線維素壊死</b>とも。<br>例：悪性高血圧の細動脈、膠原病（血管炎・SLE）</td></tr>
-          <tr><th>アミロイド変性<br><span class="en">amyloid deg.</span></th>
-              <td>βシート構造の線維状蛋白「アミロイド」が沈着。<b>Congo Red</b>染色＋偏光で<b>緑色複屈折</b>。<br>例：アミロイドーシス、アルツハイマー病、多発性骨髄腫</td></tr>
-          <tr><th>脂肪変性<br><span class="en">fatty change</span></th>
-              <td>細胞質に<b>中性脂肪</b>が異常蓄積。Sudan染色で赤橙色。<br>例：脂肪肝（アルコール・肥満・栄養障害）、心筋・腎</td></tr>
-          <tr><th>糖原（グリコーゲン）変性<br><span class="en">glycogen deg.</span></th>
-              <td>グリコーゲンが過剰蓄積。PAS染色陽性。<br>例：糖尿病（腎尿細管・肝）、糖原病</td></tr>
-          <tr><th>粘液変性<br><span class="en">mucous deg.</span></th>
-              <td>過剰な粘液が細胞内外に貯留。<br>例：鼻・気管支カタル、粘液癌の間質貯留</td></tr>
-          <tr><th>硝子滴変性<br><span class="en">hyaline droplet deg.</span></th>
-              <td>細胞質内にHEで赤い硝子様の滴。<br>例：高度蛋白尿時の近位尿細管（再吸収蛋白の蓄積）</td></tr>
-        </table>
-        <div class="def" style="margin-top:8px;color:var(--muted);font-size:13.5px;">（このほか <b>色素変性</b> pigmentation、<b>石灰変性</b> calcification、<b>線維化・器質化</b> も広義の物質代謝障害として扱われる。）</div>
-      </div>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">変性（degeneration）とは</span>：物質代謝の障害により、正常では存在しない物質や過剰な物質が細胞内外に<span class="key">蓄積</span>し、形態的・機能的変化を生じた状態。多くは<span class="key">可逆的</span>で、まだ壊死に至っていない段階を指す。</div>
+      <table class="t"><caption>主な変性（代表8種＋関連。設問は「4つ以上」なので太字の型を優先して書けば十分）</caption>
+        <tr><th>種類</th><th>内容と例</th></tr>
+        <tr><th>細胞腫脹・空胞変性</th><td>虚血・低酸素 → ATP低下 → Na排出障害で<b>水分が貯留</b>し膨化・空胞化。最も軽度・初期。例：虚血、急性尿細管障害の初期</td></tr>
+        <tr><th>硝子変性（硝子化）</th><td>HEで<b>赤く均質無構造</b>に染まる硝子様物質が蓄積。例：硝子細動脈硬化症、瘢痕・ケロイド</td></tr>
+        <tr><th>類線維素変性</th><td>フィブリンを含む血漿成分が血管壁・膠原線維に沈着。<b>類線維素壊死</b>とも。例：悪性高血圧、膠原病（血管炎・SLE）</td></tr>
+        <tr><th>アミロイド変性</th><td>βシート構造の線維状蛋白が沈着。<b>Congo Red</b>＋偏光で<b>緑色複屈折</b>。例：アミロイドーシス、Alzheimer、多発性骨髄腫</td></tr>
+        <tr><th>脂肪変性</th><td>細胞質に<b>中性脂肪</b>が異常蓄積。Sudan染色。例：脂肪肝（アルコール・肥満）、心筋・腎</td></tr>
+        <tr><th>糖原（グリコーゲン）変性</th><td>グリコーゲン過剰蓄積。PAS陽性。例：糖尿病、糖原病</td></tr>
+        <tr><th>粘液変性</th><td>過剰な粘液が貯留。例：鼻・気管支カタル、粘液癌の間質</td></tr>
+        <tr><th>硝子滴変性</th><td>細胞質内にHEで赤い硝子様の滴。例：高度蛋白尿時の近位尿細管</td></tr></table>
+      <div class="def" style="margin-top:8px;color:var(--muted);font-size:13.5px;">（このほか <b>色素変性・石灰変性・線維化／器質化</b> も広義の物質代謝障害として扱われる。）</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>定義のキモは「<b>代謝障害による異常物質の蓄積で、まだ可逆的な段階</b>」。壊死（不可逆・細胞死）の手前という位置づけを言えると差がつく。</p>
+      <p>4つ選ぶなら<b>染色法と例がセットで言える型</b>を。映えるのは硝子変性／アミロイド変性（Congo Red＋緑色複屈折）／脂肪変性（脂肪肝・Sudan）／類線維素変性（悪性高血圧・膠原病）。硝子<b>滴</b>変性（尿細管）と硝子変性（細動脈・瘢痕）の混同に注意。</p>
     </div>
-
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>変性の定義は「<b>代謝障害による異常物質の蓄積で、まだ可逆的な段階</b>」がキモ。壊死（不可逆・細胞死）の手前にある“傷害だが生きている”状態という位置づけを言えると差がつく。</p>
-      <p>4つ選ぶなら、<b>染色法と例がセットで言えるもの</b>を選ぶと書きやすい。試験で映えるのは ①硝子変性、②アミロイド変性（Congo Red＋緑色複屈折）、③脂肪変性（脂肪肝・Sudan）、④類線維素変性（悪性高血圧・膠原病）。染色像の特徴は実習スケッチでも頻出。</p>
-      <p>注意点として、「硝子<b>滴</b>変性（尿細管の滴）」と「硝子変性（細動脈や瘢痕の均質物質）」は名前が紛らわしいので混同しないこと。</p>
-    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
-  <!-- ============== 問3 ============== -->
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 3</span>
-      <span class="q-years">2017再・2020再</span>
+    <div class="q-head"><span class="q-no">問 3</span><span class="q-years">2017再・2020再</span></div>
+    <p class="stem mincho">心臓では、心筋梗塞によって心筋が変性・壊死に陥ると、最終的には線維組織による置換（青色部分）が起こり心機能は低下していく。なぜ心筋では線維組織による置換が起こるのか、心筋細胞の有する特性と関係づけて説明せよ。また、線維化に至るまでの組織学的変化について述べよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">なぜ線維組織に置換されるのか（心筋細胞の特性）</span>
+        <p style="margin:6px 0 0;">心筋細胞は高度に分化した<span class="key">永久細胞（permanent cells）</span>で、<span class="key">分裂・再生能を持たない</span>（骨格筋・神経も同様）。よって壊死した心筋は同種細胞で補充されず、欠損部は<span class="key">肉芽組織</span>を経て<span class="key">線維組織（瘢痕）</span>に置換される＝<span class="key">不完全治癒（器質化, organization）</span>。収縮力のない瘢痕に置換されるため心機能が低下する。</p></div>
+      <div class="pair"><span class="lbl">線維化に至るまでの組織学的変化</span>
+        <ul class="clean">
+          <li>数時間〜：心筋の<b>凝固壊死</b>、<b>好中球</b>浸潤</li>
+          <li>1〜3日：好中球浸潤がピーク、壊死心筋の融解</li>
+          <li>3〜7日：<b>マクロファージ</b>による壊死組織の貪食・除去</li>
+          <li>1〜2週：<b>肉芽組織</b>形成（毛細血管新生＋線維芽細胞増生＋膠原線維産生）</li>
+          <li>数週〜数か月：膠原線維が増加・収縮し<b>線維化（瘢痕化）が完成</b></li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>核心は<b>細胞の再生能による分類</b>。不安定細胞（表皮・腸上皮・造血）／安定細胞（肝・腎尿細管）／<b>永久細胞（心筋・骨格筋・神経）</b>。心筋は永久細胞なので完全治癒できず瘢痕治癒（＝不完全治癒）になる、という論理を明示すると満点。</p>
+      <p>図譜の <b>Azan染色</b> は膠原線維を青に染め、<b>赤＝心筋・青＝線維組織</b>。臨床的には瘢痕部の菲薄化が<b>心室瘤</b>や伝導障害・心不全につながる帰結まで触れたい。</p>
     </div>
-    <p class="stem mincho">心臓では、心筋梗塞によって心筋が変性・壊死に陥ると、最終的には線維組織による置換（図譜：基本病変-1、青色部分）が起こり心機能は低下していく。なぜ心筋では、障害部位においてこのような線維組織による置換が起こるのか、心筋細胞の有する特性と関係づけて説明せよ。また、線維化に至るまでの組織学的変化について述べよ。</p>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <span class="lbl">なぜ線維組織に置換されるのか（心筋細胞の特性）</span>
-          <p style="margin:6px 0 0;">心筋細胞は高度に分化した<span class="key">永久細胞（permanent cells）</span>であり、<span class="key">分裂・再生能を持たない</span>（骨格筋・神経細胞も同様）。そのため壊死に陥った心筋は、同種の心筋細胞によって補充（再生）されることがない。欠損部は<span class="key">肉芽組織</span>を経て<span class="key">線維組織（瘢痕）</span>に置き換えられる ＝ <span class="key">不完全治癒（器質化, organization）</span>。収縮力を持たない瘢痕に置換されるため心機能は低下する。</p>
-        </div>
-        <div class="pair">
-          <span class="lbl">線維化に至るまでの組織学的変化（経時的）</span>
-          <ul class="clean">
-            <li>数時間〜：心筋の<b>凝固壊死</b>が始まり、<b>好中球</b>が浸潤</li>
-            <li>1〜3日：好中球浸潤がピーク、壊死心筋の融解</li>
-            <li>3〜7日：<b>マクロファージ</b>が壊死組織を貪食・除去</li>
-            <li>1〜2週：<b>肉芽組織</b>形成（毛細血管新生＋線維芽細胞増生＋膠原線維産生の開始）</li>
-            <li>数週〜数か月：膠原線維が増加・収縮し、<b>線維化（瘢痕化）が完成</b></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>この問題の核心は「<b>細胞の再生能による組織の分類</b>」。細胞は再生能で <b>不安定細胞</b>（表皮・腸上皮・造血細胞：盛んに分裂）／<b>安定細胞</b>（肝・腎尿細管：通常は静止だが刺激で分裂）／<b>永久細胞</b>（心筋・骨格筋・神経：分裂しない）に分けられる。心筋は永久細胞なので“同じ組織で治る（完全治癒）”ができず、線維化（瘢痕治癒＝不完全治癒）になる、という論理を明示するのが満点答案。</p>
-      <p>図譜の <b>Azan染色</b> は膠原線維を<b>青</b>に染める染色で、<b>赤＝心筋・青＝線維組織</b>。だから「青色部分が線維組織による置換」という設問の図と直結する。HE像との染め分けの意味まで触れられると良い。</p>
-      <p>臨床的には、この瘢痕部は収縮せず菲薄化して<b>心室瘤</b>の原因になったり、伝導障害・心不全につながる、という帰結まで述べると説得力が増す。</p>
-    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
-  <!-- ============== 問4 ============== -->
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 4</span>
-    </div>
+    <div class="q-head"><span class="q-no">問 4</span></div>
     <p class="stem mincho">萎縮（狭義）の定義を述べた上で、萎縮に伴う細胞の変化および原因分類に関して説明せよ。</p>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <span class="lbl">定義</span>
-          <p style="margin:6px 0 0;">いったんは正常に発達・成熟した臓器・組織の体積が、病気・老化などにより<span class="key">二次的に減少</span>した状態を萎縮（atrophy）という。<br><span style="color:var(--muted);font-size:14px;">⇔ 発生・成長の段階で正常の大きさまで発育しなかった状態は <b>低形成（hypoplasia）</b>。両者は区別する。</span></p>
-        </div>
-
-        <div class="pair">
-          <span class="lbl">萎縮に伴う細胞の変化</span>
-          <ul class="clean">
-            <li><b>単純萎縮</b>：臓器を構成する個々の細胞の<b>体積が減少</b>した結果、臓器体積が減る（細胞数は不変）</li>
-            <li><b>数的萎縮</b>：構成細胞の<b>数が減少</b>（主にアポトーシスによる）した結果、臓器体積が減る</li>
-            <li><b>両者の混合</b>：実際には単純萎縮と数的萎縮が同時に起こることが多い</li>
-          </ul>
-          <p style="margin:8px 0 0;color:var(--muted);font-size:14px;">※ 萎縮細胞内にはしばしば<b>リポフスチン</b>が沈着し、肉眼的に褐色を呈する（<b>褐色萎縮</b>：心臓・肝臓）。</p>
-        </div>
-
-        <div class="pair">
-          <span class="lbl">原因分類</span>
-          <ul class="clean">
-            <li><b>生理的萎縮</b>：加齢（老人性萎縮）、胸腺の退縮、閉経後の子宮・卵巣</li>
-            <li><b>廃用（無為）萎縮</b>：ギプス固定・長期臥床による骨格筋萎縮</li>
-            <li><b>神経性（脱神経）萎縮</b>：運動神経損傷による支配筋の萎縮</li>
-            <li><b>内分泌性萎縮</b>：ホルモン刺激低下（下垂体機能低下による標的臓器の萎縮）</li>
-            <li><b>圧迫萎縮</b>：腫瘍・水腎症などの持続的圧迫による萎縮</li>
-            <li><b>栄養障害性（飢餓）・虚血性萎縮</b>：栄養不足や血流低下による萎縮</li>
-          </ul>
-        </div>
-      </div>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">定義</span><p style="margin:6px 0 0;">いったん正常に発達・成熟した臓器・組織の体積が、病気・老化などにより<span class="key">二次的に減少</span>した状態。<br><span style="color:var(--muted);font-size:14px;">⇔ 発生・成長の段階で正常の大きさまで発育しなかった状態は <b>低形成（hypoplasia）</b>。区別する。</span></p></div>
+      <div class="pair"><span class="lbl">萎縮に伴う細胞の変化</span>
+        <ul class="clean">
+          <li><b>単純萎縮</b>：個々の細胞の<b>体積が減少</b>（数は不変）</li>
+          <li><b>数的萎縮</b>：細胞の<b>数が減少</b>（主にアポトーシス）</li>
+          <li><b>両者の混合</b>：実際には両者が同時に起こることが多い</li></ul>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:14px;">※ 萎縮細胞には<b>リポフスチン</b>が沈着しうる（<b>褐色萎縮</b>：心臓・肝臓）。</p></div>
+      <div class="pair"><span class="lbl">原因分類</span>
+        <ul class="clean">
+          <li><b>生理的萎縮</b>：加齢（老人性）、胸腺退縮、閉経後の子宮・卵巣</li>
+          <li><b>廃用（無為）萎縮</b>：ギプス固定・長期臥床による骨格筋萎縮</li>
+          <li><b>神経性（脱神経）萎縮</b>：運動神経損傷による支配筋の萎縮</li>
+          <li><b>内分泌性萎縮</b>：ホルモン刺激低下（下垂体機能低下→標的臓器）</li>
+          <li><b>圧迫萎縮</b>：腫瘍・水腎症などの持続的圧迫</li>
+          <li><b>栄養障害性（飢餓）・虚血性萎縮</b>：栄養不足・血流低下</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>定義には「<b>いったん正常に成熟したものが後から減る</b>」という時間軸を必ず入れる。これにより「最初から小さい＝低形成」と明確に区別できる（この対比が問われている）。細胞変化は<b>個々が縮む（単純）／数が減る（数的）</b>の2軸。褐色萎縮（リポフスチン）は加点ポイント。</p>
     </div>
-
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>定義で必ず入れるべきは「<b>いったん正常に成熟したものが、後から減る</b>」という時間軸。これがあるからこそ「最初から小さい＝低形成」と明確に区別できる（この対比が問われている）。</p>
-      <p>「細胞の変化」は <b>個々が縮む（単純）か／数が減る（数的）か</b> の2軸で答えるのがフレームワーク。原因分類は語呂で「<b>生理・廃用・神経・内分泌・圧迫・栄養／虚血</b>」と列挙できるようにしておくと取りこぼさない。褐色萎縮（リポフスチン）は加点ポイント。</p>
-    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
-  <!-- ============== 問5 ============== -->
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 5</span>
-    </div>
+    <div class="q-head"><span class="q-no">問 5</span></div>
     <p class="stem mincho">以下①②について説明しなさい。</p>
-    <ol class="items">
-      <li><span class="maru">①</span>同化と異化</li>
-      <li><span class="maru">②</span>糖新生</li>
-    </ol>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <div><span class="en">①</span> <span class="term">同化と異化（合わせて新陳代謝, metabolism）</span></div>
-          <div class="def"><span class="lbl">同化（anabolism）</span>：エネルギーを<span class="key">消費</span>して、単純な物質から生体に必要な複雑な高分子（蛋白質・グリコーゲン・脂質など）を<span class="key">合成</span>する反応。</div>
-          <div class="def" style="margin-top:6px;"><span class="lbl">異化（catabolism）</span>：複雑な高分子化合物を<span class="key">分解</span>してより単純な物質に変え、その過程で<span class="key">ATP（エネルギー）を得る</span>反応。例：解糖、TCA回路、β酸化。</div>
-        </div>
-
-        <div class="pair">
-          <div><span class="en">②</span> <span class="term">糖新生（gluconeogenesis）</span></div>
-          <div class="def">空腹時・絶食時などに、<span class="key">糖（グルコース）以外の物質</span>からグルコースを新たに合成する経路。主に<span class="key">肝臓</span>（一部腎臓）で行われる。</div>
-          <div class="def" style="margin-top:6px;">主な基質：
-            <ul class="clean">
-              <li><b>アミノ酸</b>（糖原性アミノ酸 ― 筋蛋白の分解に由来）</li>
-              <li><b>乳酸</b>（嫌気的解糖の産物 ― Cori回路で肝へ）</li>
-              <li><b>グリセロール</b>（中性脂肪の分解に由来）</li>
-            </ul>
-          </div>
-          <div class="def" style="margin-top:6px;"><span class="lbl">意義</span>：<span class="key">脳</span>や赤血球はエネルギーの大部分をグルコースに依存するため、空腹時にも血糖を維持してこれらへ供給する必要がある。</div>
-        </div>
-      </div>
+    <ol class="items"><li><span class="maru">①</span>同化と異化</li><li><span class="maru">②</span>糖新生</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><div><span class="en">①</span> <span class="term">同化と異化（合わせて新陳代謝, metabolism）</span></div>
+        <div class="def"><span class="lbl">同化（anabolism）</span>：エネルギーを<span class="key">消費</span>して、単純な物質から複雑な高分子（蛋白質・グリコーゲン・脂質など）を<span class="key">合成</span>する反応。</div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">異化（catabolism）</span>：複雑な高分子を<span class="key">分解</span>して単純な物質に変え、<span class="key">ATPを得る</span>反応。例：解糖、TCA回路、β酸化。</div></div>
+      <div class="pair"><div><span class="en">②</span> <span class="term">糖新生（gluconeogenesis）</span></div>
+        <div class="def">空腹時・絶食時などに、<span class="key">糖以外の物質</span>からグルコースを新たに合成する経路。主に<span class="key">肝臓</span>（一部腎臓）で行われる。</div>
+        <div class="def" style="margin-top:6px;">主な基質：
+          <ul class="clean"><li><b>アミノ酸</b>（糖原性 ― 筋蛋白の分解由来）</li>
+          <li><b>乳酸</b>（嫌気的解糖 ― Cori回路）</li>
+          <li><b>グリセロール</b>（中性脂肪の分解由来）</li></ul></div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">意義</span>：<span class="key">脳</span>・赤血球はグルコースに大きく依存するため、空腹時も血糖を維持して供給する必要がある。</div></div>
+    </div></div>
+    <div class="redpen"><p class="nt">添 削（手書き解答へ）</p>
+      <p>① 同化：「エネルギーを<span class="strike">消化</span>して合成」→ 正しくは <span class="fix">消費</span>。用語として重要なので注意。</p>
+      <p>② 基質と由来（アミノ酸＝筋肉／乳酸＝嫌気呼吸／グリセロール＝脂肪）と「脳がグルコース依存」の意義づけは的確。あとは <span class="fix">主に肝臓で行われる</span> という場所を一言足せば完成。</p>
     </div>
-
-    <div class="redpen">
-      <p class="nt">添 削（手書き解答へ）</p>
-      <p>① 同化の説明：「エネルギーを<span class="strike">消化</span>して合成」→ 正しくは <span class="fix">消費</span>（エネルギーを使って作る）。漢字変換ミスだが用語としては重要なので注意。</p>
-      <p>② 基質と由来の対応（アミノ酸＝筋肉の分解／乳酸＝嫌気呼吸／グリセロール＝脂肪の分解）と、「脳がグルコースに依存」という意義づけは的確。あとは <span class="fix">主に肝臓で行われる</span> という場所を一言添えれば完成。</p>
+    <div class="note"><p class="nt">解 説</p>
+      <p>同化＝“作る・貯める（要エネルギー）”、異化＝“壊す・取り出す（産エネルギー）”と一対で。糖新生は<b>異化で得た材料を使って同化的にグルコースを作り直す</b>過程と捉えると①②がつながる。脂肪酸は脳の主要燃料になれず、飢餓が続くとケトン体で一部代替する点まで言えると深い。</p>
     </div>
-
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>同化＝“作る・貯める（要エネルギー）”、異化＝“壊す・取り出す（産エネルギー）”と一対で覚える。糖新生は<b>異化で得た材料（アミノ酸・乳酸・グリセロール）を使って、わざわざ同化的にグルコースを作り直す</b>過程と捉えると、①と②がつながる。</p>
-      <p>「なぜそこまでしてグルコースを作るのか」の答えが<b>脳・赤血球のグルコース依存</b>。脂肪酸は脳の主要エネルギー源になれない（飢餓が続くとケトン体で一部代替）という背景まで言えると深みが出る。</p>
-    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
-  <!-- ============== 問6 ============== -->
   <section class="q">
-    <div class="q-head">
-      <span class="q-no">問 6</span>
-    </div>
+    <div class="q-head"><span class="q-no">問 6</span></div>
     <p class="stem mincho">化生（metaplasia）について、以下の設問に答えよ。</p>
-    <ol class="items">
-      <li><span class="maru">問1.</span>化生とはどのような現象であるか。</li>
+    <ol class="items"><li><span class="maru">問1.</span>化生とはどのような現象であるか。</li>
       <li><span class="maru">問2.</span>扁平上皮化生の起こりやすい臓器・組織は何か。</li>
       <li><span class="maru">問3.</span>問2の変化はどのような腫瘍の前ガン病変となりうるか。</li>
-      <li><span class="maru">問4.</span>消化管の円柱上皮化生として知っているものの名称1つと、そこを素地として発生する腫瘍の名称をそれぞれ答えよ。</li>
-    </ol>
-
-    <div class="answer">
-      <span class="tag a">解答</span>
-      <div class="body">
-        <div class="pair">
-          <span class="lbl">問1</span>　いったん分化・成熟した細胞・組織が、<span class="key">別の機能と形態をもつ成熟した細胞・組織に置き換わる</span>現象。可逆的で、持続的な刺激・ストレスに対する<span class="key">適応現象</span>のひとつ。</div>
-        <div class="pair">
-          <span class="lbl">問2</span>　<span class="key">気管・気管支</span>の線毛円柱上皮（喫煙・慢性刺激）、<span class="key">子宮頸部</span>、膀胱・腎盂などの移行上皮などで起こりやすい（代表は気管支上皮と子宮頸部）。</div>
-        <div class="pair">
-          <span class="lbl">問3</span>　<span class="key">扁平上皮癌（squamous cell carcinoma）</span>の前癌病変となりうる。<br><span style="color:var(--muted);font-size:14px;">例：喫煙者の気管支扁平上皮化生 → 肺扁平上皮癌、子宮頸部の扁平上皮化生 → 子宮頸癌。</span></div>
-        <div class="pair">
-          <span class="lbl">問4</span>　円柱上皮化生：<span class="key">Barrett食道（Barrett粘膜）</span>＝逆流性食道炎により食道下部の重層扁平上皮が胃型・腸型の円柱上皮に置換されたもの。<br>そこを素地として発生する腫瘍：<span class="key">（Barrett）腺癌（adenocarcinoma）</span>。</div>
-      </div>
+      <li><span class="maru">問4.</span>消化管の円柱上皮化生として知っているものの名称1つと、そこを素地として発生する腫瘍の名称をそれぞれ答えよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>いったん分化・成熟した細胞・組織が、<span class="key">別の機能と形態をもつ成熟した細胞・組織に置き換わる</span>現象。可逆的で、持続的刺激への<span class="key">適応現象</span>のひとつ。</div>
+      <div class="pair"><span class="qsub">問2</span><span class="key">気管・気管支</span>の線毛円柱上皮（喫煙・慢性刺激）、<span class="key">子宮頸部</span>、膀胱・腎盂などの移行上皮（代表は気管支上皮と子宮頸部）。</div>
+      <div class="pair"><span class="qsub">問3</span><span class="key">扁平上皮癌（squamous cell carcinoma）</span>の前癌病変となりうる。<br><span style="color:var(--muted);font-size:14px;">例：喫煙者の気管支扁平上皮化生→肺扁平上皮癌、子宮頸部→子宮頸癌。</span></div>
+      <div class="pair"><span class="qsub">問4</span>円柱上皮化生：<span class="key">Barrett食道（Barrett粘膜）</span>＝逆流性食道炎で食道下部の重層扁平上皮が胃型・腸型円柱上皮に置換。発生する腫瘍：<span class="key">（Barrett）腺癌（adenocarcinoma）</span>。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>定義で外せないのは「<b>成熟細胞→別系統の成熟細胞</b>」（胚葉を越えない）。可逆的な適応である一方、刺激が続くと異形成→癌の足がかりになる二面性が狙い。<b>扁平上皮化生→扁平上皮癌</b>、<b>円柱上皮化生（Barrett）→腺癌</b>と、化生の方向と発生する癌が一致する点がポイント。</p>
     </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
 
-    <div class="note">
-      <p class="nt">解 説</p>
-      <p>化生の定義で外せないのは「<b>成熟細胞 → 別系統の成熟細胞</b>」という点。未熟な細胞が別方向に分化し直すのであって、上皮が間葉に変わるような胚葉を越える変化ではない。あくまで<b>刺激への適応（可逆的）</b>である一方、刺激が続くと異形成→癌へ進む足がかりになる、という二面性が出題の狙い。</p>
-      <p>“方向”で対にして覚えると速い：<b>扁平上皮化生</b>（円柱→扁平：気管支・子宮頸部、喫煙など）は <b>扁平上皮癌</b>へ、<b>円柱上皮化生</b>（扁平→円柱：Barrett食道、胃酸逆流）は <b>腺癌</b>へ。化生の方向と発生する癌の種類が一致しているのがポイント。</p>
-      <p>Barrettは「重層扁平上皮の食道に、胃や腸のような円柱上皮（しばしば杯細胞を伴う腸上皮化生）が現れる」状態。逆流→Barrett→腺癌という流れは消化器でも頻出。</p>
+  <!-- ================= 第2章 ================= -->
+  <div class="chapter" id="ch2"><div class="ch-no">CHAPTER 2</div><h2 class="mincho">炎症（免疫・炎症）</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2017再・2018・2019・2020再・2021・2022・2022再</span></div>
+    <p class="stem mincho">急性炎症に関して以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>「ケルススの四徴候」および「ガレノスの5徴候」を挙げよ。</li>
+      <li><span class="maru">問2.</span>炎症局所において「ケルススの四徴候」が出現する機序を各々説明せよ。</li>
+      <li><span class="maru">問3.</span>急性炎症は「滲出性炎症」であると言えるが、どういうことか説明せよ。</li>
+      <li><span class="maru">問4.</span>急性炎症の組織学的（形態学的）パターンを列挙し、説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span><b>ケルススの四徴候</b>：発赤（rubor）・熱感（calor）・腫脹（tumor）・疼痛（dolor）。<br><b>ガレノスの5徴候</b>：上の4つ＋<span class="key">機能障害（functio laesa）</span>。</div>
+      <div class="pair"><span class="qsub">問2</span>各徴候の機序：
+        <ul class="clean">
+          <li><b>発赤・熱感</b>：細動脈拡張による局所の<b>血流増加（充血）</b>。温かい血液が多く流れるため熱感も生じる。</li>
+          <li><b>腫脹</b>：血管透過性亢進により血漿成分が組織へ<b>滲出（浮腫）</b>するため。</li>
+          <li><b>疼痛</b>：ブラジキニン・プロスタグランジンなどの起炎物質による<b>神経終末の刺激</b>＋腫脹による圧迫。</li>
+          <li><b>（機能障害）</b>：上記の総合結果として患部の機能が低下する。</li></ul></div>
+      <div class="pair"><span class="qsub">問3</span>急性炎症は、血管拡張に続いて<span class="key">血管透過性が亢進</span>し、<span class="key">血漿成分（蛋白・液性成分）の漏出</span>と<span class="key">白血球（特に好中球）の浸潤</span>を主体とする。すなわち血管内成分が組織へ「滲み出る」反応が中心であり、<b>滲出性炎症</b>と表現される。</div>
+      <div class="pair"><span class="qsub">問4</span>滲出物の種類による分類：
+        <ul class="clean">
+          <li><b>漿液性炎</b>：蛋白に乏しい漿液の滲出（水疱、漿膜炎の初期）</li>
+          <li><b>線維素性炎</b>：フィブリンに富む滲出（線維素性心膜炎など）</li>
+          <li><b>化膿性炎</b>：<b>好中球</b>が主体、膿の形成（膿瘍・蓄膿）</li>
+          <li><b>出血性炎</b>：<b>赤血球</b>の漏出を伴う（出血性膀胱炎など）</li>
+          <li><b>壊死性炎／壊疽性炎</b>：組織壊死を伴う、腐敗菌感染で壊疽に至る</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>問2は「<b>どの徴候がどの血管反応に対応するか</b>」を1対1で言えるかが勝負。発赤・熱感＝血管拡張（充血）、腫脹＝透過性亢進（浮腫）、疼痛＝化学メディエーター＋圧迫、と機序ごとに分けて書く。</p>
+      <p>問4のパターンは「<b>滲出物に何が多いか</b>」で覚える（漿液／フィブリン／好中球（膿）／赤血球／壊死）。慢性炎症の“増殖性炎”（問2参照）と対になる概念。</p>
     </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 2</span><span class="q-years">2020再・2021</span></div>
+    <p class="stem mincho">慢性炎症に関して以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>慢性炎症で見られる炎症細胞にはどのようなものがあるか挙げよ。</li>
+      <li><span class="maru">問2.</span>慢性炎症は「増殖性炎症」であるといえる。どういうことか説明せよ。</li>
+      <li><span class="maru">問3.</span>慢性炎症の組織学的（形態学的）パターンを列挙し、説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span><span class="key">マクロファージ・リンパ球・形質細胞</span>などの<b>単核球</b>が主体（好酸球が加わることもある）。好中球主体の急性炎症と対照的。</div>
+      <div class="pair"><span class="qsub">問2</span>慢性炎症では、滲出よりも<span class="key">血管新生の増生と線維芽細胞の増殖を伴う線維化</span>が前面に出て、傷害組織が置換されていく。組織反応の主体が「滲出」ではなく「<b>増殖（修復）</b>」であるため、増殖性炎症と表現される。</div>
+      <div class="pair"><span class="qsub">問3</span>形態学的パターン：
+        <ul class="clean">
+          <li><b>単核球（マクロファージ・リンパ球・形質細胞）の浸潤</b></li>
+          <li>持続性の攻撃因子あるいは炎症細胞浸潤による<b>組織破壊と組織構築の改変</b></li>
+          <li><b>血管新生と線維芽細胞増殖を伴う線維化</b>による傷害組織の置換</li>
+          <li>特殊型として<b>肉芽腫</b>形成（類上皮細胞・多核巨細胞の結節性集簇）</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>急性＝<b>滲出性炎</b>（好中球・浮腫）、慢性＝<b>増殖性炎</b>（単核球・線維化）という対比が全体の幹。肉芽腫形成の流れ（消化できない物質を貪食したマクロファージ → <b>類上皮細胞</b> → 癒合して<b>多核巨細胞</b> → 結節性集簇で<b>肉芽腫</b>）も問われやすい。第1章 問1②の「肉芽組織と肉芽腫」と必ずリンクさせて整理する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 3</span><span class="q-years">2020再・2023</span></div>
+    <p class="stem mincho">急性期蛋白質に関して以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>急性期蛋白質とはどのようなものか。</li>
+      <li><span class="maru">問2.</span>代表的なものに C-reactive protein（CRP）があり、多くの炎症性疾患の重症度の指標として用いられる。その理由について考察し、説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>炎症時に、<span class="key">TNF-α・IL-1・IL-6</span>などの炎症性サイトカインの刺激を受けて、主に<b>肝臓</b>で産生が増加する一群の血漿蛋白。CRP、フィブリノゲン、血清アミロイドA、ハプトグロビンなどがある（C反応性蛋白＝CRP）。</div>
+      <div class="pair"><span class="qsub">問2</span>CRPは<span class="key">IL-6など炎症性サイトカインに反応して肝で速やかに産生</span>され、炎症の程度に応じて<span class="key">短時間で上昇し、炎症の鎮静化とともに低下</span>する。すなわち血中濃度が炎症の活動性をよく反映してリアルタイムに変動するため、重症度や経過のモニタリング指標として有用である。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「重症度の指標になる理由」は、①炎症の強さに比例して、②速やかに上下する、という2点が骨子。発生源が炎症の上流サイトカイン（IL-6等）に直結している点を述べると説得力が増す。逆に反応がやや遅れる（数時間〜）ことや、感染以外の炎症（外傷・術後・自己免疫）でも上がる非特異性も押さえておくとよい。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 4</span></div>
+    <p class="stem mincho">炎症における重要な症状の一つに白血球増多症がある。以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>白血球増多症の起こる機序につき説明せよ。</li>
+      <li><span class="maru">問2.</span>白血球増多症の際にみられる「（核の）左方移動」について説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>炎症で産生される<span class="key">TNF-α・IL-1</span>が骨髄からの白血球放出を促し、さらに<span class="key">G-CSF（コロニー刺激因子）</span>の産生を誘導して骨髄での白血球産生を増加させる。これにより末梢血の白血球が増える。原因により好中球増多（細菌感染）、好酸球増多（寄生虫・アレルギー）、リンパ球増多（ウイルス）、単球増多（肉芽腫性炎症）などを示す。</div>
+      <div class="pair"><span class="qsub">問2</span>需要に対し供給が追いつかないと、骨髄から<span class="key">分葉の少ない未熟な好中球（桿状核球・後骨髄球など）</span>が末梢血に動員される。この<b>未熟細胞が血中に出現する現象</b>を「核の左方移動」という（成熟＝右、未熟＝左と並べることに由来）。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>機序は「<b>放出（TNF-α・IL-1）＋産生増加（G-CSF）</b>」の2段で説明する。左方移動は<b>核分葉が進む前の若い好中球が末梢に出てくる</b>こと、と一言で言えるように。重症感染・敗血症で目立つ。なお慢性消耗性疾患や栄養障害では逆に白血球が減少する点も対で覚える。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 5</span><span class="q-years">2017再</span></div>
+    <p class="stem mincho">全身性炎症反応症候群 systemic inflammatory response syndrome（SIRS）について以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>病態について説明せよ。</li>
+      <li><span class="maru">問2.</span>敗血症および敗血症性ショック（septic shock）との関係について述べよ。</li>
+      <li><span class="maru">問3.</span>敗血症性ショックにおける warm shock と cold shock に関して説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>感染の有無を問わず、炎症性サイトカインが全身を巡って引き起こす<span class="key">全身性の炎症反応</span>。従来は次の4項目のうち<b>2項目以上</b>を満たすものと定義された：
+        <ul class="clean"><li>体温 &gt;38℃ または &lt;36℃</li><li>脈拍 &gt;90/分</li><li>呼吸数 &gt;20/分</li><li>白血球 &gt;12,000/μL または &lt;4,000/μL、または幼若白血球 &gt;10%</li></ul></div>
+      <div class="pair"><span class="qsub">問2</span><b>敗血症</b>＝<span class="key">感染が原因で生じたSIRS</span>（感染＋全身性炎症反応）。<b>敗血症性ショック</b>＝敗血症に<span class="key">十分な輸液でも改善しない循環不全（低血圧・組織灌流低下）</span>を伴った状態。SIRS ⊃ 敗血症 ⊃ 敗血症性ショック、という重症度の階層で捉える。</div>
+      <div class="pair"><span class="qsub">問3</span>
+        <div class="def"><span class="lbl">warm shock（温かいショック・早期）</span>：末梢血管が拡張し、心拍出量はむしろ増加。四肢が温かく紅潮する。</div>
+        <div class="def" style="margin-top:6px;"><span class="lbl">cold shock（冷たいショック・後期）</span>：代償が破綻して末梢血管が収縮し、心拍出量も低下。四肢が冷たく蒼白となる。予後不良。</div></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>キーは「<b>SIRSは感染がなくても起こる（外傷・熱傷・膵炎などでも）</b>」点。そこに感染が加わると敗血症、循環不全まで進むと敗血症性ショック、と段階で整理する。warm/cold は<b>末梢血管が拡張（温・早期）か収縮（冷・後期）か</b>で正反対、と対比して覚える。重症化するとDIC（播種性血管内凝固症候群）を合併しうる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <!-- ================= 第3章 ================= -->
+  <div class="chapter" id="ch3"><div class="ch-no">CHAPTER 3</div><h2 class="mincho">免疫異常（免疫・炎症）</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2019</span></div>
+    <p class="stem mincho">MHC分子の役割とMHC拘束性に関して説明し、胸腺においてT細胞が中枢性免疫寛容を獲得する機序に関して述べよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">MHC分子の役割</span>
+        <ul class="clean">
+          <li><b>① 身分証明（自己標識）</b>：MHCは個体ごとに構造が異なり、自己／非自己を区別する目印となる。自己と異なるMHCをもつ細胞はNK細胞などによる排除の対象になる。</li>
+          <li><b>② 抗原提示（皿としての役割）</b>：MHCは抗原ペプチドを「皿」のように載せて細胞表面に運び、T細胞に提示する。</li></ul></div>
+      <div class="pair"><span class="lbl">MHC拘束性</span>　T細胞はTCRで<span class="key">「自己MHC分子」と「その上に載った抗原ペプチド」の組み合わせ</span>を同時に認識する。抗原単独では認識できず、自己MHCに提示されて初めて反応する。この制約を <b>MHC拘束性</b> という（CD8⁺T＝クラスI、CD4⁺T＝クラスII）。</div>
+      <div class="pair"><span class="lbl">胸腺における中枢性免疫寛容の獲得</span>　未熟T細胞は胸腺で2段階の選択を受ける：
+        <ul class="clean">
+          <li><b>正の選択</b>：自己MHCを適度に認識できるT細胞だけが生存（MHC拘束性の確立）。</li>
+          <li><b>負の選択</b>：<span class="key">自己抗原に強く反応するT細胞をアポトーシスで除去（クローン消去）</span>。</li></ul>
+        これにより自己を攻撃しないT細胞集団が選ばれ、<b>中枢性免疫寛容</b>が成立する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>3点（①役割＝標識＋皿、②MHC拘束性＝MHC＋ペプチドのセット認識、③胸腺の正負の選択）を順に書くと過不足ない。中枢性寛容の本質は<b>胸腺での負の選択（自己反応性クローンの除去）</b>。これをすり抜けた細胞は末梢性寛容（アネルギー・制御性T細胞）で抑えられる、と補足できると自己免疫疾患（次問の膠原病）への橋渡しになる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 2</span><span class="q-years">2016</span></div>
+    <p class="stem mincho">膠原病に関して以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>膠原病において、抗核抗体を測定する意義は何か。説明せよ。</li>
+      <li><span class="maru">問2.</span>シェーグレン症候群を診断する際に、抗SS-Aおよび抗SS-B抗体の2つの抗核抗体を測定する理由につき説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair" style="margin-bottom:14px;color:var(--muted);font-size:14px;"><b>前提：膠原病とは</b>　全身性の自己免疫疾患で、結合組織を中心に炎症・フィブリノイド変性などをきたす。組織像はフィブリノイド壊死に代表される滲出性病変と、その慢性化による線維化（増殖性病変）からなり、自己免疫疾患かつリウマチ性疾患の側面を持つ。</div>
+      <div class="pair"><span class="qsub">問1</span><b>抗核抗体</b>は<span class="key">細胞核内の様々な抗原に対する自己抗体の総称</span>。膠原病では自己抗体が高頻度に出現するため、抗核抗体は<span class="key">膠原病を疑うスクリーニング</span>として有用。さらに特定の抗体は特定疾患と強く関連し、診断や活動性・重症度の評価にも役立つ。</div>
+      <div class="pair"><span class="qsub">問2</span>抗SS-A・抗SS-B抗体は<span class="key">シェーグレン症候群に対する特異性が高い</span>抗核抗体である（特に抗SS-Bは特異度が高い）。多数ある抗核抗体の中でこの2つを測ることで、シェーグレン症候群らしさを<b>診断的に絞り込める</b>ため測定される。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>抗核抗体の使い分けは「<b>抗核抗体＝広く拾うスクリーニング（感度重視）／個別の抗体＝疾患を絞る確認（特異度重視）</b>」という二段構えで理解する。SS-A/SS-B＝シェーグレン、抗dsDNA・抗Sm＝SLE、抗Scl-70＝強皮症…と疾患特異抗体をセットで覚えると応用が効く。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <!-- ================= 第4章 ================= -->
+  <div class="chapter" id="ch4"><div class="ch-no">CHAPTER 4</div><h2 class="mincho">循環障害</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2022・2022再</span></div>
+    <p class="stem mincho">粥状動脈硬化症がもたらす疾患として以下のものが挙げられる。粥状硬化が以下①②③の疾患をもたらす機序に関して説明せよ。</p>
+    <ol class="items"><li><span class="maru">①</span>動脈瘤形成とその破裂</li><li><span class="maru">②</span>急性心筋梗塞</li><li><span class="maru">③</span>臓器の萎縮</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair" style="margin-bottom:14px;color:var(--muted);font-size:14px;"><b>前提</b>　粥状（アテローム）硬化は大型〜中型の動脈（弾性型・筋型動脈）の内膜に、脂質・コレステロール・炎症細胞・平滑筋細胞・結合組織線維が進行性に蓄積する病変。</div>
+      <div class="pair"><span class="en">①</span> <span class="term">動脈瘤形成と破裂</span>：プラークの進展に伴い中膜の平滑筋・弾性線維が変性・破壊され<span class="key">血管壁が脆弱化</span>。内圧に耐えられず限局性に拡張して<b>動脈瘤</b>を形成し、さらに進むと<b>破裂</b>して大出血を起こす。</div>
+      <div class="pair"><span class="en">②</span> <span class="term">急性心筋梗塞</span>：冠動脈のプラーク（特に脆弱性プラーク）が<span class="key">破綻 → 血栓形成 → 冠動脈の急性閉塞</span>。支配領域の心筋が虚血・壊死に陥り急性心筋梗塞となる。</div>
+      <div class="pair"><span class="en">③</span> <span class="term">臓器の萎縮</span>：プラークにより<span class="key">血管内腔が慢性的に狭窄</span>し、支配臓器が持続的な虚血（慢性的な血流低下）に陥る。栄養・酸素供給の低下により実質細胞が<b>萎縮</b>する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>3つは「<b>壁が弱る（①）／詰まって急性壊死（②）／じわじわ足りない＝慢性虚血（③）</b>」と整理。②は“破綻→血栓→急性閉塞”、③は“狭窄→慢性虚血→萎縮”で、<b>急性閉塞か慢性狭窄か</b>が②③の分かれ目。①は内腔ではなく<b>壁そのものの脆弱化</b>が主因という違いを意識する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 2</span><span class="q-years">2020・2021</span></div>
+    <p class="stem mincho">粥状硬化における安定プラークと脆弱性プラークの組織学的相違を示し、冠動脈における脆弱性プラークが心筋梗塞をもたらす機序につき考察し、説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <table class="t"><tr><th></th><th>安定プラーク</th><th>脆弱性プラーク</th></tr>
+        <tr><th>線維性被膜</th><td><b>厚い</b></td><td><b>薄い</b></td></tr>
+        <tr><th>脂質コア</th><td>小さい</td><td><b>大きい</b></td></tr>
+        <tr><th>炎症</th><td>極めて少ない</td><td><b>強い（炎症細胞浸潤・新生血管）</b></td></tr>
+        <tr><th>性質</th><td>破綻しにくい</td><td><b>破綻・亀裂・びらんを起こしやすい</b></td></tr></table>
+      <div class="pair" style="margin-top:12px;"><span class="lbl">脆弱性プラークが心筋梗塞をもたらす機序</span>
+        <p style="margin:6px 0 0;">薄い線維性被膜が<span class="key">局所的に破裂・びらん</span>すると、内部の血栓原性物質が血流に露出して<span class="key">急性の血栓</span>が形成される。これが冠動脈を<span class="key">急性閉塞</span>し、支配領域の心筋が虚血・壊死に陥って<b>急性心筋梗塞</b>に至る。プラーク内の新生血管は脆弱で破綻・出血しやすく、プラークの急速な膨張・破綻を助長する。</p></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>ポイントは「<b>梗塞を起こすのは狭窄度ではなく“破れやすさ”</b>」。高度狭窄でも被膜が厚い安定プラークはむしろ破れにくく、軽度狭窄でも薄い被膜＋大きな脂質コアの脆弱プラークが突然破綻して致死的梗塞を起こす。被膜を薄く弱くする主因が<b>炎症（マクロファージのプロテアーゼ等）</b>である点まで触れると考察になる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 3</span><span class="q-years">2017再・2018</span></div>
+    <p class="stem mincho">梗塞の進展は臓器によって差がある。梗塞の進展に影響を及ぼす因子を挙げ、説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <ul class="clean">
+        <li><b>① 血管支配の解剖学</b>：閉塞時に<span class="key">他の血管から血流供給を得られるか</span>（側副路・二重支配）。終動脈支配の臓器（腎・脾）は梗塞に陥りやすく、二重支配（肝＝肝動脈＋門脈、肺）や側副路の豊富な組織は梗塞しにくい。<b>最も重要な因子</b>。</li>
+        <li><b>② 血管閉塞の進展速度</b>：閉塞が<span class="key">緩徐</span>に進むと側副循環路が発達する余裕があり、梗塞が起こりにくい。急速な閉塞ほど梗塞に至りやすい。</li>
+        <li><b>③ 虚血に対する組織の脆弱性</b>：細胞ごとに虚血耐性が異なる。<span class="key">神経細胞（3〜4分）</span>が最も鋭敏、次いで<span class="key">心筋細胞（20〜30分）</span>。</li>
+        <li><b>④ 低酸素血症</b>：血中酸素濃度が異常に低下していると、わずかな血流低下でも梗塞が起こりやすく、程度も増悪する。</li></ul>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>4因子を「<b>逃げ道があるか（①②）／組織がどれだけもろいか（③）／そもそも酸素が足りているか（④）</b>」と束ねると思い出しやすい。①の<b>終動脈 vs 二重支配/側副路</b>が最重要で、次問（赤色／白色梗塞）の臓器特性とも直結する。③の「神経3〜4分・心筋20〜30分」は数字で覚える。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 4</span></div>
+    <p class="stem mincho">塞栓症について説明せよ。その際、以下①〜④に関しても説明せよ。</p>
+    <ol class="items"><li><span class="maru">①</span>腫瘍塞栓</li><li><span class="maru">②</span>羊水塞栓</li><li><span class="maru">③</span>脂肪・骨髄塞栓</li><li><span class="maru">④</span>空気塞栓</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">塞栓症とは</span>　血流中を運ばれてきた異物（塞栓子）が、自身より細い血管腔に詰まって血流を遮断する病態。塞栓子は血栓のほか、腫瘍・羊水・脂肪・空気など多様である。</div>
+      <div class="pair"><span class="en">①</span> <span class="term">腫瘍塞栓</span>：血管に侵入した<span class="key">がん細胞が血流に乗って運ばれ</span>、遠隔の細い血管に詰まる。そこで再び血管外へ出て増殖すると<b>血行性転移</b>となる（毛細血管の豊富な肺・肝に好発）。</div>
+      <div class="pair"><span class="en">②</span> <span class="term">羊水塞栓</span>：分娩時に<span class="key">羊水（胎児成分を含む）が母体の静脈に流入</span>し肺血管を閉塞。重篤な呼吸循環不全を起こし、しばしば<b>DIC</b>を併発する。</div>
+      <div class="pair"><span class="en">③</span> <span class="term">脂肪・骨髄塞栓</span>：<span class="key">長管骨の骨折</span>などで骨髄の脂肪滴・骨髄組織が破綻した静脈に入り、肺などの血管を閉塞する。</div>
+      <div class="pair"><span class="en">④</span> <span class="term">空気塞栓</span>：外傷や医原性処置（中心静脈穿刺など）で<span class="key">空気が血管内に入り</span>、気泡が血流を遮断する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>塞栓子の「正体」で分類するのが基本。臨床ではいずれも<b>肺塞栓</b>として現れやすい（静脈系の塞栓子は右心を経て肺動脈に詰まるため）。羊水塞栓・脂肪塞栓はDICや呼吸不全を伴う急性重症病態として重要。次問の減圧症・肺血栓塞栓と合わせて「塞栓子の種類カタログ」を完成させておく。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 5</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">塞栓症に関する以下①②の病態について説明せよ。</p>
+    <ol class="items"><li><span class="maru">①</span>減圧症</li><li><span class="maru">②</span>肺血栓塞栓（症）</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="en">①</span> <span class="term">減圧症</span>：スキューバ潜水などでの<span class="key">急激な気圧変化</span>により起こる。高圧下では呼吸により血液・組織に溶ける気体（特に<b>窒素</b>）量が増加するが、急に減圧するとこれらの気体が<span class="key">組織内・血中で気泡化</span>し、気泡が血管を閉塞して<b>空気（ガス）塞栓</b>を生じる。</div>
+      <div class="pair"><span class="en">②</span> <span class="term">肺血栓塞栓（症）</span>：長期臥床・運動制限による<span class="key">下肢深部静脈のうっ血</span>から血栓が形成され（深部静脈血栓症）、これが体動などで<span class="key">剥離して静脈を流れ、肺動脈に詰まる</span>。呼吸困難・胸痛をきたす（いわゆるエコノミークラス症候群）。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>①は「<b>高圧で溶けた窒素が、急減圧で気泡に戻る</b>」が一行要約。②は「<b>下肢でできた血栓が剥がれて肺へ</b>」（DVT→PE の流れ）。いずれも<b>静脈系→右心→肺動脈</b>という塞栓子の通り道を意識すると、問4の各塞栓となぜ肺が標的になるかが一貫して理解できる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 6</span></div>
+    <p class="stem mincho">臓器が梗塞に陥る際、赤色梗塞（出血性梗塞）に陥る場合と白色梗塞（貧血性梗塞）に陥る場合に分かれる。なぜそのような差が生じ得るのか、各々の梗塞を引き起こす臓器の有する特徴や各々のタイプの梗塞が起こりやすい状況について説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">赤色梗塞（出血性梗塞）</span>　梗塞巣に血液が流れ込んで赤くなるもの。次の状況で起こりやすい：
+        <ul class="clean">
+          <li><b>静脈の閉塞</b>による梗塞</li>
+          <li><b>疎な（緩い）組織</b>（肺など）で、梗塞巣に血液が貯留しやすい</li>
+          <li><b>二重の血液供給</b>を受ける組織（肺・小腸・肝）。閉塞血管の他方から壊死部へ血液が流れ込み出血するため</li>
+          <li>うっ血・<b>静脈還流低下</b>の状態にある組織</li>
+          <li><b>梗塞後の動脈血再灌流</b>が起こった場合</li></ul></div>
+      <div class="pair"><span class="lbl">白色梗塞（貧血性梗塞）</span>　梗塞巣が蒼白になるもの。次の特徴の臓器で起こる：
+        <ul class="clean">
+          <li><b>動脈閉塞</b>によって起こる</li>
+          <li><b>緻密な臓器</b>（心臓・脾臓・腎臓）。近傍の閉塞血管床からの血液漏出が少ない</li>
+          <li><b>終動脈支配</b>を受ける臓器（側副路が乏しい）</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>対比の軸は「<b>血が入り込めるか／戻れるか</b>」。<b>赤色＝二重支配・疎な組織・静脈閉塞・再灌流</b>（＝血液が梗塞巣に入り込む余地がある）、<b>白色＝終動脈支配・緻密な臓器・動脈閉塞</b>（＝血液が流れ込めない）。前問の「梗塞の進展因子①血管支配」と完全に連動しており、臓器の解剖（肺・肝＝赤、心・脾・腎＝白）で覚えると速い。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 7</span><span class="q-years">2019・2020再・2021・2022</span></div>
+    <p class="stem mincho">心不全をきたすと、湿性（痰が絡むような）咳嗽、ピンク色の泡沫状の喀痰や呼吸困難を訴えるようになる。以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>呼吸苦は座位で軽減するという。この現象を何と呼ぶか。</li>
+      <li><span class="maru">問2.</span>何故座位で呼吸は軽減するのか説明せよ。</li>
+      <li><span class="maru">問3.</span>湿性の咳嗽やピンク状泡沫状の喀痰の出現は、肺におけるどのような状態を表しているか説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span><span class="key">起坐呼吸（orthopnea）</span>。臥位で呼吸困難が増悪し、座位（起坐位）をとることで軽減する状態。</div>
+      <div class="pair"><span class="qsub">問2</span>臥位では下半身からの<span class="key">静脈還流が増加</span>し、心臓への前負荷が増えて肺うっ血が悪化する。座位をとると重力により下肢などへ血液が分布して<span class="key">静脈還流（前負荷）が減少</span>し、肺うっ血が軽減するため呼吸が楽になる。</div>
+      <div class="pair"><span class="qsub">問3</span>心不全による<span class="key">肺毛細血管のうっ血</span>で、肺胞腔内に漏出液がたまる<b>肺水腫</b>の状態を表す。さらに毛細血管が破綻すると肺胞内へ<b>出血</b>し、漏出液と血液が混ざって<span class="key">ピンク色の泡沫状の喀痰</span>となる。これが気道を刺激して湿性咳嗽を生じる。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>全体が「<b>左心不全 → 肺うっ血 → 肺水腫</b>」という一本の流れ。問2は<b>前負荷（静脈還流）の体位による増減</b>がキーワード。問3のピンク泡沫痰は<b>肺水腫＋肺胞内出血</b>の組み合わせ。夜間に増悪する発作性夜間呼吸困難も同じ機序（臥位での還流増加）で説明できる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 8</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">腎動脈狭窄が高血圧をもたらす機序に関して説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">腎動脈狭窄により<span class="key">腎への血流量が低下</span>すると、腎の<span class="key">傍糸球体装置</span>がこれを感知して<span class="key">レニンを分泌</span>し、<b>レニン-アンジオテンシン-アルドステロン（RAA）系</b>が活性化される。その結果、
+        <ul class="clean">
+          <li><b>アンジオテンシンⅡ</b>による<span class="key">末梢血管収縮</span></li>
+          <li><b>副腎皮質</b>からの<b>アルドステロン</b>分泌促進による遠位尿細管での<span class="key">Na・水の再吸収亢進</span>（循環血液量の増加）</li></ul>
+        が起こり、<b>高血圧（腎血管性高血圧）</b>となる。</div>
+    </div></div>
+    <div class="redpen"><p class="nt">添 削（手書き解答へ）</p>
+      <p>アルドステロンの分泌部位を「<span class="strike">副腎髄質</span>から」と記載していたが、正しくは <span class="fix">副腎皮質（球状帯）</span>。髄質はカテコールアミン（アドレナリン等）を分泌する部位。RAA系の流れ自体（レニン→アンジオテンシンⅡ→アルドステロン）は正確です。</p>
+    </div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「<b>腎血流↓ → レニン↑ → ①血管収縮（アンジオテンシンⅡ）＋②体液量↑（アルドステロン）→ 血圧↑</b>」の一本道。これは高アルドステロン血症の<b>2次性（高レニン）</b>の典型で、原発性アルドステロン症（コン症候群＝低レニン）との対比で出題されやすい。アルドステロンは<b>皮質・球状帯</b>という解剖を正確に。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <!-- ================= 第5章 ================= -->
+  <div class="chapter" id="ch5"><div class="ch-no">CHAPTER 5</div><h2 class="mincho">複合問題</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2016再</span></div>
+    <p class="stem mincho">以下の文章を読み、次の設問に答えよ。</p>
+    <p class="scenario">60歳代男性。大量に吐血をして倒れているところを発見され、救急搬送された。30年以上の経過で<b>C型肝炎ウイルスキャリア</b>であり、最近施行された肝生検では肝硬変の組織像（アザン染色で膠原線維が青色に染色）を呈し、<b>肝硬変</b>と診断されていた。また、この時<b>脾腫、食道および腹壁の静脈怒張</b>が指摘されていた。</p>
+    <ol class="items">
+      <li><span class="maru">問1.</span>病初期段階の肝生検ではグリソン鞘に高度のリンパ球浸潤（b）がみられた。（b）の病態から最終的に（a）肝硬変の状態に至った訳だが、この一連の組織変化の機序につき、炎症総論の炎症の組織学的（形態学的）パターンに基づき説明せよ。</li>
+      <li><span class="maru">問2.</span>その後の検査で、吐血はこの食道病変（c）の破綻によるものと判断された。この吐血の原因となった食道病変の発生機序に関して説明せよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>C型肝炎ウイルスキャリアであり、その肝臓では<span class="key">慢性炎症（増殖性炎）</span>が起こっていたと考えられる。
+        <ul class="clean">
+          <li>（b）ではグリソン鞘域に<b>リンパ球が浸潤</b>し、ウイルスに対する免疫応答が持続している。</li>
+          <li>リンパ球が周囲の肝細胞を傷害しながら慢性炎症が拡大し、同時に<b>線維芽細胞が増生して線維化</b>が進む。</li>
+          <li>線維化により肝小葉が分断され、残存肝細胞が再生して<b>再生結節</b>を形成する。</li>
+          <li>肝小葉の改築（線維化＋再生結節）が進行し、再生結節が肝全体に<span class="key">びまん性に出現</span>して<b>肝硬変</b>に移行する。</li></ul>
+        （a）のアザン染色で青く染まる膠原線維は、この線維化を反映している。</div>
+      <div class="pair"><span class="qsub">問2</span>肝硬変により肝の線維化が広がると<span class="key">門脈圧亢進症</span>をきたす。門脈血が肝を通過しにくくなり、<span class="key">側副血行路</span>へ流れが迂回する：
+        <ul class="clean">
+          <li>脾静脈系のうっ血 → <b>脾腫</b></li>
+          <li>臍傍静脈・腹壁皮下静脈への血流増加 → <b>腹壁静脈怒張</b></li>
+          <li>食道静脈叢への血流増加 → <b>食道静脈瘤</b></li></ul>
+        食道静脈瘤の内圧が上昇して<span class="key">血管壁が破綻</span>し、大量吐血を生じた。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>1症例で総論を縦断する問題。問1は第2章の「<b>慢性炎症＝増殖性炎（単核球浸潤＋線維化）</b>」を肝臓に当てはめ、<b>慢性肝炎 → 線維化 → 再生結節 → 肝硬変</b>の流れで書く。問2は第4章の<b>うっ血・側副血行路</b>の考え方を肝硬変に適用し、<b>門脈圧亢進 → 側副路（脾・腹壁・食道）→ 静脈瘤破裂</b>と展開する。脾腫・腹壁怒張・食道静脈瘤を「同じ門脈圧亢進の三徴」として並べて説明できると満点。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <!-- ================= 第6章 ================= -->
+  <div class="chapter" id="ch6"><div class="ch-no">CHAPTER 6</div><h2 class="mincho">感染症</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2019</span></div>
+    <p class="stem mincho">以下の文章を読み、次の設問に答えよ。</p>
+    <p class="scenario">67歳女性、悪性リンパ腫に対し化学療法を行っている。1か月前から微熱と乾性咳嗽が出現、2週間前に近医で感冒薬を処方されるも改善なし。1週前から労作時呼吸苦が顕著になり38℃台の高熱も出現。胸部X線・CTで両側肺に<b>（a）びまん性のスリガラス様陰影</b>を、左肺の一部に<b>（b）空洞を伴う強い浸潤影</b>を認めた。<br>（a）（b）の組織像を示す病原体は何だと考えるか、また背景にある病態を考察し、これらの病変が生じた理由を簡潔に説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">（a）</span><span class="key">サイトメガロウイルス（CMV）</span>。<b>フクロウの目（owl's eye）状の核内封入体</b>が見られることから判断する。</div>
+      <div class="pair"><span class="lbl">（b）</span><span class="key">アスペルギルス（Aspergillus）</span>。菌糸が<b>鋭角に分岐</b>し一定方向に並び、<b>隔壁</b>を有することから判断する。</div>
+      <div class="pair"><span class="lbl">背景にある病態・理由</span>　この患者は悪性リンパ腫に対し化学療法を受けており、免疫能が低下した<span class="key">易感染宿主（compromised host）</span>となっている。CMVやアスペルギルスは本来病原性の強くない<span class="key">日和見病原体</span>だが、宿主の免疫低下により<b>日和見感染</b>を起こしたと考えられる。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>2つの所見の決め手は<b>CMV＝owl's eye核内封入体</b>、<b>アスペルギルス＝鋭角分岐・隔壁のある菌糸</b>。両者をつなぐ背景が「<b>化学療法による易感染宿主 → 日和見感染</b>」。日和見病原体の代表（CMV・HSV／カンジダ・アスペルギルス・ニューモシスチス／MRSA・緑膿菌／トキソプラズマ）をセットで覚える。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 2</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">非特異的防御機構について説明せよ。これにはどのようなものがあるか列挙し説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">生体が<span class="key">生まれつき（生得的に）備えている</span>防御機構で、病原体侵入時に<span class="key">即時・直接的・非特異的</span>に働く（自然免疫）。特定の抗原を記憶せず、あらゆる異物に対して一様に作動する。</div>
+      <div class="pair"><span class="lbl">主なもの</span>
+        <ul class="clean">
+          <li><b>物理的バリア</b>：皮膚の角質層、粘膜（線毛運動による排除）</li>
+          <li><b>化学的バリア</b>：胃酸、リゾチーム（涙・唾液）、汗腺・脂腺の分泌物</li>
+          <li><b>常在細菌叢</b>：病原体と拮抗し定着・増殖を妨げる</li>
+          <li><b>食細胞</b>：好中球・マクロファージによる貪食</li>
+          <li><b>NK細胞</b>：感染細胞・腫瘍細胞の傷害</li>
+          <li><b>補体</b>：オプソニン化・溶菌・炎症惹起</li>
+          <li><b>炎症反応</b></li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「<b>生得的・即時・非特異的（＝自然免疫）</b>」という性質を最初に定義し、<b>バリア（物理・化学）→ 常在菌 → 細胞性（食細胞・NK）→ 液性（補体）</b>の順で列挙すると整理されて見える。特異的・記憶を伴う獲得免疫（T/B細胞）との対比を一言添えると良い。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 3</span><span class="q-years">2018・2022再・2023</span></div>
+    <p class="stem mincho">常在細菌叢について以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>常在細菌叢とはどのようなものか、またそれは生体においてどのような働きをしているか簡潔に説明せよ。</li>
+      <li><span class="maru">問2.</span>その破綻をきたす原因と、それによって起こる疾患・病態を総じて何というか答えよ。またその例となる疾患・病態を一つ挙げよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>宿主が正常な状態のときに、皮膚・口腔・消化管などに住みついている多種類の細菌で、宿主と<span class="key">共生関係</span>を保っている。病原微生物と<span class="key">拮抗してその増殖を防ぎ</span>、異物侵入の初期に働く<b>非特異的感染防御機構の一つ</b>として機能する。</div>
+      <div class="pair"><span class="qsub">問2</span>原因は<span class="key">抗生物質（特に広域・大量・長期）の投与</span>。感受性のある常在菌が死滅し、感受性のない菌が増殖して取って代わる現象を<b>菌交代現象</b>といい、過剰増殖した耐性菌による感染症の発病を<span class="key">菌交代症</span>という。<br>例：<b>偽膜性腸炎（Clostridioides difficile）</b>、外陰膣カンジダ症（カンジダ）。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>用語の区別が問われる。<b>菌交代“現象”＝菌の入れ替わりそのもの</b>、<b>菌交代“症”＝それによって発病した状態</b>。常在菌叢が問2の「非特異的防御」（前問）の一員でもある点をリンクさせると一貫する。代表例は偽膜性腸炎（C. difficile）。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 4</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">感染経路を7つ挙げ説明せよ。この時、水平感染、垂直感染に関しても説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <table class="t"><tr><th>経路</th><th>内容</th></tr>
+        <tr><th>① 経気道感染</th><td>飛沫感染・空気感染。呼吸で吸い込むことで感染</td></tr>
+        <tr><th>② 経皮感染</th><td>創傷からの感染、媒介昆虫（媒虫）、寄生虫</td></tr>
+        <tr><th>③ 経口感染</th><td>汚染された飲食物 → 消化管</td></tr>
+        <tr><th>④ 性感染</th><td>性器・口腔・肛門の接触</td></tr>
+        <tr><th>⑤ 医原性感染</th><td>輸血・薬物・針刺し</td></tr>
+        <tr><th>⑥ 医療機材を介する感染</th><td>点滴・尿カテーテル・内視鏡など</td></tr>
+        <tr><th>⑦ 母子感染</th><td>経胎盤・産道・母乳</td></tr></table>
+      <div class="pair" style="margin-top:12px;"><span class="lbl">水平感染と垂直感染</span>
+        <div class="def"><b>水平感染</b>：個体から個体へ広がる感染（上記<span class="key">①〜⑥</span>）。</div>
+        <div class="def" style="margin-top:4px;"><b>垂直感染</b>：母から子へ伝わる感染（上記<span class="key">⑦の母子感染</span>）。経胎盤・産道・母乳の3経路。</div></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>7経路は「<b>気道・皮膚・口・性・医原性・医療機材・母子</b>」。水平／垂直の切り口は単純で、<b>母子（垂直）かそれ以外（水平）か</b>。垂直感染の3経路（胎盤・産道・母乳）は具体的病原体（風疹＝経胎盤、B型肝炎＝産道など）と結びつけると応用が利く。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 5</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">外因性感染と内因性感染について説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">外因性感染</span>　<span class="key">外界から侵入した病原体</span>による感染。水平感染・垂直感染のいずれの形もとる。</div>
+      <div class="pair"><span class="lbl">内因性感染</span>　<span class="key">宿主自身の常在菌</span>が原因となる感染。常在菌は普段は無害だが、宿主の抵抗力低下や菌交代などで病原性を発揮する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>区別の軸は「<b>病原体が外から来たか（外因性）／もともと体内にいたか（内因性）</b>」。内因性感染は前問の<b>菌交代症</b>や<b>日和見感染</b>と地続き（常在菌が宿主の隙をついて発病）。易感染宿主では内因性感染が起こりやすい。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 6</span><span class="q-years">2017再・2020再</span></div>
+    <p class="stem mincho">無症候性キャリアとはどのような状態か、感染防御の観点よりどのようなことが問題となるか、説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">状態</span>　<span class="key">不顕性感染（感染しているが症状のない状態）を持続</span>し、病原体を体外に排出している宿主。本人には症状がない。</div>
+      <div class="pair"><span class="lbl">感染防御上の問題点</span>　本人が無症状のため感染に気づかず、知らぬ間に<span class="key">感染源</span>となって他者に病原体を広げてしまう点。隔離・治療の対象から漏れやすい。<br><span style="color:var(--muted);font-size:14px;">例：HBV／HCV、HIV、単純ヘルペスウイルス、サイトメガロウイルス、EBウイルス、クラミジア、淋菌など。</span></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「顕性感染（症状あり）／不顕性感染（症状なし）」の対のうち、<b>不顕性のまま病原体を出し続ける</b>のが無症候性キャリア。問題の核心は<b>「無症状ゆえに気づかれず感染源になる」</b>という公衆衛生上の点。慢性ウイルス肝炎やHIVが代表で、スクリーニング検査の意義につながる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 7</span><span class="q-years">2022</span></div>
+    <p class="stem mincho">空気感染が成立するために病原微生物が満たさなければならない条件について説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">空気感染は、咳やくしゃみのしぶき（飛沫）から水分が蒸発して残った<span class="key">飛沫核（直径5μm未満）</span>を吸い込むことで起こる。飛沫核は空中を長く漂うが、含まれる病原体はごく少数である。したがって病原微生物が満たすべき条件は：
+        <ul class="clean">
+          <li><b>乾燥に強いこと</b>（水分が蒸発した飛沫核の中でも生存できる）</li>
+          <li><b>少数の病原体でも感染が成立すること（＝感染力が強い）</b></li></ul>
+        代表的な病原体：<span class="key">結核菌・麻疹ウイルス・水痘ウイルス</span>。飛沫核は微小で長時間浮遊するため、手洗いは空気感染の予防には無効。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>飛沫感染（&gt;5μm・1m以内に落下）と空気感染（飛沫核＜5μm・長く浮遊）の違いを押さえた上で、空気感染の条件は<b>①乾燥耐性 ②少数で感染（強い感染力）</b>の2点。「空気感染＝結核・麻疹・水痘」の3つは暗記必須。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 8</span><span class="q-years">2020再・2021</span></div>
+    <p class="stem mincho">ある疾患の胸部単純X線写真および病理組織写真を示す（結核症）。これら全ての画像について特徴的な所見を説明せよ。また、この疾患の感染経路および診断法について知るところを述べよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">胸部単純X線</span>　右肺上葉上部に<span class="key">結核性空洞</span>。結核に感染すると1次結核（不顕性または進行性）となり、休止していた内在菌の再燃あるいは外来菌の再感染で<b>2次結核</b>となって空洞が生じる。既感作の結核抗原に対する<span class="key">T細胞性免疫反応</span>の結果、組織壊死が起こり空洞が形成される。</div>
+      <div class="pair"><span class="lbl">病理組織</span>　<span class="key">乾酪壊死</span>と、<span class="key">ラングハンス型多核巨細胞・類上皮細胞</span>を伴う<b>肉芽腫性病変</b>。</div>
+      <div class="pair"><span class="lbl">染色</span>　<span class="key">Ziehl-Neelsen（チール・ネルゼン）染色</span>で赤く染まる桿菌（<b>抗酸菌＝結核菌</b>）。</div>
+      <div class="pair"><span class="lbl">感染経路</span>　気道からの<b>空気感染（飛沫核感染）</b>。</div>
+      <div class="pair"><span class="lbl">診断法（4分類）</span>
+        <table class="t"><tr><th>方法</th><th>特徴</th></tr>
+          <tr><th>① 顕微鏡検査</th><td>喀痰塗抹（蛍光染色 or Ziehl-Neelsen）→ <b>ガフキー号数</b>で判定。<b>最も迅速</b>だが感度は高くない</td></tr>
+          <tr><th>② 培養</th><td>MGIT（液体培地、約2週間）／小川培地（3〜4週間）。時間はかかるが<b>確実で薬剤感受性も判定可能</b></td></tr>
+          <tr><th>③ 遺伝子検査（核酸増幅／PCR）</th><td>少量検体で迅速（1時間〜1日）、<b>感度・特異度ともに高い</b>が高額</td></tr>
+          <tr><th>④ 免疫学的検査</th><td>ツベルクリン反応（BCGの影響で確定不可）、<b>IGRA（インターフェロンγ遊離試験）</b>、抗原・抗体検出</td></tr></table></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>結核の総まとめ問題。病理3点セット＝<b>乾酪壊死＋類上皮細胞＋ラングハンス型多核巨細胞（肉芽腫）</b>、染色＝<b>Ziehl-Neelsenで抗酸菌</b>、空洞＝<b>2次結核でのⅣ型（T細胞性）反応による組織壊死</b>。診断は「<b>速いが甘い顕微鏡／遅いが確実な培養（＋感受性）／速くて鋭いが高い遺伝子／BCGに惑わされるツ反 vs 影響されないIGRA</b>」と各法の長短で対比して覚える。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 9</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">薬剤耐性菌はなぜ生まれるのか。その発生を促進する医療行為も併せて説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">細菌は<span class="key">遺伝子変異</span>により薬剤への抵抗性（耐性）を獲得することがある。抗生物質を使用すると感受性菌は死滅するが、<span class="key">耐性をもつ菌だけが生き残って選択的に増殖</span>するため、耐性菌が出現・拡大する。</div>
+      <div class="pair"><span class="lbl">発生を促進する医療行為</span>　特定の抗生物質の<span class="key">長期連用</span>、効果のない（不適切な）抗生剤の使用。入院患者の治療中に出現することが多い。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>機序は<b>「変異で耐性化 → 抗菌薬による選択圧で耐性株だけ生き残る」</b>。促進因子は<b>濫用・不適切使用・長期連用</b>。MRSA・多剤耐性緑膿菌などが院内で問題になり、次問の医療関連感染（院内感染）に直結する。抗菌薬適正使用（antimicrobial stewardship）の根拠でもある。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 10</span><span class="q-years">2022</span></div>
+    <p class="stem mincho">医療関連感染とはどのようなものか説明し、医療関連感染の有する問題点、予防策について説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">定義</span>　病院などの施設、長期療養施設や在宅医療の現場といった<span class="key">医療行為を行う場で、患者や医療従事者が新たに罹患する感染</span>（いわゆる院内感染）。</div>
+      <div class="pair"><span class="lbl">問題点</span>
+        <ul class="clean">
+          <li>感染源の存在（患者・医療従事者・医療機器・院内設備）</li>
+          <li>感染経路の存在（飛沫・空気・接触）</li>
+          <li>抗菌薬・消毒液の日常的使用により<b>薬剤耐性菌が生じやすい</b></li>
+          <li>免疫能の低下した<b>易感染性患者（compromised host）</b>が多い</li>
+          <li>複数の病原体に同時に感染する<b>重複感染</b>が多い</li></ul></div>
+      <div class="pair"><span class="lbl">予防策</span>
+        <ul class="clean">
+          <li>感染の有無にかかわらず<b>すべての患者</b>に行う<span class="key">標準予防策（standard precautions）</span>：手指衛生、個人防護具の着用、注射針のリキャップ防止と適切な廃棄など</li>
+          <li>感染症患者・病原体保有者に対する<span class="key">感染経路別予防策</span>（接触・飛沫・空気予防策）の徹底</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>問題点は「<b>感染源・経路・耐性菌・易感染宿主・重複感染</b>」の5本立て。予防策は<b>2段構え＝全患者への標準予防策＋経路別予防策</b>。前問の薬剤耐性菌と合わせ、院内が耐性菌の温床になりやすい理由（抗菌薬・消毒薬の常用）を述べると一貫する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 11</span><span class="q-years">2022</span></div>
+    <p class="stem mincho">新興感染症が有する問題点に関して説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">新興感染症とは</span>　かつて知られておらず、新しく認識された感染症で、局地的あるいは国際的に公衆衛生上問題となるもの（一般に1970年以降に認識されたものを指す）。例：HIV、SARS、新型インフルエンザ、COVID-19など。</div>
+      <div class="pair"><span class="lbl">問題点</span>
+        <ul class="clean">
+          <li>病原体やその性状の<span class="key">同定に時間がかかる</span></li>
+          <li><span class="key">ワクチンや治療薬の開発に長い時間を要する</span></li>
+          <li>その間に感染が<b>世界中に拡大</b>しやすく、予防も治療も困難</li></ul></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>新興感染症の問題点は要するに<b>「正体の特定にも対策（ワクチン・治療薬）の確立にも時間がかかり、その間に拡大してしまう」</b>こと。COVID-19が典型例。いったん減った感染症が再び増える<b>再興感染症</b>（結核・マラリア・デング熱など。耐性菌の増加が一因）との区別も問われやすい。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <!-- ================= 第7章 ================= -->
+  <div class="chapter" id="ch7"><div class="ch-no">CHAPTER 7</div><h2 class="mincho">腫瘍総論</h2></div>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 1</span><span class="q-years">2017再・2018</span></div>
+    <p class="stem mincho">大腸腺腫内癌症例、子宮頸部上皮内病変（異形成）症例の像を示す。子宮頸部病変では同一患者の病変に提示する組織学的変化が全て混在していた。なぜこのような病態が生じうるのか、考えるところを説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">悪性腫瘍を発生させるような<span class="key">体細胞変異の蓄積</span>により、良性腫瘍・異型病変（前がん病変）を経由して、一部の細胞が段階的に「がん」としての形質を獲得していく<b>多段階発がん</b>が生じているため。
+        <ul class="clean">
+          <li><b>大腸</b>：管状腺腫（良性・前がん病変）→ 遺伝子変異の追加 → 同一病巣内に腺癌が出現（腺腫内癌）。</li>
+          <li><b>子宮頸部</b>：正常上皮 → 遺伝子変異により軽度扁平上皮内病変 → 高度扁平上皮内病変（前がん病変）→ 浸潤癌、へと変化する。</li></ul>
+        各段階は一斉に進むのではなく病変内で<span class="key">併存</span>するため、1つの病変に複数段階の組織像が混在する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>キーワードは<b>多段階発がん</b>と<b>前がん病変</b>。「変異が少しずつ蓄積し、良性→異型→癌と段階を踏む」ため、進行速度の異なる細胞集団が同一病変に混在する、という論理。大腸腺腫→腺癌、子宮頸部上皮内病変→浸潤癌が二大典型例。次問の異型度・分化度、問3の年齢相関とすべて同じ「変異の蓄積」で説明できる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 2</span></div>
+    <p class="stem mincho">病理組織をみる際に、腫瘍における細胞・組織の形態を示す指標として、異型度および分化度という言葉が使われる。それぞれの意味を説明し、相互の関係性と、これらの指標と腫瘍の予後との関係性について述べよ。<span class="lbl">（＋α：異型性と異形成についても説明し、その関係性を述べよ。）</span></p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">異型度（atypia）</span>　腫瘍細胞・組織が<span class="key">正常からどれだけ形態的に逸脱しているか</span>の程度。核の腫大・多形性、核分裂像、構造の乱れなどで評価。逸脱が大きいほど高異型（悪性度が高い）。</div>
+      <div class="pair"><span class="lbl">分化度（differentiation）</span>　腫瘍が<span class="key">起源となる組織・臓器の細胞にどれだけ類似しているか</span>の程度。発生母地に近い＝高分化、相違が著しい＝低分化。経過中に分化度が低下する現象を<b>脱分化</b>、もとの特徴が全く失われた状態を<b>退形成（anaplastic）</b>という。</div>
+      <div class="pair"><span class="lbl">相互の関係と予後</span>
+        <ul class="clean">
+          <li><b>低分化ほど高異型</b>（両者は連動する）。</li>
+          <li>一般に<b>低分化・高異型ほど予後不良</b>、高分化・低異型ほど予後良好。良性腫瘍は分化度が高い。</li></ul></div>
+      <div class="pair"><span class="lbl">＋α：異型性と異形成</span>
+        <div class="def"><b>異型性</b>：正常との違いの程度を表す尺度。</div>
+        <div class="def" style="margin-top:4px;"><b>異形成（dysplasia）</b>：細胞の形態・配列が乱れる（異型性を伴う）が、<span class="key">まだ上皮内癌の基準を満たさない前がん病変</span>の病理学的診断（例：子宮頸部上皮異形成）。</div>
+        <div class="def" style="margin-top:4px;color:var(--muted);font-size:14px;">→ 異形成は正常組織に異型性が加わった腫瘍性病変。異型性がさらに増すと「がん」と呼ばれるようになる。</div></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>異型度＝「正常からの<b>離れ具合</b>」、分化度＝「起源組織への<b>似具合</b>」で、表裏一体（低分化＝高異型）。予後は<b>低分化・高異型＝悪い</b>。＋αは「<b>異形成＝異型性を伴うが癌未満の前がん病変</b>、異型性が増せば癌」という連続性が要点で、問1の多段階発がんと直結する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 3</span></div>
+    <p class="stem mincho">ある年の年齢とがん罹患率の関係を示したグラフ（高齢で急増）について、なぜこのような結果となるのか、がんの発生機序の観点よりグラフが示す結果を説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">がんの発生には通常1つの遺伝子異常では足りず、<span class="key">複数の遺伝子変異の蓄積</span>が必要である（多段階発がん）。
+        <ul class="clean">
+          <li>長生きするほど<b>DNA複製異常や損傷の機会が増え</b>、遺伝子異常が蓄積していく。</li>
+          <li>加齢に伴い<b>免疫能（がん細胞の排除能）が低下</b>する。</li></ul>
+        このため、がんは高齢者に好発し、年齢とともに罹患率が上昇する（多くのがん死は55〜75歳に集中する）。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>グラフの右肩上がりを<b>「変異の蓄積＋免疫監視の低下」</b>で説明する。問1・問2と同じ「多段階発がん」が背景。なお小児では多段階を経ずに少数の変異で発症するがん（網膜芽細胞腫など、問12参照）があり、若年でも一定の死因を占める点が対比として効く。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 4</span><span class="q-years">2018・2022・2023</span></div>
+    <p class="stem mincho">腫瘍の転移について、以下の設問に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>転移の定義を述べよ。</li>
+      <li><span class="maru">問2.</span>血行性転移による病巣は肝や肺に好発する理由を説明せよ。</li>
+      <li><span class="maru">問3.</span>乳癌におけるセンチネルリンパ節検索の意義を説明せよ。</li>
+      <li><span class="maru">問4.</span>がんのウィルヒョウ（Virchow）転移とはどのような状態か説明せよ。またこの転移が臨床病理学的に重要である理由を述べよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span>腫瘍細胞が原発巣から<span class="key">物理的に不連続な部位へ運ばれ、そこで増殖して新たな腫瘍巣を形成する</span>こと。</div>
+      <div class="pair"><span class="qsub">問2</span>血行性転移は、血流に乗ったがん細胞が細い血管に詰まって増殖して起こる。<span class="key">毛細血管が豊富な肝・肺</span>はがん細胞が捕捉されやすく、好発する。特に門脈系（上部消化管など）の腫瘍は肝に、それ以外は肺に転移しやすい。</div>
+      <div class="pair"><span class="qsub">問3</span>センチネルリンパ節は<span class="key">がんが最初に到達するリンパ節</span>。乳癌で術中にこれを検索し、転移がなければ下流リンパ節にも転移がないと予測でき、不要な<span class="key">広範なリンパ節郭清を回避</span>できる（郭清範囲の決定）。</div>
+      <div class="pair"><span class="qsub">問4</span><span class="key">左鎖骨上窩リンパ節への転移</span>（胃癌などで有名）。胸管を経た上行性リンパ行性転移であり、<span class="key">病変が全身性に及んでいることを示唆</span>するため、進行・予後判定上きわめて重要。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>転移様式は<b>血行性／リンパ行性／播種</b>の3本柱。問2は「<b>毛細血管が豊富＝捕捉されやすい</b>」＋門脈系→肝の解剖。問3は<b>センチネル＝最初の関所</b>で過剰郭清を防ぐ意義。問4のウィルヒョウ転移は<b>左鎖骨上窩＝全身播種のサイン</b>。次問のシュニッツラー転移（播種）と並べて「特殊な転移名」を整理する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 5</span><span class="q-years">2019</span></div>
+    <p class="stem mincho">横行結腸に全周性の浸潤癌が発見された。さらにこの患者では直腸指診にて深部直腸の前壁に硬結が触知された。この硬結の正体として、以下に答えよ。</p>
+    <ol class="items"><li><span class="maru">問1.</span>まず疑うべきものはなにか。その名称と、その病変を形成するに至る病態を考察し述べよ。</li>
+      <li><span class="maru">問2.</span>この患者では腹水が認められている。この硬結の正体を検索するのに有用であると思われる検査に関して述べよ。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="qsub">問1</span><span class="key">シュニッツラー転移（Schnitzler転移）</span>を疑う。がん細胞が腹腔内に<span class="key">播種</span>し、最も低い部位である<span class="key">ダグラス窩（直腸子宮窩／直腸膀胱窩）</span>に定着・増殖して転移巣を形成したもの。直腸前壁の硬結として触知される（播種性転移＝漿液・腹水の流れに乗って腹腔面に散布される）。</div>
+      <div class="pair"><span class="qsub">問2</span>播種を反映して腹水が貯留しているため、<span class="key">腹水細胞診</span>が有用。腹水中のがん細胞を検出することで播種・転移を確認できる。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>消化管癌＋ダグラス窩硬結＝<b>シュニッツラー転移（腹膜播種）</b>がほぼ確定的に問われる定番。播種は「腹腔という“面”に重力で最も低いダグラス窩へ落ちて定着」とイメージ。検査は<b>腹水細胞診</b>。次問のクルーケンベルグ腫瘍（卵巣転移）と合わせて、消化管癌の特殊転移を3点（ウィルヒョウ・シュニッツラー・クルーケンベルグ）で覚える。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 6</span></div>
+    <p class="stem mincho">60歳代の女性。近医にて胃幽門部の進行癌を発見された患者が精査目的で紹介されてきた。画像所見で卵巣に腫瘍形成が指摘された。この腫瘍の正体としてまず疑うべきものは何か。その名称と、病変を形成するに至る病態を考察して述べよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="key">クルーケンベルグ腫瘍（Krukenberg tumor）</span>を疑う。<span class="key">胃癌（特に印環細胞癌）が卵巣へ転移</span>したもので、血行性転移・播種により胃のがん細胞が両側卵巣に達して腫瘤を形成する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「<b>胃癌＋卵巣腫瘍＝クルーケンベルグ腫瘍</b>」は即答できるように。組織学的には粘液を産生する<b>印環細胞</b>が特徴。前問のシュニッツラー転移（ダグラス窩播種）と同じく、消化管癌が腹腔内・骨盤内に及ぶ転移として一括して押さえる。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 7</span></div>
+    <p class="stem mincho">発がんの二段階説に関して説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">発がんは<span class="key">イニシエーション</span>と<span class="key">プロモーション</span>の2段階からなるとする説。
+        <ul class="clean">
+          <li><b>イニシエーション（initiation）</b>：発癌物質などが作用して細胞に<span class="key">DNA損傷・突然変異</span>を起こす段階（不可逆的）。</li>
+          <li><b>プロモーション（promotion）</b>：イニシエートされた細胞の<span class="key">増殖を（一過性に）促進</span>する段階。</li></ul>
+        両者がそろって初めて腫瘍が発生する（イニシエーターのみ、プロモーターのみでは原則発生しない）。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>「<b>火種をつける（イニシエーション＝変異）→ 火を煽る（プロモーション＝増殖促進）</b>」のたとえが定番。マウス皮膚発癌実験（発癌物質→クロトン油）が根拠。イニシエーションは不可逆な遺伝子変化、プロモーションは可逆的な増殖刺激、という性質の違いも押さえる。多段階発がん（問1・3）の最初期を説明するモデル。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 8</span></div>
+    <p class="stem mincho">腫瘍マーカー検索の意義に関して説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">腫瘍マーカーは、がん細胞またはがんに反応した細胞が産生する蛋白・ペプチド・糖鎖などの物質で、<span class="key">血液・尿などで簡便に測定できる</span>。網羅的・補助的な診断、治療効果や再発のモニタリングに用いられる。</div>
+      <div class="pair"><span class="lbl">良い腫瘍マーカーの条件＝感度・特異度が高いこと</span>
+        <ul class="clean">
+          <li><b>感度</b>：がん患者でその陽性率（いかに<span class="key">がんを拾い上げられるか</span>）。</li>
+          <li><b>特異度</b>：非がん者での陰性率（いかに<span class="key">がん以外で反応しないか</span>）。</li></ul>
+        例：ある癌でだけ上がり他の癌や良性疾患で上がらないものは「特異度が高い」、どの癌でも上がってしまうものは「特異度が低い」。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>意義は<b>「簡便に測れる補助診断・経過観察ツール」</b>。評価軸は必ず<b>感度（拾い上げ）と特異度（絞り込み）</b>の2つで説明する。多くの腫瘍マーカーは単独で確定診断には使えず、画像・病理と組み合わせる点、治療効果判定・再発検出に強い点を添えると実践的。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 9</span></div>
+    <p class="stem mincho">抗体薬について説明せよ。その際「表面マーカー」「コンパニオン診断」というワードを用いること。さらに、作用機序に基づいた抗体薬の種類（個別の薬剤名ではない）を挙げ、作用機序に関して各々説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">抗体薬とは</span>　がん細胞の表面に存在する特異的なマーカー（<span class="key">表面マーカー</span>）に対する分子標的薬の一つ。この治療は標的マーカーをもつ症例にのみ効果が期待でき保険適用されるため、投与前に標的の有無を確認する治療前効果判定診断＝<span class="key">コンパニオン診断</span>を治療薬とともに行う必要がある。</div>
+      <div class="pair"><span class="lbl">作用機序による種類</span>
+        <div class="def"><b>① 非修飾型抗体薬</b>：抗体自身が表面マーカーを発現するがん細胞に結合し、<span class="key">NK細胞・マクロファージによる抗体依存性細胞傷害（ADCC）</span>や、<span class="key">補体活性化による補体依存性細胞傷害（CDC）</span>を誘導してがん細胞を傷害する。</div>
+        <div class="def" style="margin-top:6px;"><b>② 修飾型（抱合型）抗体薬（ADC）</b>：抗体を利用した<span class="key">ドラッグデリバリーシステム</span>。薬物や放射性物質を結合させた抗体ががん細胞表面マーカーを認識し、薬物等をがん細胞へ届けて抗腫瘍効果を示す。</div></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>骨子は<b>「表面マーカーを狙う分子標的薬 → 効くかどうかをコンパニオン診断で事前確認」</b>。種類は<b>非修飾型（ADCC／CDCで免疫を動員）</b> と <b>修飾型＝ADC（薬物を運ぶ運び屋）</b> の2分類。コンパニオン診断は「治療薬と一対で行う、効果が見込める患者を選ぶ検査」と定義づけると確実。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 10</span></div>
+    <p class="stem mincho">がんはモノクローナルな細胞の増殖であるにもかかわらず、同一の腫瘍内には形態的にも組織・細胞の多様性がみられることが多く、また多くのクローンの細胞が存在することが確認されている。この現象が起こる理由について述べよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair">がんは1個の細胞に由来する<span class="key">単クローン（モノクローナル）起源</span>だが、増殖の過程で<span class="key">さらなる遺伝子変異が蓄積</span>し、新たな形質をもつ<b>サブクローンが分岐・進化</b>していく（クローン進化／プログレッション）。これらのサブクローンが不均一に増殖するため、形態的・分子的に多様化し、同一腫瘍内に多くのクローンが共存する。腫瘍マーカーの発現も腫瘍内で不均一になる。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>一見矛盾（単クローン起源なのに多様）を、<b>「起源は1個 → 増殖中に変異が積み重なってサブクローンに枝分かれ（クローン進化）」</b>で解く。この腫瘍内不均一性（heterogeneity）は、薬剤耐性クローンの出現や治療抵抗性の原因になり、生検部位による所見の差にもつながる、と臨床的意義まで触れると深い。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 11</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">がん遺伝子とがん抑制遺伝子について説明せよ。その際以下の①②に関しても説明せよ。</p>
+    <ol class="items"><li><span class="maru">①</span>「腫瘍形成に対して優性遺伝子変化としての性質を示す」あるいは「両側アレルの変異や欠失が必要となる」のはどうしてか。</li>
+      <li><span class="maru">②</span>gatekeeper型がん抑制遺伝子とcaretaker型がん抑制遺伝子の違いはなにか。</li></ol>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">がん遺伝子（oncogene）</span>　正常細胞に内在する遺伝子（原がん遺伝子）が、<span class="key">活性化突然変異</span>などにより細胞の癌化を誘導するようになったもの。</div>
+      <div class="pair"><span class="lbl">がん抑制遺伝子（tumor suppressor gene）</span>　過剰・異常な細胞増殖を<span class="key">抑える働き</span>をもつ正常遺伝子。</div>
+      <div class="pair"><span class="qsub">①</span>
+        <ul class="clean">
+          <li><b>がん遺伝子＝優性</b>：原がん遺伝子は<span class="key">片方のアレルの活性化変異だけで十分に異常増殖</span>を引き起こす（機能獲得型）。よって腫瘍形成に対し優性に働く。</li>
+          <li><b>がん抑制遺伝子＝両側アレルの不活化が必要</b>：正常な抑制機能を担う産物をコードするため、<span class="key">両方のアレルの変異・欠失</span>で初めて機能が失われ腫瘍形成に寄与する（機能喪失型、いわゆる<b>two-hit</b>）。</li></ul></div>
+      <div class="pair"><span class="qsub">②</span>がん抑制遺伝子は次の2型に大別される：
+        <div class="def"><b>gatekeeper型</b>：多くが<span class="key">細胞周期・増殖を直接制御</span>。欠損すると<b>直接的に</b>増殖異常を引き起こす（例：RB、p53、APC）。</div>
+        <div class="def" style="margin-top:4px;"><b>caretaker型</b>：<span class="key">ゲノム安定性の維持・DNA修復</span>を担う。欠損すると変異が蓄積し、<b>間接的に</b>がん化を促す（例：BRCA、ミスマッチ修復遺伝子）。</div></div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>①は<b>「機能獲得（片アレルでOK＝優性／がん遺伝子）vs 機能喪失（両アレル必要＝劣性的・two-hit／がん抑制遺伝子）」</b>という対比が核心。②は<b>gatekeeper＝門番（増殖を直接管理）／caretaker＝管理人（ゲノムを守る、壊れると変異が溜まる）</b>とイメージ。次問の網膜芽細胞腫（RB＝gatekeeper、two-hit）が具体例として直結する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
+  </section>
+
+  <section class="q">
+    <div class="q-head"><span class="q-no">問 12</span><span class="q-new">新出</span></div>
+    <p class="stem mincho">網膜芽細胞腫には孤発型と常染色体優性遺伝の形質の特徴をとる家族型がある。家族型は1歳までに発症することが多く孤発型の2〜3歳程度に比較してより若年で発症するが、どうしてか説明せよ。この際、「Two-hit hypothesis」および「Loss of Heterozygosity」とは何かについても触れて説明せよ。</p>
+    <div class="answer"><span class="tag a">解答</span><div class="body">
+      <div class="pair"><span class="lbl">前提</span>　網膜芽細胞腫の発症には、<span class="key">第13番染色体13q14上のRB遺伝子（がん抑制遺伝子）の両アレルの変異</span>が必要（＝two-hit）。</div>
+      <div class="pair"><span class="lbl">Two-hit hypothesis</span>　がん抑制遺伝子は両側アレルの不活化（2回のヒット）で初めて機能を失い発症する、という仮説。</div>
+      <div class="pair"><span class="lbl">孤発型</span>　生まれつきは正常で、網膜細胞の分化過程で<span class="key">片方のアレルに変異（1st hit）</span>、さらにもう片方にも変異（2nd hit）が起こって発症。<b>2回の変異が必要</b>なため発症は遅め（2〜3歳）、片側性が多い。</div>
+      <div class="pair"><span class="lbl">家族型</span>　生まれつき<span class="key">全身の細胞で片アレルに変異を保有（1st hitを生殖細胞性にもつ）</span>。残り1アレルにもう1回の変異（2nd hit）が加わるだけで発症するため、<span class="key">早期（1歳まで）・両側性</span>になりやすい。</div>
+      <div class="pair"><span class="lbl">Loss of Heterozygosity（LOH／ヘテロ接合性の喪失）</span>　染色体の欠失などにより、両親由来の2本のうち<span class="key">片方の（正常）アレルが失われ、変異アレルだけが残る</span>状態。家族型ではこのLOHが2nd hitとなって発症する。</div>
+      <div class="pair" style="color:var(--muted);font-size:14px;">→ 家族型の「1st hit」はすでに生殖細胞にあり、孤発型でいう「2nd hit」までの距離が短い。だから家族型は孤発型より早く発症する。</div>
+    </div></div>
+    <div class="note"><p class="nt">解 説</p>
+      <p>Knudsonのtwo-hit仮説の代表例。理屈は<b>「家族型は最初の1ヒットを生まれつき全細胞に持っている → あと1ヒットで発症 → だから早く・両側性」</b>。LOHは「正常アレルが脱落して変異アレルだけ残る＝実質的な2nd hit」と理解する。問11の「がん抑制遺伝子＝両アレル不活化（劣性的）」の具体例として完璧に対応する。</p>
+    </div>
+    <a class="backtop" href="#top">▲ 目次へ</a>
   </section>
 
   <footer>
-    病理学 過去問 解答・解説集 ／ 創傷治癒・物質代謝障害（問1–問6）。<br>
-    解答は出題趣旨に沿ったモデル解答、解説は背景・鑑別・臨床的意味の補足です。次は「炎症（免疫・炎症）」の章をこの体裁のまま追記していけます。
+    <p>病理 問題集 解答・解説集 ｜ 全7章・全45問（創傷治癒／物質代謝障害・炎症・免疫異常・循環障害・複合問題・感染症・腫瘍総論）。出題年は判明分のみ表記。</p>
+    <p>各問は <b>モデル解答</b> と <b>解説</b> で構成し、元の手書き解答に明らかな誤りがある箇所は <b style="color:var(--red)">添削</b> として示した。学習用にまとめたものであり、最終的な記載は教科書・講義資料で確認することを推奨する。</p>
   </footer>
 
 </div>
