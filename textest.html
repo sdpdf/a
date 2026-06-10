@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>病理問題集 解答・解説集 ― 創傷治癒／物質代謝障害</title>
+<style>
+  :root{
+    --paper:#F4F6F5;
+    --paper-2:#FBFCFB;
+    --ink:#1B2A2C;
+    --ink-soft:#41525350;
+    --muted:#5C6B6B;
+    --teal:#0E5E5A;
+    --teal-soft:#E7F0EE;
+    --teal-line:#CBDAD6;
+    --red:#BB413A;          /* 赤ペン */
+    --red-soft:#F6E7E5;
+    --rule:#D9E0DD;
+    --shadow:0 1px 2px rgba(27,42,44,.05),0 8px 28px rgba(27,42,44,.06);
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic",Meiryo,system-ui,sans-serif;
+    line-height:1.92;
+    font-size:16px;
+    letter-spacing:.01em;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif; }
+
+  .wrap{ max-width:760px; margin:0 auto; padding:0 20px 96px; }
+
+  /* ---- ヘッダー ---- */
+  header.cover{
+    padding:56px 0 30px;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:8px;
+  }
+  .eyebrow{
+    font-size:12.5px; letter-spacing:.34em; color:var(--teal);
+    font-weight:700; margin:0 0 18px;
+  }
+  header.cover h1{
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+    font-weight:600; font-size:30px; line-height:1.5; margin:0 0 14px;
+    letter-spacing:.02em;
+  }
+  header.cover h1 .sub{ display:block; font-size:17px; color:var(--muted); margin-top:8px; letter-spacing:.06em;}
+  .cover-meta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:22px; }
+  .chip{
+    font-size:12px; color:var(--muted); border:1px solid var(--rule);
+    background:var(--paper-2); border-radius:999px; padding:4px 12px; letter-spacing:.04em;
+  }
+  .chip strong{ color:var(--teal); font-weight:700; }
+
+  /* ---- 凡例 ---- */
+  .legend{
+    margin:26px 0 40px; padding:16px 18px; background:var(--paper-2);
+    border:1px solid var(--rule); border-radius:14px; font-size:13.5px; color:var(--muted);
+  }
+  .legend b{ color:var(--ink); }
+  .legend .k-q{ color:var(--red); font-weight:700; }
+  .legend .k-a{ color:var(--teal); font-weight:700; }
+
+  /* ---- 各問 ---- */
+  .q{ margin:0 0 14px; padding:34px 0 8px; border-top:1px solid var(--rule); }
+  .q:first-of-type{ border-top:none; }
+  .q-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:18px; }
+  .q-no{
+    flex:none;
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
+    font-size:13px; font-weight:700; letter-spacing:.12em; color:#fff;
+    background:var(--red); border-radius:7px; padding:6px 11px 5px; line-height:1;
+    box-shadow:0 1px 0 rgba(0,0,0,.08);
+  }
+  .q-years{
+    flex:none; font-size:11.5px; color:var(--red); border:1px solid #E2BCB8;
+    background:var(--red-soft); border-radius:6px; padding:3px 9px; letter-spacing:.05em;
+    align-self:center;
+  }
+  .q-years::before{ content:"出題  "; color:#C98C87; }
+
+  .stem{
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+    font-size:18px; line-height:1.85; margin:0; letter-spacing:.015em;
+  }
+  ol.items{ margin:14px 0 0; padding:0; list-style:none; }
+  ol.items li{
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
+    font-size:17px; padding:3px 0 3px 4px; color:#2a3a3b;
+  }
+  ol.items li .maru{ color:var(--teal); font-weight:600; margin-right:.45em; }
+
+  /* ---- 解答 ---- */
+  .answer{ margin:22px 0 0; }
+  .tag{
+    display:inline-block; font-size:12px; font-weight:700; letter-spacing:.18em;
+    padding:3px 12px; border-radius:6px 6px 0 0; line-height:1.4;
+  }
+  .tag.a{ color:#fff; background:var(--teal); }
+  .answer .body{
+    border:1px solid var(--teal-line); border-top:3px solid var(--teal);
+    border-radius:0 12px 12px 12px; background:var(--paper-2);
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+
+  .pair{ margin:4px 0 16px; }
+  .pair:last-child{ margin-bottom:2px; }
+  .term{ font-weight:700; color:var(--ink); }
+  .en{ color:var(--teal); font-weight:600; font-size:.9em; letter-spacing:.02em; }
+  .pair .def{ margin-top:2px; }
+  .vs{
+    display:inline-block; font-size:11px; color:var(--red); font-weight:700;
+    border:1px solid #E2BCB8; border-radius:5px; padding:1px 7px; margin:0 2px;
+    vertical-align:.08em; letter-spacing:.06em;
+  }
+
+  ul.clean{ margin:6px 0 0; padding-left:1.15em; }
+  ul.clean li{ margin:3px 0; }
+  ul.clean li::marker{ color:var(--teal); }
+  .key{ font-weight:700; border-bottom:2px solid #E7C7C3; padding-bottom:.5px; }
+  .lbl{ font-weight:700; color:var(--teal); }
+
+  table.t{ width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:14.5px; }
+  table.t th,table.t td{ border:1px solid var(--rule); padding:8px 10px; text-align:left; vertical-align:top; }
+  table.t th{ background:var(--teal-soft); color:var(--ink); font-weight:700; width:34%; }
+  table.t caption{ text-align:left; font-size:13px; color:var(--muted); margin-bottom:6px; }
+
+  /* ---- 解説 ---- */
+  .note{ margin:16px 0 4px; padding:16px 18px 14px;
+    background:var(--teal-soft); border-left:4px solid var(--teal); border-radius:0 10px 10px 0; }
+  .note .nt{ font-size:11.5px; font-weight:700; letter-spacing:.2em; color:var(--teal); margin:0 0 8px; }
+  .note p{ margin:0 0 9px; font-size:14.5px; }
+  .note p:last-child{ margin-bottom:0; }
+
+  /* 添削（赤ペン） */
+  .redpen{ margin:14px 0 2px; padding:14px 16px; background:var(--red-soft);
+    border-left:4px solid var(--red); border-radius:0 10px 10px 0; }
+  .redpen .nt{ font-size:11.5px; font-weight:700; letter-spacing:.2em; color:var(--red); margin:0 0 7px; }
+  .redpen p{ margin:0 0 7px; font-size:14px; }
+  .redpen p:last-child{ margin-bottom:0; }
+  .strike{ text-decoration:line-through; text-decoration-color:var(--red); color:var(--muted); }
+  .fix{ color:var(--red); font-weight:700; }
+
+  .group-label{
+    margin:48px 0 4px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    font-size:15px; letter-spacing:.18em; color:var(--teal); font-weight:700;
+    display:flex; align-items:center; gap:12px;
+  }
+  .group-label::after{ content:""; flex:1; height:1px; background:var(--teal-line); }
+
+  footer{ margin-top:60px; padding-top:22px; border-top:1px solid var(--rule);
+    font-size:12.5px; color:var(--muted); line-height:1.8; }
+
+  @media (max-width:520px){
+    body{ font-size:15.5px; }
+    .wrap{ padding:0 16px 72px; }
+    header.cover h1{ font-size:25px; }
+    .stem{ font-size:16.5px; }
+    ol.items li{ font-size:15.5px; }
+    .q-head{ flex-wrap:wrap; gap:9px; }
+    table.t th{ width:38%; }
+  }
+  @media print{
+    body{ background:#fff; font-size:11.5pt; }
+    .legend{ display:none; }
+    .answer .body,.note,.redpen{ box-shadow:none; }
+    .q{ break-inside:avoid; }
+    .wrap{ padding:0; max-width:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <p class="eyebrow">病理学 ｜ 過去問 解答・解説集</p>
+    <h1 class="mincho">創傷治癒／物質代謝障害
+      <span class="sub">細胞・組織傷害と適応 ― 全6問</span>
+    </h1>
+    <div class="cover-meta">
+      <span class="chip"><strong>収録</strong>　問1–問6</span>
+      <span class="chip"><strong>出題年</strong>　2017–2022</span>
+      <span class="chip"><strong>範囲</strong>　壊死／変性／萎縮／化生／代謝</span>
+    </div>
+  </header>
+
+  <div class="legend">
+    <b>読み方</b>：各問は <span class="k-q">問題</span>（教科書の出題文）→ <span class="k-a">解答</span>（要点を整理したモデル解答）→ <b>解説</b>（背景・鑑別・臨床的意味）の順。赤い枠は元の手書き解答に対する <b style="color:var(--red)">添削</b> です。
+  </div>
+
+  <!-- ============== 問1 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 1</span>
+      <span class="q-years">2019・2022</span>
+    </div>
+    <p class="stem mincho">以下の用語に関して、両者の違いが明確になるように説明せよ。</p>
+    <ol class="items">
+      <li><span class="maru">①</span>壊死とアポトーシス</li>
+      <li><span class="maru">②</span>肉芽組織と肉芽腫</li>
+      <li><span class="maru">③</span>肥大と過形成</li>
+      <li><span class="maru">④</span>過形成と腫瘍</li>
+    </ol>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <div><span class="en">①</span> <span class="term">壊死（ネクローシス, necrosis）</span> <span class="vs">vs</span> <span class="term">アポトーシス（apoptosis）</span></div>
+          <table class="t">
+            <tr><th></th><th>壊死</th></tr>
+            <tr><th>性質</th><td>外部からの強い傷害により<span class="key">受動的</span>に起こる細胞死</td></tr>
+            <tr><th>機序</th><td>ATP枯渇 → 細胞膨化 → 細胞膜破綻 → 内容物が漏出</td></tr>
+            <tr><th>範囲・炎症</th><td>多くの細胞が<span class="key">集団</span>で死に、内容物漏出により周囲に<span class="key">炎症を伴う</span></td></tr>
+          </table>
+          <table class="t" style="margin-top:10px;">
+            <tr><th></th><th>アポトーシス</th></tr>
+            <tr><th>性質</th><td>遺伝子に制御された<span class="key">能動的・プログラムされた死</span>（“細胞の自殺”）</td></tr>
+            <tr><th>機序</th><td>ATPを<span class="key">消費</span>し、細胞は縮小、核クロマチンが凝集・断片化 → アポトーシス小体に分裂</td></tr>
+            <tr><th>範囲・炎症</th><td><span class="key">個々の細胞単位</span>で起こり、マクロファージに貪食され<span class="key">炎症を起こさない</span></td></tr>
+          </table>
+        </div>
+
+        <div class="pair">
+          <div><span class="en">②</span> <span class="term">肉芽組織</span> <span class="en">granulation tissue</span> <span class="vs">vs</span> <span class="term">肉芽腫</span> <span class="en">granuloma</span></div>
+          <div class="def"><span class="lbl">肉芽組織</span>：創傷治癒・組織修復の過程で<span class="key">一時的に</span>作られる幼若な新生組織。毛細血管新生・線維芽細胞増生・炎症細胞浸潤からなり、やがて膠原線維に置き換わって瘢痕となる（＝修復のための組織）。</div>
+          <div class="def" style="margin-top:6px;"><span class="lbl">肉芽腫</span>：慢性炎症（特にⅣ型遅延型過敏反応や難分解性の持続刺激）で生じる、<span class="key">類上皮細胞</span>と<span class="key">多核巨細胞</span>の限局性集簇からなる結節性病巣。結核・サルコイドーシス・異物反応など（＝特殊な慢性炎症の形態）。</div>
+          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 名称は似るが概念は別物。<b>肉芽組織＝修復組織</b>、<b>肉芽腫＝慢性炎症病巣</b>。</div>
+        </div>
+
+        <div class="pair">
+          <div><span class="en">③</span> <span class="term">肥大</span> <span class="en">hypertrophy</span> <span class="vs">vs</span> <span class="term">過形成</span> <span class="en">hyperplasia</span></div>
+          <div class="def"><span class="lbl">肥大</span>：個々の<span class="key">細胞の容積（サイズ）が増大</span>することによる臓器の容積増加。細胞数は変わらない。例：運動による骨格筋、高血圧による心肥大。</div>
+          <div class="def" style="margin-top:6px;"><span class="lbl">過形成</span>：<span class="key">細胞の数が増加</span>することによる臓器の容積増加。例：前立腺肥大症（実体は過形成）、バセドウ病の甲状腺、ホルモン刺激による子宮内膜。</div>
+          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 区別の軸は <b>細胞の大きさ↑（肥大）か、数↑（過形成）か</b>。両者とも刺激に応じた可逆的変化。</div>
+        </div>
+
+        <div class="pair">
+          <div><span class="en">④</span> <span class="term">過形成</span> <span class="vs">vs</span> <span class="term">腫瘍（新生物, neoplasm）</span></div>
+          <div class="def"><span class="lbl">過形成</span>：刺激に<span class="key">依存した</span>、制御された・<span class="key">可逆的</span>な細胞数増加。刺激が除かれれば元に戻る。多クローン性。</div>
+          <div class="def" style="margin-top:6px;"><span class="lbl">腫瘍</span>：細胞が<span class="key">自律的・不可逆的</span>に、無目的かつ過剰に増殖する。原因刺激から独立し、刺激を除いても増殖が続く。<span class="key">単クローン性</span>。</div>
+          <div class="def" style="margin-top:6px;color:var(--muted);font-size:14px;">→ 腫瘍の本質は <b>自律性・不可逆性・単クローン性</b>。過形成は“反応”、腫瘍は“自走”。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>4組とも「<b>受動 vs 能動</b>」「<b>反応性 vs 自律性</b>」という軸で対比すると整理しやすい。①は<b>死の様式</b>、③は<b>適応の様式</b>、④は<b>増殖の制御の有無</b>を問うている。</p>
+      <p>①で押さえるべきは、両者がしばしば<b>連続的</b>であること。同じ傷害でも軽度ならアポトーシス、高度ならネクローシスに傾く。アポトーシスがATPを要する“積極的”な過程である点（ATP枯渇で起こる壊死との決定的な違い）は頻出。</p>
+      <p>③④は混同しやすいが、<b>「前立腺肥大症」は名前に反して過形成</b>、という臨床用語のズレが定番のひっかけ。心筋・神経細胞のような分裂能を持たない細胞（→問3）は<b>肥大しかできず過形成は起こらない</b>点も関連づけて覚えるとよい。</p>
+    </div>
+  </section>
+
+  <!-- ============== 問2 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 2</span>
+      <span class="q-years">2018</span>
+    </div>
+    <p class="stem mincho">細胞・組織の「変性」とはどのような状態か説明せよ。また変性の種類を少なくとも4つ挙げ、各々につき簡潔に説明し、例となる病態を示せ。</p>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <span class="lbl">変性（degeneration）とは</span>：物質代謝の障害により、正常では存在しない物質や過剰な物質が細胞内外に<span class="key">蓄積</span>し、形態的・機能的変化を生じた状態。多くは<span class="key">可逆的</span>で、まだ壊死には至っていない段階を指す。</div>
+
+        <table class="t">
+          <caption>主な変性（代表的な8種＋関連2種。設問は「4つ以上」なので太字の型を優先して書けば十分）</caption>
+          <tr><th>種類</th><th>内容と例</th></tr>
+          <tr><th>細胞腫脹・空胞変性<br><span class="en">cell swelling / vacuolar deg.</span></th>
+              <td>虚血・低酸素でミトコンドリア障害 → ATP低下 → Na排出障害で<b>水分が貯留</b>し細胞膨化・空胞形成。最も軽度・初期の可逆的変性。<br>例：虚血、急性尿細管障害の初期</td></tr>
+          <tr><th>硝子変性（硝子化）<br><span class="en">hyaline deg.</span></th>
+              <td>HE染色で<b>赤く均質無構造</b>に染まる硝子様物質（多種の蛋白の総称）が蓄積。<br>例：硝子細動脈硬化症、瘢痕・ケロイド</td></tr>
+          <tr><th>類線維素変性<br><span class="en">fibrinoid deg.</span></th>
+              <td>フィブリンを含む血漿成分が血管壁・膠原線維に沈着し、好酸性を呈す。<b>類線維素壊死</b>とも。<br>例：悪性高血圧の細動脈、膠原病（血管炎・SLE）</td></tr>
+          <tr><th>アミロイド変性<br><span class="en">amyloid deg.</span></th>
+              <td>βシート構造の線維状蛋白「アミロイド」が沈着。<b>Congo Red</b>染色＋偏光で<b>緑色複屈折</b>。<br>例：アミロイドーシス、アルツハイマー病、多発性骨髄腫</td></tr>
+          <tr><th>脂肪変性<br><span class="en">fatty change</span></th>
+              <td>細胞質に<b>中性脂肪</b>が異常蓄積。Sudan染色で赤橙色。<br>例：脂肪肝（アルコール・肥満・栄養障害）、心筋・腎</td></tr>
+          <tr><th>糖原（グリコーゲン）変性<br><span class="en">glycogen deg.</span></th>
+              <td>グリコーゲンが過剰蓄積。PAS染色陽性。<br>例：糖尿病（腎尿細管・肝）、糖原病</td></tr>
+          <tr><th>粘液変性<br><span class="en">mucous deg.</span></th>
+              <td>過剰な粘液が細胞内外に貯留。<br>例：鼻・気管支カタル、粘液癌の間質貯留</td></tr>
+          <tr><th>硝子滴変性<br><span class="en">hyaline droplet deg.</span></th>
+              <td>細胞質内にHEで赤い硝子様の滴。<br>例：高度蛋白尿時の近位尿細管（再吸収蛋白の蓄積）</td></tr>
+        </table>
+        <div class="def" style="margin-top:8px;color:var(--muted);font-size:13.5px;">（このほか <b>色素変性</b> pigmentation、<b>石灰変性</b> calcification、<b>線維化・器質化</b> も広義の物質代謝障害として扱われる。）</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>変性の定義は「<b>代謝障害による異常物質の蓄積で、まだ可逆的な段階</b>」がキモ。壊死（不可逆・細胞死）の手前にある“傷害だが生きている”状態という位置づけを言えると差がつく。</p>
+      <p>4つ選ぶなら、<b>染色法と例がセットで言えるもの</b>を選ぶと書きやすい。試験で映えるのは ①硝子変性、②アミロイド変性（Congo Red＋緑色複屈折）、③脂肪変性（脂肪肝・Sudan）、④類線維素変性（悪性高血圧・膠原病）。染色像の特徴は実習スケッチでも頻出。</p>
+      <p>注意点として、「硝子<b>滴</b>変性（尿細管の滴）」と「硝子変性（細動脈や瘢痕の均質物質）」は名前が紛らわしいので混同しないこと。</p>
+    </div>
+  </section>
+
+  <!-- ============== 問3 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 3</span>
+      <span class="q-years">2017再・2020再</span>
+    </div>
+    <p class="stem mincho">心臓では、心筋梗塞によって心筋が変性・壊死に陥ると、最終的には線維組織による置換（図譜：基本病変-1、青色部分）が起こり心機能は低下していく。なぜ心筋では、障害部位においてこのような線維組織による置換が起こるのか、心筋細胞の有する特性と関係づけて説明せよ。また、線維化に至るまでの組織学的変化について述べよ。</p>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <span class="lbl">なぜ線維組織に置換されるのか（心筋細胞の特性）</span>
+          <p style="margin:6px 0 0;">心筋細胞は高度に分化した<span class="key">永久細胞（permanent cells）</span>であり、<span class="key">分裂・再生能を持たない</span>（骨格筋・神経細胞も同様）。そのため壊死に陥った心筋は、同種の心筋細胞によって補充（再生）されることがない。欠損部は<span class="key">肉芽組織</span>を経て<span class="key">線維組織（瘢痕）</span>に置き換えられる ＝ <span class="key">不完全治癒（器質化, organization）</span>。収縮力を持たない瘢痕に置換されるため心機能は低下する。</p>
+        </div>
+        <div class="pair">
+          <span class="lbl">線維化に至るまでの組織学的変化（経時的）</span>
+          <ul class="clean">
+            <li>数時間〜：心筋の<b>凝固壊死</b>が始まり、<b>好中球</b>が浸潤</li>
+            <li>1〜3日：好中球浸潤がピーク、壊死心筋の融解</li>
+            <li>3〜7日：<b>マクロファージ</b>が壊死組織を貪食・除去</li>
+            <li>1〜2週：<b>肉芽組織</b>形成（毛細血管新生＋線維芽細胞増生＋膠原線維産生の開始）</li>
+            <li>数週〜数か月：膠原線維が増加・収縮し、<b>線維化（瘢痕化）が完成</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>この問題の核心は「<b>細胞の再生能による組織の分類</b>」。細胞は再生能で <b>不安定細胞</b>（表皮・腸上皮・造血細胞：盛んに分裂）／<b>安定細胞</b>（肝・腎尿細管：通常は静止だが刺激で分裂）／<b>永久細胞</b>（心筋・骨格筋・神経：分裂しない）に分けられる。心筋は永久細胞なので“同じ組織で治る（完全治癒）”ができず、線維化（瘢痕治癒＝不完全治癒）になる、という論理を明示するのが満点答案。</p>
+      <p>図譜の <b>Azan染色</b> は膠原線維を<b>青</b>に染める染色で、<b>赤＝心筋・青＝線維組織</b>。だから「青色部分が線維組織による置換」という設問の図と直結する。HE像との染め分けの意味まで触れられると良い。</p>
+      <p>臨床的には、この瘢痕部は収縮せず菲薄化して<b>心室瘤</b>の原因になったり、伝導障害・心不全につながる、という帰結まで述べると説得力が増す。</p>
+    </div>
+  </section>
+
+  <!-- ============== 問4 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 4</span>
+    </div>
+    <p class="stem mincho">萎縮（狭義）の定義を述べた上で、萎縮に伴う細胞の変化および原因分類に関して説明せよ。</p>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <span class="lbl">定義</span>
+          <p style="margin:6px 0 0;">いったんは正常に発達・成熟した臓器・組織の体積が、病気・老化などにより<span class="key">二次的に減少</span>した状態を萎縮（atrophy）という。<br><span style="color:var(--muted);font-size:14px;">⇔ 発生・成長の段階で正常の大きさまで発育しなかった状態は <b>低形成（hypoplasia）</b>。両者は区別する。</span></p>
+        </div>
+
+        <div class="pair">
+          <span class="lbl">萎縮に伴う細胞の変化</span>
+          <ul class="clean">
+            <li><b>単純萎縮</b>：臓器を構成する個々の細胞の<b>体積が減少</b>した結果、臓器体積が減る（細胞数は不変）</li>
+            <li><b>数的萎縮</b>：構成細胞の<b>数が減少</b>（主にアポトーシスによる）した結果、臓器体積が減る</li>
+            <li><b>両者の混合</b>：実際には単純萎縮と数的萎縮が同時に起こることが多い</li>
+          </ul>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:14px;">※ 萎縮細胞内にはしばしば<b>リポフスチン</b>が沈着し、肉眼的に褐色を呈する（<b>褐色萎縮</b>：心臓・肝臓）。</p>
+        </div>
+
+        <div class="pair">
+          <span class="lbl">原因分類</span>
+          <ul class="clean">
+            <li><b>生理的萎縮</b>：加齢（老人性萎縮）、胸腺の退縮、閉経後の子宮・卵巣</li>
+            <li><b>廃用（無為）萎縮</b>：ギプス固定・長期臥床による骨格筋萎縮</li>
+            <li><b>神経性（脱神経）萎縮</b>：運動神経損傷による支配筋の萎縮</li>
+            <li><b>内分泌性萎縮</b>：ホルモン刺激低下（下垂体機能低下による標的臓器の萎縮）</li>
+            <li><b>圧迫萎縮</b>：腫瘍・水腎症などの持続的圧迫による萎縮</li>
+            <li><b>栄養障害性（飢餓）・虚血性萎縮</b>：栄養不足や血流低下による萎縮</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>定義で必ず入れるべきは「<b>いったん正常に成熟したものが、後から減る</b>」という時間軸。これがあるからこそ「最初から小さい＝低形成」と明確に区別できる（この対比が問われている）。</p>
+      <p>「細胞の変化」は <b>個々が縮む（単純）か／数が減る（数的）か</b> の2軸で答えるのがフレームワーク。原因分類は語呂で「<b>生理・廃用・神経・内分泌・圧迫・栄養／虚血</b>」と列挙できるようにしておくと取りこぼさない。褐色萎縮（リポフスチン）は加点ポイント。</p>
+    </div>
+  </section>
+
+  <!-- ============== 問5 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 5</span>
+    </div>
+    <p class="stem mincho">以下①②について説明しなさい。</p>
+    <ol class="items">
+      <li><span class="maru">①</span>同化と異化</li>
+      <li><span class="maru">②</span>糖新生</li>
+    </ol>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <div><span class="en">①</span> <span class="term">同化と異化（合わせて新陳代謝, metabolism）</span></div>
+          <div class="def"><span class="lbl">同化（anabolism）</span>：エネルギーを<span class="key">消費</span>して、単純な物質から生体に必要な複雑な高分子（蛋白質・グリコーゲン・脂質など）を<span class="key">合成</span>する反応。</div>
+          <div class="def" style="margin-top:6px;"><span class="lbl">異化（catabolism）</span>：複雑な高分子化合物を<span class="key">分解</span>してより単純な物質に変え、その過程で<span class="key">ATP（エネルギー）を得る</span>反応。例：解糖、TCA回路、β酸化。</div>
+        </div>
+
+        <div class="pair">
+          <div><span class="en">②</span> <span class="term">糖新生（gluconeogenesis）</span></div>
+          <div class="def">空腹時・絶食時などに、<span class="key">糖（グルコース）以外の物質</span>からグルコースを新たに合成する経路。主に<span class="key">肝臓</span>（一部腎臓）で行われる。</div>
+          <div class="def" style="margin-top:6px;">主な基質：
+            <ul class="clean">
+              <li><b>アミノ酸</b>（糖原性アミノ酸 ― 筋蛋白の分解に由来）</li>
+              <li><b>乳酸</b>（嫌気的解糖の産物 ― Cori回路で肝へ）</li>
+              <li><b>グリセロール</b>（中性脂肪の分解に由来）</li>
+            </ul>
+          </div>
+          <div class="def" style="margin-top:6px;"><span class="lbl">意義</span>：<span class="key">脳</span>や赤血球はエネルギーの大部分をグルコースに依存するため、空腹時にも血糖を維持してこれらへ供給する必要がある。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="redpen">
+      <p class="nt">添 削（手書き解答へ）</p>
+      <p>① 同化の説明：「エネルギーを<span class="strike">消化</span>して合成」→ 正しくは <span class="fix">消費</span>（エネルギーを使って作る）。漢字変換ミスだが用語としては重要なので注意。</p>
+      <p>② 基質と由来の対応（アミノ酸＝筋肉の分解／乳酸＝嫌気呼吸／グリセロール＝脂肪の分解）と、「脳がグルコースに依存」という意義づけは的確。あとは <span class="fix">主に肝臓で行われる</span> という場所を一言添えれば完成。</p>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>同化＝“作る・貯める（要エネルギー）”、異化＝“壊す・取り出す（産エネルギー）”と一対で覚える。糖新生は<b>異化で得た材料（アミノ酸・乳酸・グリセロール）を使って、わざわざ同化的にグルコースを作り直す</b>過程と捉えると、①と②がつながる。</p>
+      <p>「なぜそこまでしてグルコースを作るのか」の答えが<b>脳・赤血球のグルコース依存</b>。脂肪酸は脳の主要エネルギー源になれない（飢餓が続くとケトン体で一部代替）という背景まで言えると深みが出る。</p>
+    </div>
+  </section>
+
+  <!-- ============== 問6 ============== -->
+  <section class="q">
+    <div class="q-head">
+      <span class="q-no">問 6</span>
+    </div>
+    <p class="stem mincho">化生（metaplasia）について、以下の設問に答えよ。</p>
+    <ol class="items">
+      <li><span class="maru">問1.</span>化生とはどのような現象であるか。</li>
+      <li><span class="maru">問2.</span>扁平上皮化生の起こりやすい臓器・組織は何か。</li>
+      <li><span class="maru">問3.</span>問2の変化はどのような腫瘍の前ガン病変となりうるか。</li>
+      <li><span class="maru">問4.</span>消化管の円柱上皮化生として知っているものの名称1つと、そこを素地として発生する腫瘍の名称をそれぞれ答えよ。</li>
+    </ol>
+
+    <div class="answer">
+      <span class="tag a">解答</span>
+      <div class="body">
+        <div class="pair">
+          <span class="lbl">問1</span>　いったん分化・成熟した細胞・組織が、<span class="key">別の機能と形態をもつ成熟した細胞・組織に置き換わる</span>現象。可逆的で、持続的な刺激・ストレスに対する<span class="key">適応現象</span>のひとつ。</div>
+        <div class="pair">
+          <span class="lbl">問2</span>　<span class="key">気管・気管支</span>の線毛円柱上皮（喫煙・慢性刺激）、<span class="key">子宮頸部</span>、膀胱・腎盂などの移行上皮などで起こりやすい（代表は気管支上皮と子宮頸部）。</div>
+        <div class="pair">
+          <span class="lbl">問3</span>　<span class="key">扁平上皮癌（squamous cell carcinoma）</span>の前癌病変となりうる。<br><span style="color:var(--muted);font-size:14px;">例：喫煙者の気管支扁平上皮化生 → 肺扁平上皮癌、子宮頸部の扁平上皮化生 → 子宮頸癌。</span></div>
+        <div class="pair">
+          <span class="lbl">問4</span>　円柱上皮化生：<span class="key">Barrett食道（Barrett粘膜）</span>＝逆流性食道炎により食道下部の重層扁平上皮が胃型・腸型の円柱上皮に置換されたもの。<br>そこを素地として発生する腫瘍：<span class="key">（Barrett）腺癌（adenocarcinoma）</span>。</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="nt">解 説</p>
+      <p>化生の定義で外せないのは「<b>成熟細胞 → 別系統の成熟細胞</b>」という点。未熟な細胞が別方向に分化し直すのであって、上皮が間葉に変わるような胚葉を越える変化ではない。あくまで<b>刺激への適応（可逆的）</b>である一方、刺激が続くと異形成→癌へ進む足がかりになる、という二面性が出題の狙い。</p>
+      <p>“方向”で対にして覚えると速い：<b>扁平上皮化生</b>（円柱→扁平：気管支・子宮頸部、喫煙など）は <b>扁平上皮癌</b>へ、<b>円柱上皮化生</b>（扁平→円柱：Barrett食道、胃酸逆流）は <b>腺癌</b>へ。化生の方向と発生する癌の種類が一致しているのがポイント。</p>
+      <p>Barrettは「重層扁平上皮の食道に、胃や腸のような円柱上皮（しばしば杯細胞を伴う腸上皮化生）が現れる」状態。逆流→Barrett→腺癌という流れは消化器でも頻出。</p>
+    </div>
+  </section>
+
+  <footer>
+    病理学 過去問 解答・解説集 ／ 創傷治癒・物質代謝障害（問1–問6）。<br>
+    解答は出題趣旨に沿ったモデル解答、解説は背景・鑑別・臨床的意味の補足です。次は「炎症（免疫・炎症）」の章をこの体裁のまま追記していけます。
+  </footer>
+
+</div>
+</body>
+</html>
